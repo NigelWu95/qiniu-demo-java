@@ -1,0 +1,34 @@
+{
+  "code": 0,
+  "message": "",
+  "result": {
+    "review": true,
+    "detections": [
+      {
+        "boundingBox":{
+          "pts": [[1213,400],[205,400],[205,535],[1213,535]],
+          "score":0.998
+        },
+        "value": {
+          "name": "xx",
+          "score":0.567,
+          "review": true
+        },
+        "sample": {
+          "url": "",
+          "pts": [[1213,400],[205,400],[205,535],[1213,535]]
+        }
+      },
+      {
+        "boundingBox":{
+          "pts": [[1109,500],[205,500],[205,535],[1109,535]],
+          "score":0.98
+        },
+        "value": {
+          "score":0.987,
+          "review": false
+        }
+      }
+    ]
+  }
+}
