@@ -1,12 +1,6 @@
-/**
- * Project Name: com.nigel
- * File Name: ForkAndJoinTest.java
- * Package Name: com.nigel
- * Date Time: 21/03/2018  1:25 AM
- * Copyright (c) 2017, xxx  All Rights Reserved.
- */
 package com.qiniu.examples;
 
+import com.qiniu.common.Config;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
 import com.qiniu.storage.BucketManager;
@@ -25,16 +19,10 @@ import java.util.concurrent.Future;
 import java.util.concurrent.RecursiveTask;
 
 /**
- * ClassName: ForkAndJoinTest
- * Description: TODO
- * Date Time: 21/03/2018  1:25 AM
- * @author Nigel Wu  wubinghengajw@outlook.com
- * @version V1.0
- * @since V1.0
- * @jdk 1.7
- * @see
+ * ClassName: ForkAndJoinListBucket
+ * Description: ForkAndJoin 的方式来列举 bucket 文件
  */
-public class ForkAndJoinTest extends RecursiveTask<Integer> {
+public class ForkAndJoinListBucket extends RecursiveTask<Integer> {
 
     private static final int THREAD_HOLD = 2;
 
@@ -42,7 +30,7 @@ public class ForkAndJoinTest extends RecursiveTask<Integer> {
     private BucketManager bucketManager;
     private String bucket;
 
-    public ForkAndJoinTest(List<String> fileKeyList, BucketManager bucketManager, String bucket){
+    public ForkAndJoinListBucket(List<String> fileKeyList, BucketManager bucketManager, String bucket){
         this.fileKeyList = fileKeyList;
         this.bucketManager = bucketManager;
         this.bucket = bucket;
@@ -85,11 +73,11 @@ public class ForkAndJoinTest extends RecursiveTask<Integer> {
                 }
             }
         } else {
-            int middleindex = fileKeyList.size() / 2;
-            List<String> leftList = fileKeyList.subList(0, middleindex + 1);
-            List<String> rightList = fileKeyList.subList(middleindex, fileKeyList.size());
-            ForkAndJoinTest left = new ForkAndJoinTest(leftList, bucketManager, bucket);
-            ForkAndJoinTest right = new ForkAndJoinTest(rightList, bucketManager, bucket);
+            int middleIndex = fileKeyList.size() / 2;
+            List<String> leftList = fileKeyList.subList(0, middleIndex + 1);
+            List<String> rightList = fileKeyList.subList(middleIndex, fileKeyList.size());
+            ForkAndJoinListBucket left = new ForkAndJoinListBucket(leftList, bucketManager, bucket);
+            ForkAndJoinListBucket right = new ForkAndJoinListBucket(rightList, bucketManager, bucket);
             //执行子任务
             left.fork();
             right.fork();
@@ -103,18 +91,16 @@ public class ForkAndJoinTest extends RecursiveTask<Integer> {
     }
 
     public static void main(String[] args){
-        //设置需要操作的账号的AK和SK
+
         Config config = Config.getInstance();
-        //设置好账号的ACCESS_KEY和SECRET_KEY
-        String ACCESS_KEY = config.getAccesskey();
-        String SECRET_KEY = config.getSecretKey();
-        Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
+        String accesskey = config.getAccesskey();
+        String secretKey = config.getSecretKey();
+        Auth auth = Auth.create(accesskey, secretKey);
         Zone z = Zone.zone0();
         Configuration c = new Configuration(z);
-        //实例化一个BucketManager对象
         BucketManager bucketManager = new BucketManager(auth, c);
-        //要列举文件的空间名
-        String bucket = "ts-work";
+        String bucket = "bucket";
+
         List<String> fileKeyList = new ArrayList<>();
         fileKeyList.add(0, "");
         fileKeyList.add(1, "2965583-r15gop30.m3u8");
@@ -123,7 +109,7 @@ public class ForkAndJoinTest extends RecursiveTask<Integer> {
         fileKeyList.add(4, "7bNOdFMmkSAixm2ID2IhIsrF5yM=/lhnx9QzsVcDYScDaxzl_L3_m3Alc/000031.ts");
         fileKeyList.add(5, "");
         ForkJoinPool pool = new ForkJoinPool();
-        ForkAndJoinTest task = new ForkAndJoinTest(fileKeyList, bucketManager, bucket);
+        ForkAndJoinListBucket task = new ForkAndJoinListBucket(fileKeyList, bucketManager, bucket);
         Future<Integer> result = pool.submit(task);
 
         try {

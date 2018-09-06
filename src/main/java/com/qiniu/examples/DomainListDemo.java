@@ -1,5 +1,6 @@
 package com.qiniu.examples;
 
+import com.qiniu.common.Config;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
@@ -8,27 +9,28 @@ import com.qiniu.storage.Configuration;
 import com.qiniu.util.Auth;
 
 public class DomainListDemo {
+
     public static void main(String args[]) {
-        //设置需要操作的账号的AK和SK
-        String ACCESS_KEY = "";
-        String SECRET_KEY = "";
+
+        Config config = Config.getInstance();
+        String ACCESS_KEY = config.getAccesskey();
+        String SECRET_KEY = config.getSecretKey();
         Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
-
-        Zone z = Zone.zone0();
+        Zone z = Zone.autoZone();
         Configuration c = new Configuration(z);
-
-        //实例化一个BucketManager对象
         BucketManager bucketManager = new BucketManager(auth, c);
+        String bucket = "bucket";
 
-        //要列举文件的空间名
-        String bucket = "dorst1";
+        try {
+            String[] domainLists = bucketManager.domainList(bucket);
 
-        //try {
-            String[] domainLists = null;//bucketManager.domainList(bucket);
-            for(String domain : domainLists)
-            System.out.print(domain);
-
-        //} catch (QiniuException e) {        }
-
+            for( String domain : domainLists ) {
+                System.out.print(domain);
+            }
+        } catch (QiniuException e) {
+            System.out.printf(e.response.reqId);
+            System.out.printf(String.valueOf(e.response.statusCode));
+            System.out.printf(e.response.error);
+        }
     }
 }

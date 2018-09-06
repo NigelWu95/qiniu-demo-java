@@ -1,6 +1,8 @@
 package com.qiniu.examples;
 import java.io.File;
 import java.io.FileInputStream;
+
+import com.qiniu.common.Config;
 import com.qiniu.util.*;
 import okhttp3.*;
 

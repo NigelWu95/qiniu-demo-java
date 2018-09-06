@@ -1,5 +1,6 @@
 package com.qiniu.examples;
 
+import com.qiniu.common.Config;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
 import com.qiniu.storage.Recorder;

@@ -1,10 +1,3 @@
-/**
- * Project Name: com.qiniu.wubingheng
- * File Name: ConvertListBucket.java
- * Package Name: com.qiniu.wubingheng
- * Date Time: 2018/4/10  12:28 AM
- * Copyright (c) 2017, xxx  All Rights Reserved.
- */
 package com.qiniu.examples;
 
 import java.io.BufferedWriter;
@@ -23,13 +16,7 @@ import java.util.stream.Stream;
 
 /**
  * ClassName: ConvertListBucket
- * Description: TODO
- * Date Time: 2018/4/10  12:28 AM
- * @author Nigel Wu  wubinghengajw@outlook.com
- * @version V1.0
- * @since V1.0
- * @jdk 1.7
- * @see
+ * Description: 将 listbucket 的结果过滤并拼接出 url
  */
 public class ConvertListBucket extends RecursiveTask<List<String>> {
 
@@ -58,8 +45,8 @@ public class ConvertListBucket extends RecursiveTask<List<String>> {
             stringList.add(path.toString());
 
             try (Stream<String> stream = Files.lines(Paths.get(dirPath + System.getProperty("file.separator") + filePathName))) {
-                list = stream
-                        .filter(line -> {
+                list = stream.filter(
+                            line -> {
                             String lineKey = line.split("\t")[0];
                             boolean flag = lineKey.endsWith(".jpg") || lineKey.endsWith(".png") ||
                                     lineKey.endsWith(".gif") || lineKey.endsWith(".bmp") ||
@@ -107,35 +94,6 @@ public class ConvertListBucket extends RecursiveTask<List<String>> {
         return stringList;
     }
 
-    public static void main(String[] args) {
-        String filePath = "";
-        String domain = "";
-
-        if (args.length < 2) {
-            System.out.println("Please add path and domain params.");
-            System.out.println("e.g.");
-            System.out.println("java ConvertListBucket /home/ubuntu cdn.nigel.qiniuts.com");
-            return;
-
-//            filePath = "/Users/wubingheng/Public/Works/mtime/temp";
-        } else {
-            filePath = args[0];
-            domain = args[1];
-        }
-
-        List<String> pathNames = ListFilePath(filePath);
-
-        ForkJoinPool pool = new ForkJoinPool();
-        ConvertListBucket task = new ConvertListBucket(pathNames, filePath, domain);
-        Future<List<String>> result = pool.submit(task);
-
-        try {
-            result.get();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public static List<String> ListFilePath(String filePath) {
 
         List<String> pathNames = new ArrayList<String>();
@@ -156,5 +114,32 @@ public class ConvertListBucket extends RecursiveTask<List<String>> {
         }
 
         return pathNames;
+    }
+
+    public static void main(String[] args) {
+        String filePath = "";
+        String domain = "";
+
+        if (args.length < 2) {
+            System.out.println("Please add keys file path and domain params.");
+            System.out.println("e.g.");
+            System.out.println("java ConvertListBucket /home/ubuntu cdn.xxx.com");
+            return;
+        } else {
+            filePath = args[0];
+            domain = args[1];
+        }
+
+        List<String> pathNames = ListFilePath(filePath);
+
+        ForkJoinPool pool = new ForkJoinPool();
+        ConvertListBucket task = new ConvertListBucket(pathNames, filePath, domain);
+        Future<List<String>> result = pool.submit(task);
+
+        try {
+            result.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -1,10 +1,3 @@
-/**
- * Project Name: com.qiniu.wubingheng
- * File Name: BatchOperateFileByQshell.java
- * Package Name: com.qiniu.wubingheng
- * Date Time: 2018/4/12  4:19 PM
- * Copyright (c) 2017, xxx  All Rights Reserved.
- */
 package com.qiniu.examples;
 
 import java.io.*;
@@ -22,13 +15,7 @@ import java.util.stream.Stream;
 
 /**
  * ClassName: BatchOperateFileByQshell
- * Description: TODO
- * Date Time: 2018/4/12  4:19 PM
- * @author Nigel Wu  wubinghengajw@outlook.com
- * @version V1.0
- * @since V1.0
- * @jdk 1.7
- * @see
+ * Description: 通过命令行调用 qshell 实现批量 镜像 fetch
  */
 public class BatchOperateFileByQshell extends RecursiveTask<List<String>> {
 
@@ -153,14 +140,10 @@ public class BatchOperateFileByQshell extends RecursiveTask<List<String>> {
         String command = "";
 
         if (args.length < 3) {
-//            System.out.println("Please add path domain and command params.");
-//            System.out.println("e.g.");
-//            System.out.println("java ConvertListBucket /home/ubuntu cdn.nigel.qiniuts.com 'qshell prefetch temp'");
-//            return;
-
-            filePath = "/Users/wubingheng/Public/Works/mtime/temp";
-            domain = "i1qiniu.mtime.cn";
-            command = "qshell prefetch mtime-mtime-img-58bak";
+            System.out.println("Please add path domain and command params.");
+            System.out.println("e.g.");
+            System.out.println("java ConvertListBucket /home/ubuntu cdn.nigel.qiniuts.com 'qshell prefetch temp'");
+            return;
         } else {
             filePath = args[0];
             domain = args[1];

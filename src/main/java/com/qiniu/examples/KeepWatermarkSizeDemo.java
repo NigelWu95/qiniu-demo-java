@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.qiniu.common.Config;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
 import com.qiniu.http.Client;
@@ -14,59 +15,51 @@ import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
 import com.qiniu.util.UrlSafeBase64;
 
-public class KeepWatermarkDemo {
+public class KeepWatermarkSizeDemo {
 
     public static void main(String[] args) {
+
         Config config = Config.getInstance();
+        String accesskey = config.getAccesskey();
+        String secretKey = config.getSecretKey();
+        Auth auth = Auth.create(accesskey, secretKey);
 
-        //设置好账号的ACCESS_KEY和SECRET_KEY
-        String ACCESS_KEY = config.getAccesskey();
-        String SECRET_KEY = config.getSecretKey();
-        Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
-        //设置要转码的空间和key，并且这个key在你空间中存在
+        //设置转码的队列名称
+        String pipeline = "xxx";
+        //设置要转码的空间和 key，并且这个 key 在你空间中存在
         String bucket = "temp";
-        //设置转码的队列
-        String pipeline = "audio-video";
-        String domainOfBucket = "http://temp.nigel.qiniuts.com/";
-        String sourthVideoKey = "test1.mp4";
-        String targetFileName = "test137.mp4";
+        String domainOfBucket = "http://xxx.com/";
+        String sourceVideoKey = "test1.mp4";
+        String targetFileName = "test2.mp4";
         String wmText = "ID:12345678";
-        String wmImageUrl = "https://qn.kaiheikeji.com/watermark_22.png";
+        String wmImageUrl = "https://xxx.com/watermark.png";
 
-        String persistid = new KeepWatermarkDemo().keepSizeWaterMark(auth, bucket, domainOfBucket, pipeline,
-                sourthVideoKey, targetFileName, wmText, wmImageUrl);
+        String persistId = new KeepWatermarkSizeDemo().keepSizeWaterMark(auth, bucket, domainOfBucket, pipeline,
+                sourceVideoKey, targetFileName, wmText, wmImageUrl);
 
-        System.out.println("http://api.qiniu.com/status/get/prefop?id=" + persistid);
+        System.out.println("http://api.qiniu.com/status/get/prefop?id=" + persistId);
     }
 
     public String keepSizeWaterMark(Auth auth, String bucket, String domainOfBucket, String pipeline,
-                                    String sourthVideoKey, String targetFileName, String wmText, String wmImageUrl) {
+                                    String sourceVideoKey, String targetFileName, String wmText, String wmImageUrl) {
 
-        double[] wxh = getAvinfo(domainOfBucket, sourthVideoKey);
+        double[] wxh = getWidthAndHeight(domainOfBucket, sourceVideoKey);
         double width = wxh[0];
         double height = wxh[1];
         Configuration cfg = new Configuration(Zone.autoZone());
         //新建一个OperationManager对象
-        OperationManager operater = new OperationManager(auth, cfg);
+        OperationManager operationManager = new OperationManager(auth, cfg);
 
-        // 做两层水印处理，里面一层是在一个背景透明的图片上打上水印文字和 log 图片，采用同步处理，得到一个合成的水印图片 URL，这样可以动态调整文字和 log URL 参数，
-        // 再对这个 URL 进行 base64 编码得到参数放在视频水印的图片路径参数中可以设置适当偏移。其中控制图片大小的参数是 wmScale，这个使得图片跟随视频大小缩放，但
-        // 根据 360.000000/width 来设置这个参数就是表示，自适应的一边保持长度 360，然后除以原视频 width 得到这个比例。
-        String pfops = "avthumb/mp4/wmImage/" +
-                UrlSafeBase64.encodeToString("http://nigel.qiniuts.com/transparent200x200.png?watermark/3/image/" +
-                        UrlSafeBase64.encodeToString(wmImageUrl) +
-                        "/gravity/North/text/" +
-                        UrlSafeBase64.encodeToString(wmText) +
-                        "/fontsize/450/fill/I0ZGRkZGRg==/gravity/Center") +
+        // 控制图片大小的参数是 wmScale，这个使得图片跟随视频大小缩放，根据 360.000000/width 来设置这个参数就是表示，自适应的一边保持长度 360，然后除以原视频 width 得到这个比例。
+        String pfops = "avthumb/mp4/wmImage/" + UrlSafeBase64.encodeToString(wmImageUrl) +
                 "/wmGravity/NorthWest/vmOffsetX/-30/vmOffsetY/-30/wmConstant/1/wmScale/" + 360.000000/width + "/wmScaleType/0" +
                 "|saveas/" + UrlSafeBase64.encodeToString(bucket + ":" + targetFileName);
 
-        //设置pipeline参数
         StringMap params = new StringMap().putWhen("force", 1, true).putNotEmpty("pipeline", pipeline);
-        String persistid = "";
+        String persistId = "";
 
         try {
-            persistid = operater.pfop(bucket, sourthVideoKey, pfops, params);
+            persistId = operationManager.pfop(bucket, sourceVideoKey, pfops, params);
         } catch (QiniuException e) {
             //捕获异常信息
             Response r = e.response;
@@ -80,17 +73,17 @@ public class KeepWatermarkDemo {
             }
         }
 
-        return persistid;
+        return persistId;
     }
 
 
-    public double[] getAvinfo(String domain, String sourthVideoKey) {
+    public double[] getWidthAndHeight(String domain, String sourceVideoKey) {
         // 先获取视频元信息
         Client client = new Client();
         String responseJson = null;
 
         try {
-            responseJson = client.get(domain + sourthVideoKey + "?avinfo").bodyString();
+            responseJson = client.get(domain + sourceVideoKey + "?avinfo").bodyString();
         } catch (QiniuException e) {
             e.printStackTrace();
         }

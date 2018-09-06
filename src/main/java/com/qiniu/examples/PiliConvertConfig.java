@@ -1,5 +1,6 @@
 package com.qiniu.examples;
 
+import com.qiniu.common.Config;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Client;
 import com.qiniu.http.Response;
@@ -22,8 +23,8 @@ public class PiliConvertConfig {
     }
 
     public static void ListWatertemplate(Auth auth) {
-        String hub = "nigel-pili";
-        String encodedStreamTitle= UrlSafeBase64.encodeToString("test");
+        String hub = "test";
+        String encodedStreamTitle = UrlSafeBase64.encodeToString("test");
 
         String url = "http://pili.qiniuapi.com/v2/hubs/" + hub + "/streams/" + encodedStreamTitle + "/converts";
         String contentType = "application/json";
@@ -46,8 +47,10 @@ public class PiliConvertConfig {
             System.out.println(response.bodyString());
         } catch (QiniuException e) {
             e.printStackTrace();
+        } finally {
+            if (response != null) {
+                response.close();
+            }
         }
-
-        response.close();
     }
 }

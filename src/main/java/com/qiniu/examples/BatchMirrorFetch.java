@@ -1,10 +1,3 @@
-/**
- * Project Name: com.qiniu.wubingheng
- * File Name: BatchMirrorFetch.java
- * Package Name: com.qiniu.wubingheng
- * Date Time: 2018/4/12  9:58 AM
- * Copyright (c) 2017, xxx  All Rights Reserved.
- */
 package com.qiniu.examples;
 
 import java.io.BufferedReader;
@@ -24,13 +17,7 @@ import java.util.stream.Stream;
 
 /**
  * ClassName: BatchMirrorFetch
- * Description: TODO
- * Date Time: 2018/4/12  9:58 AM
- * @author Nigel Wu  wubinghengajw@outlook.com
- * @version V1.0
- * @since V1.0
- * @jdk 1.7
- * @see
+ * Description: 通过命令行调用 qshell 实现批量 镜像 fetch
  */
 public class BatchMirrorFetch extends RecursiveTask<List<String>> {
 
@@ -82,11 +69,11 @@ public class BatchMirrorFetch extends RecursiveTask<List<String>> {
 
                             System.out.println(cmd[2] + "" + sb.toString());
 
-//                            if (exitVal==0) {
-//                                System.out.println(process);
-//                            } else {
-//                                System.out.println(cmd[2] + "Failed");
-//                            }
+                            if (exitVal==0) {
+                                System.out.println(process);
+                            } else {
+                                System.out.println(cmd[2] + "Failed");
+                            }
                         } catch (Exception e) {
                             e.printStackTrace();
                         } finally {
@@ -116,33 +103,6 @@ public class BatchMirrorFetch extends RecursiveTask<List<String>> {
         return stringList;
     }
 
-    public static void main(String[] args) {
-        String filePath = "";
-
-        if (args.length < 1) {
-//            System.out.println("Please add path param.");
-//            System.out.println("e.g.");
-//            System.out.println("java ConvertListBucket /home/ubuntu");
-//            return;
-
-            filePath = "/Users/wubingheng/Public/test";
-        } else {
-            filePath = args[0];
-        }
-
-        List<String> pathNames = ListFilePath(filePath);
-
-        ForkJoinPool pool = new ForkJoinPool();
-        BatchMirrorFetch task = new BatchMirrorFetch(pathNames, filePath);
-        Future<List<String>> result = pool.submit(task);
-
-        try {
-            result.get();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public static List<String> ListFilePath(String filePath) {
 
         List<String> pathNames = new ArrayList<String>();
@@ -163,5 +123,29 @@ public class BatchMirrorFetch extends RecursiveTask<List<String>> {
         }
 
         return pathNames;
+    }
+
+    public static void main(String[] args) {
+        String filePath = "";
+
+        if (args.length < 1) {
+            System.out.println("Please add path param.");
+            System.out.println("e.g.");
+            System.out.println("java ConvertListBucket /home/ubuntu");
+            return;
+        } else {
+            filePath = args[0];
+        }
+
+        List<String> pathNames = ListFilePath(filePath);
+        ForkJoinPool pool = new ForkJoinPool();
+        BatchMirrorFetch task = new BatchMirrorFetch(pathNames, filePath);
+        Future<List<String>> result = pool.submit(task);
+
+        try {
+            result.get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -7,6 +7,7 @@
  */
 package com.qiniu.examples;
 
+import com.qiniu.common.Config;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
 import com.qiniu.http.Response;

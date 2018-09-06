@@ -1,91 +1,34 @@
-/**
- * Project Name: com.qiniu.sdkdemo
- * File Name: PfopsMain.java
- * Package Name: com.qiniu.sdkdemo
- * Date Time: 30/11/2017  4:13 PM
- * Copyright (c) 2017, xxx_xxx  All Rights Reserved.
- */
 package com.qiniu.examples;
 
+import com.qiniu.common.Config;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
+import com.qiniu.http.Client;
 import com.qiniu.http.Response;
 import com.qiniu.processing.OperationManager;
+import com.qiniu.processing.OperationStatus;
 import com.qiniu.storage.Configuration;
 import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
+import com.qiniu.util.StringUtils;
 import com.qiniu.util.UrlSafeBase64;
 
 /**
- * ClassName: PfopsMain
- * Description: TODO
- * Date Time: 30/11/2017  4:13 PM
- * @author Nigel Wu  wubinghengajw@outlook.com
- * @version V1.0
- * @since V1.0
- * @jdk 1.8
- * @see
+ * ClassName: PersistenceFop
+ * Description:
  */
-public class PfopsMain {
+public class PersistenceFop {
 
     public static void main(String[] args) throws QiniuException {
-//
-//        String bucket = "yinian";
-//        String accessKey = "";
-//        // 七牛云密钥
-//        String secretKey = "";
-//        Auth auth = Auth.create(accessKey, secretKey);
-//        Configuration cfg = new Configuration(Zone.autoZone());
-//        OperationManager operationManager = new OperationManager(auth, cfg);
-//        String url1 = auth.privateDownloadUrl("http://photo.zhuiyinanian.com/50cf5dcb-5cb8-4aa7-a8ff-f092e17add89.jpeg");
-//        String url2 = auth.privateDownloadUrl("http://photo.zhuiyinanian.com/34b7a2d7-2b6e-45fa-9843-bcb8858337e3.jpg");
-//
-//        System.out.println(url1);
-//        System.out.println(url2);
-//
-//        String key = "50cf5dcb-5cb8-4aa7-a8ff-f092e17add89.jpeg";
-//        String zipName = "yasuobao1.zip";
-//        String encodedEntryURI = UrlSafeBase64.encodeToString(bucket + ":" + zipName);
-//
-//        //设置转码操作参数
-//        String fops = "mkzip/2/url/" + UrlSafeBase64.encodeToString(url1);
-//
-//        //设置转码的队列
-//        String pipeline = "testqueue";
-//
-//        //可以对转码后的文件进行使用saveas参数自定义命名，当然也可以不指定文件会默认命名并保存在当前空间。
-//        String urlbase64 = UrlSafeBase64.encodeToString(bucket + ":3.zip");
-//        String pfops = fops + "|saveas/" + urlbase64;
-//
-//        try {
-//            String id = operationManager.pfop(bucket, key, pfops, null);
-//            String purl = "http://api.qiniu.com/status/get/prefop?id=" + id;
-//
-//            System.out.println(purl);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
 
         Config config = Config.getInstance();
-
-        //设置好账号的ACCESS_KEY和SECRET_KEY
-        String ACCESS_KEY = config.getAccesskey();
-        String SECRET_KEY = config.getSecretKey();
-
-        //设置要转码的空间和key，并且这个key在你空间中存在
-        String bucket = "ts-work";
-//        String key = "robots.txt";
-//        String domain = "https://nigel.qiniuts.com";
-//        String publicUrl = String.format("%s/%s", domain, key);
-
-        Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
-//        String finalUrl = auth.privateDownloadUrl(publicUrl);
-//        System.out.println(finalUrl);
-
+        String accesskey = config.getAccesskey();
+        String secretKey = config.getSecretKey();
+        Auth auth = Auth.create(accesskey, secretKey);
         Configuration cfg = new Configuration(Zone.autoZone());
+        OperationManager operationManager = new OperationManager(auth, cfg);
 
-        //新建一个OperationManager对象
-        OperationManager operater = new OperationManager(auth, cfg);
+        String bucket = "bucket";
 
 //        //设置转码操作参数
 //        String fops = "mkzip/2/url/" + UrlSafeBase64.encodeToString(finalUrl)
@@ -96,19 +39,13 @@ public class PfopsMain {
         String fops = "mkzip/4/";
 
         //设置转码的队列
-        String pipeline = "audio-video";
-        String image_pipeline = "image";
-        String document_pipeline = "document";
+        String pipeline = "pipeline";
 
         //可以对转码后的文件进行使用saveas参数自定义命名，当然也可以不指定文件会默认命名并保存在当前空间。
         String urlbase64 = UrlSafeBase64.encodeToString(bucket + ":mkzip4-test.zip");
         String pfops = fops + "|saveas/" + urlbase64;
 
-//        String encodedImageURL = UrlSafeBase64.encodeToString("http://nigel.qiniuts.com/so-w.jpg");
-
-//        Client client = new Client();
-//        Response response = null;
-//        System.out.println(client.get("http://temp.nigel.qiniuts.com/test1.mp4?avinfo").bodyString());
+        String encodedImageURL = UrlSafeBase64.encodeToString("http://nigel.qiniuts.com/so-w.jpg");
 
         pfops =
 //              "avthumb/mp4/ab/160k/ar/44100/acodec/libfaac/r/30/vb/2200k/vcodec/libx264/s/1280x720/autoscale/1/stripmeta/0" +
@@ -219,50 +156,25 @@ public class PfopsMain {
 //                "avthumb/mp4/s/640x480/vb/800k|saveas/" + UrlSafeBase64.encodeToString( "temp:" + "1111111222211-480p.mp4") + ";" +
 //                "avthumb/mp4/s/1280x720/vb/1700k|saveas/" + UrlSafeBase64.encodeToString( "temp:" + "1111111222211-720p.mp4");
 
-        //设置pipeline参数
-//        StringMap params = new StringMap()
-//                .putWhen("force", 1, true)
-//                .putNotEmpty("pipeline", pipeline)
-//                .putNotEmpty("notifyURL", "http://753637b3.ngrok.io/QiniuDemo/callback");
-
-//        params = params == null ? new StringMap() : params;
-//        params.put("bucket", "temp").put("key", "1111111222211.mp4").put("fops", pfops);
-//        byte[] data = StringUtils.utf8Bytes(params.formString());
-//        String url = cfg.apiHost(auth.accessKey, bucket) + "/pfop/";
-//        StringMap headers = auth.authorization(url, data, Client.FormMime);
-//        System.out.println(params.formString());
-//        System.out.println(url);
-//        System.out.println(headers.get("Authorization"));
-
-
-        //设置pipeline参数
         StringMap params = new StringMap()
-                .putWhen("force", 1, true)
-                .putNotEmpty("pipeline", pipeline);
-        try {
-//            String persistid = operater.pfop("ts-work", "4EC3342A-608D-4CB7-BD37-BCCB967F0F00.mp4", pfops, params);
-            String persistid = operater.pfop("temp", "1536112882703587.mp4", pfops, params);
-            //打印返回的persistid
-            System.out.println("http://api.qiniu.com/status/get/prefop?id=" + persistid);
-//            System.out.println(operater.prefop(persistid));
+//                .putNotEmpty("notifyURL", "http://753637b3.ngrok.io/QiniuDemo/callback") // 设置回调参数
+                .putWhen("force", 1, true) // 设置覆盖源文件参数
+                .putNotEmpty("pipeline", pipeline); // 设置 pipeline 参数
 
-//            StringMap params2 = new StringMap().put("id", persistid);
-//            byte[] data = StringUtils.utf8Bytes(params2.formString());
-//
-//            String url = String.format("http://api.qiniu.com/status/get/prefop");
-//            Response response = new Client().post(url, data, null, Client.FormMime);
-//            System.out.println(response.jsonToObject(OperationStatus.class).code);
+        try {
+            String persistId = operationManager.pfop("temp", "1536112882703587.mp4", pfops, params);
+            System.out.println("http://api.qiniu.com/status/get/prefop?id=" + persistId);
+
+            StringMap params2 = new StringMap().put("id", persistId);
+            byte[] data = StringUtils.utf8Bytes(params2.formString());
+            String url = String.format("http://api.qiniu.com/status/get/prefop");
+            Response response = new Client().post(url, data, null, Client.FormMime);
+            System.out.println(response.jsonToObject(OperationStatus.class).code);
         } catch (QiniuException e) {
-            //捕获异常信息
             Response r = e.response;
-            // 请求失败时简单状态信息
+            System.out.println(r.reqId);
+            System.out.println(r.statusCode);
             System.out.println(r.toString());
-            try {
-                // 响应的文本信息
-                System.out.println(r.bodyString());
-            } catch (QiniuException e1) {
-                //ignore
-            }
         }
     }
 }

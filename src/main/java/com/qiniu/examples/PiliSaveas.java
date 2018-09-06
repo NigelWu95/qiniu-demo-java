@@ -1,5 +1,6 @@
 package com.qiniu.examples;
 
+import com.qiniu.common.Config;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Client;
 import com.qiniu.http.Response;
@@ -14,7 +15,7 @@ public class PiliSaveas {
         String secretKey = config.getSecretKey();
         Auth auth = Auth.create(accessKey, secretKey);
 
-        String hub = "nigel-pili";
+        String hub = "test";
         String stream = "test";
         String fname = "test12345";
         String pipeline = "audio-video";
@@ -38,13 +39,16 @@ public class PiliSaveas {
 
         Client client = new Client();
         Response response = null;
+
         try {
             response = client.post(url, StringUtils.utf8Bytes(Json.encode(stringMap)), headers, contentType);
             System.out.println(response.bodyString());
         } catch (QiniuException e) {
             e.printStackTrace();
+        } finally {
+            if (response != null) {
+                response.close();
+            }
         }
-
-        response.close();
     }
 }

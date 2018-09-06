@@ -1,5 +1,6 @@
 package com.qiniu.examples;
 
+import com.qiniu.common.Config;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Client;
 import com.qiniu.http.Response;
@@ -22,17 +23,17 @@ public class PiliAVConvertWater {
 
     public static void CreateWatertemplate(Auth auth) {
 
-        String hub = "nigel-pili";
-        String watermarktemplateName = "test";
+        String hub = "test";
+        String watermarkTemplateName = "test";
         String comment = "<Comment>";
         String left = "10%";
         String top = "10%";
         String width = "10%";
-        String imageURL = "https://odum9helk.qnssl.com/4c0aa36a9aafb42adeb9e9c173c62a13?imageView2/2/format/png";
+        String imageURL = "https://xxx.com/key?imageView2/2/format/png";
         String imageData = "imageData"; // 与 imageURL 二选一
 
         StringMap stringMap = new StringMap();
-        stringMap.put("name", watermarktemplateName);
+        stringMap.put("name", watermarkTemplateName);
         stringMap.put("comment", comment);
         stringMap.put("left", left);
         stringMap.put("top", top);
@@ -48,22 +49,25 @@ public class PiliAVConvertWater {
 
         Client client = new Client();
         Response response = null;
+
         try {
             response = client.post(url, StringUtils.utf8Bytes(Json.encode(stringMap)), headers, contentType);
             System.out.println(response.bodyString());
         } catch (QiniuException e) {
             e.printStackTrace();
+        } finally {
+            if (response != null) {
+                response.close();
+            }
         }
-
-        response.close();
     }
 
     public static void QueryWatertemplate(Auth auth) {
 
-        String hub = "nigel-pili";
-        String watermarktemplate = "test";
+        String hub = "test";
+        String watermarkTemplateName = "test";
 
-        String url = "http://pili.qiniuapi.com/v2/hubs/" + hub + "/watermarktemplate/" + watermarktemplate;
+        String url = "http://pili.qiniuapi.com/v2/hubs/" + hub + "/watermarktemplate/" + watermarkTemplateName;
         String contentType = "application/json";
 
         String qiniuToken = "Qiniu " + auth.signRequestV2(url, "GET", null, contentType);
@@ -72,22 +76,25 @@ public class PiliAVConvertWater {
 
         Client client = new Client();
         Response response = null;
+
         try {
             response = client.get(url, headers);
             System.out.println(response.bodyString());
         } catch (QiniuException e) {
             e.printStackTrace();
+        } finally {
+            if (response != null) {
+                response.close();
+            }
         }
-
-        response.close();
     }
 
     public static void ListWatertemplate(Auth auth) {
 
-        String hub = "nigel-pili";
-        String watermarktemplate = "test";
+        String hub = "test";
+        String watermarkTemplateName = "test";
 
-        String url = "http://pili.qiniuapi.com/v2/hubs/" + hub + "/watermarktemplate/" + watermarktemplate + "/image";
+        String url = "http://pili.qiniuapi.com/v2/hubs/" + hub + "/watermarktemplate/" + watermarkTemplateName + "/image";
         String contentType = "application/json";
 
         String qiniuToken = "Qiniu " + auth.signRequestV2(url, "GET", null, contentType);
@@ -96,13 +103,16 @@ public class PiliAVConvertWater {
 
         Client client = new Client();
         Response response = null;
+
         try {
             response = client.get(url, headers);
             System.out.println(response.bodyString());
         } catch (QiniuException e) {
             e.printStackTrace();
+        } finally {
+            if (response != null) {
+                response.close();
+            }
         }
-
-        response.close();
     }
 }

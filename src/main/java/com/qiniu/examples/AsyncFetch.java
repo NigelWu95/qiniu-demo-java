@@ -1,6 +1,7 @@
 package com.qiniu.examples;
 
 import com.google.gson.Gson;
+import com.qiniu.common.Config;
 import com.qiniu.http.Client;
 import com.qiniu.http.Response;
 import com.qiniu.util.Auth;

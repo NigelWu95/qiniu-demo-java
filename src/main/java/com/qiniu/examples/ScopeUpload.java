@@ -1,12 +1,6 @@
-/**
- * Project Name: com.qiniu.sdkdemo
- * File Name: ScopeUpload.java
- * Package Name: com.qiniu.sdkdemo
- * Date Time: 04/12/2017  10:05 AM
- * Copyright (c) 2017, xxx_xxx  All Rights Reserved.
- */
 package com.qiniu.examples;
 
+import com.qiniu.common.Config;
 import com.qiniu.common.QiniuException;
 import com.qiniu.common.Zone;
 import com.qiniu.http.Response;
@@ -17,16 +11,6 @@ import com.qiniu.util.StringMap;
 
 import java.io.IOException;
 
-/**
- * ClassName: ScopeUpload
- * Description: TODO
- * Date Time: 04/12/2017  10:05 AM
- * @author Nigel Wu  wubinghengajw@outlook.com
- * @version V1.0
- * @since V1.0
- * @jdk 1.8
- * @see
- */
 public class ScopeUpload extends Basic {
 
     public Response Scope(String fileName) throws IOException {

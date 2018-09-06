@@ -1,11 +1,4 @@
-/**
- * Project Name: com.qiniu.wubingheng
- * File Name: Config.java
- * Package Name: com.qiniu.wubingheng
- * Date Time: 03/11/2017  5:35 PM
- * Copyright (c) 2017, xxx_xxx  All Rights Reserved.
- */
-package com.qiniu.examples;
+package com.qiniu.common;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -13,13 +6,7 @@ import java.util.Properties;
 
 /**
  * ClassName: Config
- * Description: TODO
- * Date Time: 03/11/2017  5:35 PM
- * @author Nigel Wu  wubinghengajw@outlook.com
- * @version V1.0
- * @since V1.0
- * @jdk 1.8
- * @see
+ * Description: 读取账号配置信息
  */
 public class Config {
 

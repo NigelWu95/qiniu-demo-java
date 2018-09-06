@@ -10,7 +10,7 @@ package com.qiniu.examples;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Client;
 import com.qiniu.http.Response;
-import com.qiniu.examples.Config;
+import com.qiniu.common.Config;
 import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
 
@@ -27,28 +27,28 @@ import com.qiniu.util.StringMap;
 public class QiniuCdn {
 
     public static void main(String[] args) {
+
         Config config = Config.getInstance();
-
-        //设置好账号的ACCESS_KEY和SECRET_KEY
-        String ACCESS_KEY = "";
-        String SECRET_KEY = "";
-
-        //密钥配置
-        Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
-
+        String accessKey = config.getAccesskey();
+        String secretKey = config.getSecretKey();
+        Auth auth = Auth.create(accessKey, secretKey);
         String url = "http://api.qiniu.com/domain?marker=null&limit=1000";
         String authorization = "QBox " + auth.signRequestV2(url, null, null, null);
         System.out.println(authorization);
-
         StringMap headers = new StringMap().put("Authorization", authorization);
 
         Client client = new Client();
         Response response = null;
+
         try {
             response = client.get(url, headers);
             System.out.println(response.bodyString());
         } catch (QiniuException e) {
             e.printStackTrace();
+        } finally {
+            if (response != null) {
+                response.close();
+            }
         }
     }
 }
