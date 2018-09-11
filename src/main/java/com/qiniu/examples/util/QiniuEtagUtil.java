@@ -12,8 +12,9 @@ public class QiniuEtagUtil {
 
         try {
             String srcEtag = "FrXIWGT7eB94QR46knD4TbH5TGdc";
-//            srcEtag = calcETag("");
-            String tarEtag = "AN751gvBIGo6x37EJDcZ8dVRLb_7";
+            srcEtag = calcETag("/Users/wubingheng/Downloads/2000.png");
+
+            String tarEtag = "Fthh0RhJgOWbfLkwmJXydVLqTDsz";
             String fopEtag = calcFopEtag(srcEtag, "imageMogr2/rotate/90/crop/!2105x1440a227a0/thumbnail/1866x1276");
 
             System.out.println("source etag: " + srcEtag);
@@ -27,6 +28,8 @@ public class QiniuEtagUtil {
 
         } catch (NoSuchAlgorithmException ex) {
             System.err.println("Unsupported algorithm: " + ex.getMessage());
+        } catch (IOException ex) {
+            System.err.println("IOException: " + ex.getMessage());
         }
     }
 
