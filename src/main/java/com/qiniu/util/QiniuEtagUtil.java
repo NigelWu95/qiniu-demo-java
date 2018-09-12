@@ -1,4 +1,4 @@
-package com.qiniu.examples.util;
+package com.qiniu.util;
 
 import java.io.*;
 import java.security.MessageDigest;

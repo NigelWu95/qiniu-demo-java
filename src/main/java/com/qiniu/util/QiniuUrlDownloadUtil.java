@@ -1,11 +1,10 @@
-package com.qiniu.examples.util;
+package com.qiniu.util;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Client;
 import com.qiniu.http.Response;
-import com.qiniu.util.StringMap;
 import org.apache.commons.io.IOUtils;
 
 import java.io.*;

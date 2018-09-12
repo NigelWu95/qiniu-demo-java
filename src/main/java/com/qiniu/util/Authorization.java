@@ -1,13 +1,9 @@
-package com.qiniu.examples.util;
+package com.qiniu.util;
 
 import com.qiniu.common.Config;
 import com.qiniu.common.Zone;
 import com.qiniu.http.Client;
 import com.qiniu.storage.Configuration;
-import com.qiniu.util.Auth;
-import com.qiniu.util.StringMap;
-import com.qiniu.util.StringUtils;
-import com.qiniu.util.UrlSafeBase64;
 
 public class Authorization {
 

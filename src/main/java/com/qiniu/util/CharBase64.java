@@ -1,6 +1,4 @@
-package com.qiniu.examples.util;
-
-import com.qiniu.util.*;
+package com.qiniu.util;
 
 public class CharBase64 {
 
