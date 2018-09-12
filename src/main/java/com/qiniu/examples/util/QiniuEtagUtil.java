@@ -11,29 +11,27 @@ public class QiniuEtagUtil {
     public static void main(String[] args) {
 
         try {
-            String srcEtag = "FrXIWGT7eB94QR46knD4TbH5TGdc";
-            srcEtag = calcETag("/Users/wubingheng/Downloads/2000.png");
-
-            String tarEtag = "Fthh0RhJgOWbfLkwmJXydVLqTDsz";
+            String srcEtag =
+//                    calcETag("");
+                    "FrXIWGT7eB94QR46knD4TbH5TGdc"; // hex string b5c85864fb781f78411e3a9270f84db1f94c675c
+            String tarEtag = "AN751gvBIGo6x37EJDcZ8dVRLb_7";
             String fopEtag = calcFopEtag(srcEtag, "imageMogr2/rotate/90/crop/!2105x1440a227a0/thumbnail/1866x1276");
 
             System.out.println("source etag: " + srcEtag);
+            System.out.println("src etag hex string is: " + CharactersUtil.bytesToHexString(checkHashFromEtag(srcEtag)));
+            System.out.println("move preamble from src etag: " + CharactersUtil.bytesToHexString(movePreambleFromEtag(srcEtag)));
             System.out.println("target etag: " + tarEtag);
             System.out.println("fop etag is " + fopEtag + ", and it is " + (tarEtag.equals(fopEtag) ? "" : "not ") + "equal with tarEtag");
-
             System.out.println("fop etag hex string is: " + CharactersUtil.bytesToHexString(checkHashFromEtag(fopEtag)));
             System.out.println("add preamble to origin hash: " + CharactersUtil.bytesToHexString(addPreambleToHash(
                     CharactersUtil.decode("def9d60bc1206a3ac77ec4243719f1d5512dbffb".toCharArray()), (byte)0x16)));
-            System.out.println("add preamble to origin hash: " + CharactersUtil.bytesToHexString(movePreambleFromEtag(tarEtag)));
 
-        } catch (NoSuchAlgorithmException ex) {
-            System.err.println("Unsupported algorithm: " + ex.getMessage());
-        } catch (IOException ex) {
-            System.err.println("IOException: " + ex.getMessage());
+        } catch (Exception exception) {
+            exception.printStackTrace();
         }
     }
 
-    private static final int CHUNK_SIZE = 1 << 22;
+    public static final int CHUNK_SIZE = 1 << 22;
 
     public static byte[] sha1(byte[] data) throws NoSuchAlgorithmException {
         MessageDigest mDigest = MessageDigest.getInstance("sha1");
@@ -46,46 +44,43 @@ public class QiniuEtagUtil {
         return encodedString;
     }
 
+    public static byte[] lessThan4mHash(FileInputStream inputStream) throws IOException, NoSuchAlgorithmException {
+        byte[] bytesData = new byte[CHUNK_SIZE];
+        int bytesReadLen = inputStream.read(bytesData, 0, CHUNK_SIZE);
+        byte[] bytesRead = new byte[bytesReadLen];
+        System.arraycopy(bytesData, 0, bytesRead, 0, bytesReadLen);
+        byte[] hashData = sha1(bytesRead);
+        return hashData;
+    }
+
+    public static byte[] greaterThan4mHash(FileInputStream inputStream, long fileLength) throws IOException, NoSuchAlgorithmException {
+        int chunkCount = (int) (fileLength / CHUNK_SIZE);
+        if (fileLength % CHUNK_SIZE != 0) {
+            chunkCount += 1;
+        }
+        byte[] allSha1Data = new byte[0];
+        for (int i = 0; i < chunkCount; i++) {
+            byte[] chunkDataSha1 = lessThan4mHash(inputStream);
+            allSha1Data = addBytesToHashArray(allSha1Data, chunkDataSha1);
+        }
+        byte[] allSha1DataSha1 = sha1(allSha1Data);
+        return allSha1DataSha1;
+    }
+
     public static String calcETag(String fileName) throws IOException, NoSuchAlgorithmException {
         String etag = "";
         File file = new File(fileName);
         if (!(file.exists() && file.isFile() && file.canRead())) {
-            System.err.println("Error: File not found or not readable");
-            return etag;
+            throw new IOException("Error: File not found or not readable");
         }
         long fileLength = file.length();
         FileInputStream inputStream = new FileInputStream(file);
         if (fileLength <= CHUNK_SIZE) {
-            byte[] fileData = new byte[(int) fileLength];
-            inputStream.read(fileData, 0, (int) fileLength);
-            byte[] sha1Data = sha1(fileData);
-            int sha1DataLen = sha1Data.length;
-            byte[] hashData = new byte[sha1DataLen + 1];
-            System.arraycopy(sha1Data, 0, hashData, 1, sha1DataLen);
-            hashData[0] = 0x16;
-            etag = urlSafeBase64Encode(hashData);
+            byte[] hashDataSha1 = lessThan4mHash(inputStream);
+            etag = urlSafeBase64Encode(addPreambleToHash(hashDataSha1, (byte)0x16));
         } else {
-            int chunkCount = (int) (fileLength / CHUNK_SIZE);
-            if (fileLength % CHUNK_SIZE != 0) {
-                chunkCount += 1;
-            }
-            byte[] allSha1Data = new byte[0];
-            for (int i = 0; i < chunkCount; i++) {
-                byte[] chunkData = new byte[CHUNK_SIZE];
-                int bytesReadLen = inputStream.read(chunkData, 0, CHUNK_SIZE);
-                byte[] bytesRead = new byte[bytesReadLen];
-                System.arraycopy(chunkData, 0, bytesRead, 0, bytesReadLen);
-                byte[] chunkDataSha1 = sha1(bytesRead);
-                byte[] newAllSha1Data = new byte[chunkDataSha1.length + allSha1Data.length];
-                System.arraycopy(allSha1Data, 0, newAllSha1Data, 0, allSha1Data.length);
-                System.arraycopy(chunkDataSha1, 0, newAllSha1Data, allSha1Data.length, chunkDataSha1.length);
-                allSha1Data = newAllSha1Data;
-            }
-            byte[] allSha1DataSha1 = sha1(allSha1Data);
-            byte[] hashData = new byte[allSha1DataSha1.length + 1];
-            System.arraycopy(allSha1DataSha1, 0, hashData, 1, allSha1DataSha1.length);
-            hashData[0] = (byte) 0x96;
-            etag = urlSafeBase64Encode(hashData);
+            byte[] allSha1DataSha1 = greaterThan4mHash(inputStream, fileLength);
+            etag = urlSafeBase64Encode(addPreambleToHash(allSha1DataSha1, (byte)0x96));
         }
         inputStream.close();
         return etag;
@@ -100,6 +95,13 @@ public class QiniuEtagUtil {
         } else {
             return DatatypeConverter.parseBase64Binary(etag);
         }
+    }
+
+    public static byte[] addBytesToHashArray(byte[] allSha1Data, byte[] bytesSha1Data) {
+        byte[] newAllSha1Data = new byte[bytesSha1Data.length + allSha1Data.length];
+        System.arraycopy(allSha1Data, 0, newAllSha1Data, 0, allSha1Data.length);
+        System.arraycopy(bytesSha1Data, 0, newAllSha1Data, allSha1Data.length, bytesSha1Data.length);
+        return newAllSha1Data;
     }
 
     public static byte[] addPreambleToHash(byte[] hash, byte preamble) {
