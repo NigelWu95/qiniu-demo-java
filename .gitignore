@@ -16,4 +16,4 @@ buildNumber.properties
 /src/main/resources/.config.properties
 
 ### macos file
-.DS_Store
+*/.DS_Store
