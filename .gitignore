@@ -15,5 +15,6 @@ buildNumber.properties
 .idea/
 /src/main/resources/.config.properties
 
-### macos file
-*/.DS_Store
+### macOS template
+# General
+.DS_Store
