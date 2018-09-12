@@ -11,5 +11,9 @@ buildNumber.properties
 .mvn/timing.properties
 .mvn/wrapper/maven-wrapper.jar
 
+### idea
 .idea/
 /src/main/resources/.config.properties
+
+### macos file
+.DS_Store
