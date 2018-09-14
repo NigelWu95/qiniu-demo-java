@@ -21,12 +21,15 @@ public class AsyncFetch {
         Auth auth = Auth.create(accesskey, secretKey);
 
         Gson gson = new Gson();
-        String url = "http://xxx.com/test.jpg";
-        String apiUrl = "http://api.qiniu.com/sisyphus/fetch";
+        String url = "http://temp.nigel.qiniuts.com/test1.jpg";
+        url = "https://nagame.oss-cn-hangzhou.aliyuncs.com/upload/1484614302452.jpg";
+        String bucketZone = "z0";
+        String apiUrl = ("z0".equals(bucketZone) ? "http://api.qiniu.com" : "http://api-" + bucketZone + ".qiniu.com") + "/sisyphus/fetch";
         Map<String, String> bodyMap = new HashMap();
         bodyMap.put("url", url);
-        bodyMap.put("bucket", "Bucket");
-        bodyMap.put("key", "自定义文件名");
+        bodyMap.put("bucket", "temp");
+//        bodyMap.put("host", bucketZone);
+        bodyMap.put("key", "upload/1484614302452.jpg");
         String jsonBody = gson.toJson(bodyMap);
         byte[] bodyBytes = jsonBody.getBytes();
         String accessToken = "Qiniu " + auth.signRequestV2(apiUrl, "POST", bodyBytes, "application/json");
@@ -36,7 +39,9 @@ public class AsyncFetch {
         Response resp = null;
 
         try {
-            resp = client.post(url, bodyBytes, headers, Client.JsonMime);
+            resp = client.post(apiUrl, bodyBytes, headers, Client.JsonMime);
+            System.out.println(resp.statusCode);
+            System.out.println(resp.reqId);
         } catch (Exception e) {
             throw new Exception(e.getMessage());
         } finally {
