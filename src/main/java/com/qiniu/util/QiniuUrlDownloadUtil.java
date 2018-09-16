@@ -59,7 +59,7 @@ public class QiniuUrlDownloadUtil {
         BufferedReader bufferedReader = new BufferedReader(fileReader);
         String line;
         while ((line = bufferedReader.readLine()) != null) {
-            if (line.matches("https?://[^\\s/]+\\.[^\\s/]{1,3}/.*")) {
+            if (line.matches("https?://[^\\s/]+\\.[^\\s/\\\\.]{1,3}/.*")) {
                 try {
 //                    checkDownload(line, downloadPath, deleteIfFalse);
                     if (tryStripMeta) {
@@ -88,7 +88,7 @@ public class QiniuUrlDownloadUtil {
         String responseHash = respJson.get("hash").getAsString();
         long fileSize = respJson.get("fsize").getAsLong();
         SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd-HH-mm-ss-SSS");
-        String fileKey = ft.format(new Date()) + url.replaceAll("(https?://[^\\s/]+\\.[^\\s/]{1,3}/)|(\\?.*)", "").replace("/", "-");
+        String fileKey = ft.format(new Date()) + url.replaceAll("(https?://[^\\s/]+\\.[^\\s/\\\\.]{1,3}/)|(\\?.*)", "").replace("/", "-");
         File file = new File(downloadPath, fileKey);
         FileOutputStream fileOutputStream = new FileOutputStream(file);
         Response response = null;
@@ -114,10 +114,10 @@ public class QiniuUrlDownloadUtil {
 
     public static JsonObject getQhash(String url) throws QiniuException {
 
-        String host = url.replaceAll("(https?://)|(/[^\\?]*)|(\\?.*)", "");
-        String srcIOUrl = url.replaceAll("https?://[^\\s/]+\\.[^\\s/]{1,3}/", "https://iovip.qbox.me/");
+        String host = url.replaceAll("(https?://)|(/[^\\\\?]*)|(\\?.*)", "");
+        String srcIOUrl = url.replaceAll("https?://[^\\s/]+\\.[^\\s/\\\\.]{1,3}/", "https://iovip.qbox.me/");
 
-        if (srcIOUrl.matches("https://iovip.qbox.me/[^\\?]*\\?.*"))
+        if (srcIOUrl.matches("https://iovip.qbox.me/[^\\\\?]*\\?.*"))
             srcIOUrl += "|qhash/sha1";
         else
             srcIOUrl += "?qhash/sha1";
