@@ -18,7 +18,7 @@ public class BucketIOCount {
 
         String bucket = "temp";
         String domain = "";
-        String fileType = "0";
+        String fileType = "1";
         String region = "z0";
         String select = "flow";
         String particleSize = "month";
@@ -27,8 +27,8 @@ public class BucketIOCount {
         String source = "origin";
 //        String url = "http://api.qiniu.com/v6/blob_io?$bucket=" + bucket + "&$ftype=" + fileType + "&$region=" + region
 //                + "&select=" + select + "&g=" + particleSize + "&begin=" + beginTime + "&end=" + endTime + "&$src=" + source;
-        String url = "http://api.qiniu.com/v6/blob_io?$ftype=" + fileType + "&select=" + select + "&g=" + particleSize
-                + "&begin=" + beginTime + "&end=" + endTime;
+        String url = "http://api.qiniu.com/v6/blob_io?$ftype=" + fileType + "&begin=" + beginTime + "&end=" + endTime
+                + "&g=" + particleSize + "&select=" + select;
         String authorization = "QBox " + auth.signRequest(url, null, null);
         StringMap headers = new StringMap().put("Authorization", authorization);
 
