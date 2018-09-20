@@ -142,7 +142,7 @@ public class BatchOperateFileByQshell extends RecursiveTask<List<String>> {
         if (args.length < 3) {
             System.out.println("Please add path domain and command params.");
             System.out.println("e.g.");
-            System.out.println("java ConvertListBucket /home/ubuntu cdn.nigel.qiniuts.com 'qshell prefetch temp'");
+            System.out.println("java BucketListResult /home/ubuntu cdn.nigel.qiniuts.com 'qshell prefetch temp'");
             return;
         } else {
             filePath = args[0];

@@ -28,64 +28,46 @@ public class BucketFIleListDemo {
         BucketManager bucketManager = new BucketManager(auth, c);
         String bucket = "bucket";
 
+        fileList(bucket, "", "", 100, bucketManager);
+        fileIteratorList(bucket, "", 100, bucketManager);
+    }
 
-//        调用listFiles方法列举指定空间的指定文件
-//        参数一：bucket    空间名
-//        参数二：prefix    文件名前缀
-//        参数三：marker    上一次获取文件列表时返回的 marker
-//        参数四：limit     每次迭代的长度限制，最大1000，推荐值 100
-//        参数五：delimiter 指定目录分隔符，列出所有公共前缀（模拟列出目录效果）。缺省值为空字符串
+    /*
+    单次列举，可以传递 marker 和 limit 参数，通常采用此方法进行并发处理
+     */
+    public static void fileList(String bucket, String prefix, String marker, int limit, BucketManager bucketManager) {
+
+        String endMarker = null;
+
         try {
-            FileListIterator fileListIterator = bucketManager.createFileListIterator(bucket, null, 1, null);
+            FileListing fileListing = bucketManager.listFiles(bucket, prefix, marker, limit, null);
+            FileInfo[] items = fileListing.items;
 
-            while (fileListIterator.hasNext()) {
-                //处理获取的file list结果
-                FileInfo[] iitems = fileListIterator.next();
-
-                for (FileInfo item : iitems) {
-                    System.out.println(item.key);
-                }
-            }
-
-            String startFileKey = "149102912";
-            String endFileKey = "7bNOdFMmkSAixm2ID2IhIsrF5yM=/lhnx9QzsVcDYScDaxzl_L3_m3Alc/000030.ts";
-            String startJsonStr = "{\"c\":0,\"k\":\"" + startFileKey + "\"}";
-            String startMarker = UrlSafeBase64.encodeToString(startJsonStr);
-            System.out.println(startMarker);
-            FileListing fileListing = null;
-            String marker = startMarker;
-            FileInfo[] items = {};
-
-            fileListing = bucketManager.listFiles(bucket, "7bNOdFMmkSAixm2ID2IhIsrF5yM=/", null, 1000, "/");
-            items = fileListing.items;
-            String[] commonPrefixes = fileListing.commonPrefixes;
-
-            for (String commonPrefixe : commonPrefixes) {
-                System.out.println(commonPrefixe);
-            }
-
-            System.out.println("\n\n");
-
-            if (!startFileKey.equals(endFileKey)) {
-                loop:while (marker != null) {
-                    fileListing = bucketManager.listFiles(bucket, null, marker, 5, "");
-                    marker = fileListing.marker;
-                    items = fileListing.items;
-
-                    for (FileInfo fileInfo : items) {
-                        if (endFileKey.equals(fileInfo.key)) {
-                            break loop;
-                        }
-
-                        System.out.println(fileInfo.key);
-                    }
-
-                }
+            for (FileInfo fileInfo : items) {
+                System.out.println(fileInfo.toString());
             }
         } catch (QiniuException e) {
-            //捕获异常信息
-            Response r = e.response;
-            System.out.println(r.toString());
+            e.printStackTrace();
         }
+    }
+
+    /*
+    迭代器方式列举带 prefix 前缀的所有文件，直到列举完毕，limit 为单次列举的文件个数
+     */
+    public static void fileIteratorList(String bucket, String prefix, int limit, BucketManager bucketManager) {
+
+        FileListIterator fileListIterator = bucketManager.createFileListIterator(bucket, prefix, limit, null);
+
+        loop:while (fileListIterator.hasNext()) {
+            FileInfo[] items = fileListIterator.next();
+
+            for (FileInfo fileInfo : items) {
+                System.out.println(fileInfo.toString());
+            }
+        }
+    }
+
+    public String calculateMarker(String type, String key) {
+        return UrlSafeBase64.encodeToString("{\"c\":" + type + ",\"k\":\"" + key + "\"}");
     }
 }

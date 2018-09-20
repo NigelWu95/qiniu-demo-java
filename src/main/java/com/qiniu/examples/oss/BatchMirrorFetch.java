@@ -17,7 +17,7 @@ import java.util.stream.Stream;
 
 /**
  * ClassName: BatchMirrorFetch
- * Description: 通过命令行调用 qshell 实现批量 镜像 fetch
+ * Description: 通过命令行调用 qshell 实现批量镜像 fetch
  */
 public class BatchMirrorFetch extends RecursiveTask<List<String>> {
 
@@ -131,7 +131,7 @@ public class BatchMirrorFetch extends RecursiveTask<List<String>> {
         if (args.length < 1) {
             System.out.println("Please add path param.");
             System.out.println("e.g.");
-            System.out.println("java ConvertListBucket /home/ubuntu");
+            System.out.println("java BucketListResult /home/ubuntu");
             return;
         } else {
             filePath = args[0];

@@ -15,10 +15,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * ClassName: ConvertListBucket
+ * ClassName: BucketListResult
  * Description: 将 listbucket 的结果过滤并拼接出 url
  */
-public class ConvertListBucket extends RecursiveTask<List<String>> {
+public class BucketListResult extends RecursiveTask<List<String>> {
 
     private static final int THREAD_HOLD = 1;
 
@@ -26,7 +26,7 @@ public class ConvertListBucket extends RecursiveTask<List<String>> {
     private String dirPath;
     private String domain;
 
-    public ConvertListBucket(List<String> fileList, String dirPath, String domain){
+    public BucketListResult(List<String> fileList, String dirPath, String domain){
         this.fileList = fileList;
         this.dirPath = dirPath;
         this.domain = domain;
@@ -79,8 +79,8 @@ public class ConvertListBucket extends RecursiveTask<List<String>> {
         } else {
             List<String> leftList = fileList.subList(0, 1);
             List<String> rightList = fileList.subList(1, fileList.size());
-            ConvertListBucket left = new ConvertListBucket(leftList, dirPath, domain);
-            ConvertListBucket right = new ConvertListBucket(rightList, dirPath, domain);
+            BucketListResult left = new BucketListResult(leftList, dirPath, domain);
+            BucketListResult right = new BucketListResult(rightList, dirPath, domain);
             //执行子任务
             left.fork();
             right.fork();
@@ -123,7 +123,7 @@ public class ConvertListBucket extends RecursiveTask<List<String>> {
         if (args.length < 2) {
             System.out.println("Please add keys file path and domain params.");
             System.out.println("e.g.");
-            System.out.println("java ConvertListBucket /home/ubuntu cdn.xxx.com");
+            System.out.println("java BucketListResult /home/ubuntu cdn.xxx.com");
             return;
         } else {
             filePath = args[0];
@@ -133,7 +133,7 @@ public class ConvertListBucket extends RecursiveTask<List<String>> {
         List<String> pathNames = ListFilePath(filePath);
 
         ForkJoinPool pool = new ForkJoinPool();
-        ConvertListBucket task = new ConvertListBucket(pathNames, filePath, domain);
+        BucketListResult task = new BucketListResult(pathNames, filePath, domain);
         Future<List<String>> result = pool.submit(task);
 
         try {
