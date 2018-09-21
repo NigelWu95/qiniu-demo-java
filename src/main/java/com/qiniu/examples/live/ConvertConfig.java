@@ -9,7 +9,7 @@ import com.qiniu.util.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PiliConvertConfig {
+public class ConvertConfig {
 
     public static void main(String[] args) {
 

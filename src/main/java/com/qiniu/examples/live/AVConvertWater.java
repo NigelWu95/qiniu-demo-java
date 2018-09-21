@@ -6,7 +6,7 @@ import com.qiniu.http.Client;
 import com.qiniu.http.Response;
 import com.qiniu.util.*;
 
-public class PiliAVConvertWater {
+public class AVConvertWater {
 
     public static void main(String[] args) {
 

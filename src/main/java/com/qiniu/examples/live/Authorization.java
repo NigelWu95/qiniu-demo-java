@@ -4,7 +4,7 @@ import com.qiniu.common.Config;
 import com.qiniu.util.Auth;
 import com.qiniu.util.UrlSafeBase64;
 
-public class PiliAuthorization {
+public class Authorization {
 
     public static void main(String[] args) {
 

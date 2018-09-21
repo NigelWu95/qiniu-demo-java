@@ -6,7 +6,7 @@ import com.qiniu.http.Client;
 import com.qiniu.http.Response;
 import com.qiniu.util.*;
 
-public class PiliSaveas {
+public class SavePlayback {
 
     public static void main(String[] args) throws QiniuException {
 
