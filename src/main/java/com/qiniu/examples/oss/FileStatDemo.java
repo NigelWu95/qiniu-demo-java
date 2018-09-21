@@ -8,7 +8,7 @@ import com.qiniu.util.Auth;
 import com.qiniu.common.Zone;
 import com.qiniu.storage.Configuration;
 
-public class StatBucketManagerDemo {
+public class FileStatDemo {
 
     public static void main(String args[]) {
 

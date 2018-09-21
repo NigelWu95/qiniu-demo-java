@@ -15,7 +15,7 @@ import com.qiniu.util.UrlSafeBase64;
 /**
  * Description: 从起始和结束位置列举文件
  */
-public class BucketFIleListDemo {
+public class ListBucketFIle {
 
     public static void main(String args[]) {
 
