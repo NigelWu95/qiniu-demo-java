@@ -67,7 +67,7 @@ public class ListBucketFIle {
         }
     }
 
-    public String calculateMarker(String type, String key) {
+    public String calculateMarker(int type, String key) {
         return UrlSafeBase64.encodeToString("{\"c\":" + type + ",\"k\":\"" + key + "\"}");
     }
 }
