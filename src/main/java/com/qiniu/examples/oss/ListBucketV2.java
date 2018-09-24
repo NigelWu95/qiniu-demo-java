@@ -30,7 +30,7 @@ public class ListBucketV2 {
         Auth auth = Auth.create(accesskey, secretKey);
         String bucket = "temp";
 
-        fileList(auth, bucket, "", "/", "", 1000);
+        fileList(auth, bucket, "abc", "/", "", 1000);
     }
 
     /*
@@ -49,6 +49,7 @@ public class ListBucketV2 {
             response = client.post(url, null, headers, null);
             System.out.println(response.statusCode);
             System.out.println(response.contentType());
+//            System.out.println(response.bodyString().equals(""));
             System.out.println(response.bodyStream());
             InputStream inputStream = new BufferedInputStream(response.bodyStream());
             Reader reader = new InputStreamReader(inputStream);
