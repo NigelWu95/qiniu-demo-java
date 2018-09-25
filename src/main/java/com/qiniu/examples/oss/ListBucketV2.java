@@ -30,7 +30,7 @@ public class ListBucketV2 {
         Auth auth = Auth.create(accesskey, secretKey);
         String bucket = "temp";
 
-        fileList(auth, bucket, "abc", "/", "", 1000);
+        fileList(auth, bucket, "%20", "", "", 1000);
     }
 
     /*
