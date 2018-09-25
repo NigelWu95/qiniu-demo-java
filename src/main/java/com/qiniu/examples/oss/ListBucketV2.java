@@ -15,6 +15,7 @@ import com.qiniu.util.StringMap;
 import com.qiniu.util.UrlSafeBase64;
 
 import java.io.*;
+import java.net.URLEncoder;
 import java.util.zip.GZIPInputStream;
 
 /**
@@ -22,7 +23,7 @@ import java.util.zip.GZIPInputStream;
  */
 public class ListBucketV2 {
 
-    public static void main(String args[]) {
+    public static void main(String args[]) throws UnsupportedEncodingException {
 
         Config config = Config.getInstance();
         String accesskey = config.getAccesskey();
@@ -30,6 +31,7 @@ public class ListBucketV2 {
         Auth auth = Auth.create(accesskey, secretKey);
         String bucket = "temp";
 
+        fileList(auth, bucket, URLEncoder.encode("在", "UTF-8"), "", "", 1000);
         fileList(auth, bucket, "%20", "", "", 1000);
     }
 
