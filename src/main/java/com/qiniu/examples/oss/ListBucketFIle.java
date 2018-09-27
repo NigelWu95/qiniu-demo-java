@@ -1,7 +1,11 @@
 package com.qiniu.examples.oss;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import com.qiniu.common.Config;
 import com.qiniu.common.QiniuException;
+import com.qiniu.http.Client;
 import com.qiniu.http.Response;
 import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.BucketManager.*;
@@ -10,26 +14,47 @@ import com.qiniu.storage.model.FileListing;
 import com.qiniu.util.Auth;
 import com.qiniu.common.Zone;
 import com.qiniu.storage.Configuration;
+import com.qiniu.util.Json;
+import com.qiniu.util.StringMap;
 import com.qiniu.util.UrlSafeBase64;
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * Description: 从起始和结束位置列举文件
  */
 public class ListBucketFIle {
 
-    public static void main(String args[]) {
+    public static void main(String args[]) throws QiniuException, IOException {
 
         Config config = Config.getInstance();
         String accesskey = config.getAccesskey();
         String secretKey = config.getSecretKey();
+        String resultPath = config.getFilepath();
         Auth auth = Auth.create(accesskey, secretKey);
         Zone z = Zone.autoZone();
         Configuration c = new Configuration(z);
         BucketManager bucketManager = new BucketManager(auth, c);
-        String bucket = "bucket";
+        String bucket = "temp";
 
         fileList(bucket, "", "", 100, bucketManager);
         fileIteratorList(bucket, "", 100, bucketManager);
+
+        Response response = list(auth, bucket, "", "", 1000, "");
+        String resultBody = response.bodyString();
+        JsonObject jsonObject = new Gson().fromJson(resultBody, JsonObject.class);
+        JsonArray jsonArray = jsonObject.getAsJsonArray("items");
+        String result = jsonArray.toString().replaceAll("[\\[\\]]", "").replaceAll("\\},\\{", "\\}\n\\{");
+        FileWriter fileWriter = new FileWriter(resultPath + "result.txt");
+        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+//        fileWriter.write(result);
+        bufferedWriter.write(result);
+        bufferedWriter.newLine();
+        bufferedWriter.close();
+        fileWriter.close();
+        response.close();
     }
 
     /*
@@ -49,6 +74,14 @@ public class ListBucketFIle {
         } catch (QiniuException e) {
             e.printStackTrace();
         }
+    }
+
+    public static Response list(Auth auth, String bucket, String prefix, String marker, int limit, String delimiter) throws QiniuException {
+        StringMap map = new StringMap().put("bucket", bucket).putNotEmpty("marker", marker)
+                .putNotEmpty("prefix", prefix).putNotEmpty("delimiter", delimiter).putWhen("limit", limit, limit > 0);
+
+        String url = String.format("http://rsf.qbox.me/list?%s", map.formString());
+        return new Client().get(url, auth.authorization(url));
     }
 
     /*
