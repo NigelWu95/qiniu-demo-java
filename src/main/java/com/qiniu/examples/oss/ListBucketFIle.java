@@ -27,7 +27,7 @@ import java.io.IOException;
  */
 public class ListBucketFIle {
 
-    public static void main(String args[]) throws QiniuException, IOException {
+    public static void main(String args[]) throws IOException {
 
         Config config = Config.getInstance();
         String accesskey = config.getAccesskey();
@@ -39,8 +39,17 @@ public class ListBucketFIle {
         BucketManager bucketManager = new BucketManager(auth, c);
         String bucket = "temp";
 
-        fileList(bucket, "", "", 100, bucketManager);
-        fileIteratorList(bucket, "", 100, bucketManager);
+        Response response = list(auth, "ydb-video", "c2V6aWduOjIwMTblubTlgLzlvpfmjqjojZDnmoQyMOasvkFuZHJvaWQgQXBwLm1wNA==_q00040001_0000", "", 1000, "");
+        String resultBody = response.bodyString();
+        System.out.println(resultBody);
+
+//        fileList(bucket, "", "", 100, bucketManager);
+//        fileIteratorList(bucket, "", 100, bucketManager);
+//        listWrite(auth, bucket, resultPath);
+
+    }
+
+    public static void listWrite(Auth auth, String bucket, String resultPath) throws IOException {
 
         Response response = list(auth, bucket, "", "", 1000, "");
         String resultBody = response.bodyString();
