@@ -31,8 +31,9 @@ public class ListBucketV2 {
         Auth auth = Auth.create(accesskey, secretKey);
         String bucket = "temp";
 
-        fileList(auth, bucket, URLEncoder.encode("在", "UTF-8"), "", "", 1000);
-        fileList(auth, bucket, "%20", "", "", 1000);
+        fileList(auth, bucket, "", "", "", 1000);
+        fileList(auth, bucket, "在", "", "", 1000);
+        fileList(auth, bucket, " ", "", "", 1000);
     }
 
     /*
@@ -40,8 +41,10 @@ public class ListBucketV2 {
      */
     public static void fileList(Auth auth, String bucket, String prefix, String delimiter, String marker, int limit) {
 
-        String url = "http://rsf.qbox.me/v2/list?bucket=" + bucket + "&prefix=" + prefix + "&delimiter=" + delimiter
-                + "&limit=" + limit + "&marker=" + marker;
+        StringMap map = new StringMap().put("bucket", bucket).putNotEmpty("marker", marker)
+                .putNotEmpty("prefix", prefix).putNotEmpty("delimiter", delimiter).putWhen("limit", limit, limit > 0);
+        String url = String.format("http://rsf.qbox.me/v2/list?%s", map.formString());
+        System.out.println(url);
         String authorization = "QBox " + auth.signRequest(url, null, null);
         StringMap headers = new StringMap().put("Authorization", authorization);
         Client client = new Client();
@@ -51,15 +54,25 @@ public class ListBucketV2 {
             response = client.post(url, null, headers, null);
             System.out.println(response.statusCode);
             System.out.println(response.contentType());
-//            System.out.println(response.bodyString().equals(""));
-            System.out.println(response.bodyStream());
-            InputStream inputStream = new BufferedInputStream(response.bodyStream());
+            InputStream inputStream = response.bodyStream();
             Reader reader = new InputStreamReader(inputStream);
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("result.txt"));
             BufferedReader bufferedReader = new BufferedReader(reader);
-            bufferedReader.lines().forEach(p -> System.out.println(p));
+            bufferedReader.lines().forEach( p -> {
+                try {
+                    bufferedWriter.write(p);
+                    bufferedWriter.newLine();
+                    System.out.println(p);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+
+//            bufferedReader.lines().forEach(System.out::println);
+            bufferedReader.close();
             inputStream.close();
             reader.close();
-            bufferedReader.close();
+            bufferedWriter.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
