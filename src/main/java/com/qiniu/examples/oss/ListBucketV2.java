@@ -58,17 +58,17 @@ public class ListBucketV2 {
             Reader reader = new InputStreamReader(inputStream);
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("result.txt"));
             BufferedReader bufferedReader = new BufferedReader(reader);
-            bufferedReader.lines().forEach( p -> {
-                try {
-                    bufferedWriter.write(p);
-                    bufferedWriter.newLine();
-                    System.out.println(p);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
+//            bufferedReader.lines().forEach( p -> {
+//                try {
+//                    bufferedWriter.write(p);
+//                    bufferedWriter.newLine();
+//                    System.out.println(p);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            });
 
-//            bufferedReader.lines().forEach(System.out::println);
+            bufferedReader.lines().forEach(System.out::println);
             bufferedReader.close();
             inputStream.close();
             reader.close();
