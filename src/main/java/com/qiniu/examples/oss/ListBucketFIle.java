@@ -39,11 +39,12 @@ public class ListBucketFIle {
         BucketManager bucketManager = new BucketManager(auth, c);
         String bucket = "temp";
 
-        Response response = list(auth, "ydb-video", "c2V6aWduOjIwMTblubTlgLzlvpfmjqjojZDnmoQyMOasvkFuZHJvaWQgQXBwLm1wNA==_q00040001_0000", "", 1000, "");
-        String resultBody = response.bodyString();
-        System.out.println(resultBody);
+//        Response response = list(auth, "ydb-video", "c2V6aWduOjIwMTblubTlgLzlvpfmjqjojZDnmoQyMOasvkFuZHJvaWQgQXBwLm1wNA==_q00040001_0000", "", 1000, "");
+//        String resultBody = response.bodyString();
+//        System.out.println(resultBody);
 
 //        fileList(bucket, "", "", 100, bucketManager);
+        fileList("video360", "|", "", 1000, bucketManager);
 //        fileIteratorList(bucket, "", 100, bucketManager);
 //        listWrite(auth, bucket, resultPath);
 

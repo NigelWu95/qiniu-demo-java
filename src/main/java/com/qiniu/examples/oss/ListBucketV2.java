@@ -33,7 +33,8 @@ public class ListBucketV2 {
 
         fileList(auth, bucket, "", "", "", 1000);
         fileList(auth, bucket, "在", "", "", 1000);
-        fileList(auth, bucket, " ", "", "", 1000);
+        fileList(auth, bucket, "|", "", "", 1000);
+        fileList(auth, "video360", "|", "", "",1);
     }
 
     /*
