@@ -31,10 +31,10 @@ public class ListBucketV2 {
         Auth auth = Auth.create(accesskey, secretKey);
         String bucket = "temp";
 
-        fileList(auth, bucket, "", "", "", 1000);
-        fileList(auth, bucket, "在", "", "", 1000);
-        fileList(auth, bucket, "|", "", "", 1000);
-        fileList(auth, "video360", "|", "", "",1);
+//        fileList(auth, bucket, "", "", "", 1000);
+//        fileList(auth, bucket, "在", "", "", 1000);
+//        fileList(auth, bucket, "|", "", "", 1000);
+        fileList(auth, bucket, "1", "", "",300000);
     }
 
     /*
