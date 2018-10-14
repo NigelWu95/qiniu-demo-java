@@ -18,4 +18,3 @@ buildNumber.properties
 ### macOS template
 # General
 .DS_Store
-/java-demo.iml
