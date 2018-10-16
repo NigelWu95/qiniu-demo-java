@@ -30,7 +30,7 @@ public class Base64Upload {
         Request request = new Request.Builder().
                 url(url).
                 addHeader("Content-Type", "application/octet-stream")
-                .addHeader("Authorization", "UpToken " + auth.uploadToken(bucket, null, 3600, new StringMap().put("insertOnly", 1)))
+                .addHeader("AuthorizationUtil", "UpToken " + auth.uploadToken(bucket, null, 3600, new StringMap().put("insertOnly", 1)))
                 .post(rb).build();
 
         System.out.println(request.headers());

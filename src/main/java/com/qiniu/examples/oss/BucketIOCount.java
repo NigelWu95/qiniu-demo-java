@@ -30,7 +30,7 @@ public class BucketIOCount {
         String url = "http://api.qiniu.com/v6/blob_io?$ftype=" + fileType + "&begin=" + beginTime + "&end=" + endTime
                 + "&g=" + particleSize + "&select=" + select;
         String authorization = "QBox " + auth.signRequest(url, null, null);
-        StringMap headers = new StringMap().put("Authorization", authorization);
+        StringMap headers = new StringMap().put("AuthorizationUtil", authorization);
 
         Client client = new Client();
         Response response = null;

@@ -5,7 +5,7 @@ import com.qiniu.common.Zone;
 import com.qiniu.http.Client;
 import com.qiniu.storage.Configuration;
 
-public class Authorization {
+public class AuthorizationUtil {
 
     public static void main(String[] args) {
 
@@ -25,6 +25,13 @@ public class Authorization {
         String upToken = auth.uploadToken(bucket, scopeFileKey, expires, new StringMap()
                 .put("deleteAfterDays", deleteAfterDays)
                 .put("returnBody", "{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"fsize\":$(fsize),\"bucket\":\"$(bucket)\",\"name\":\"$(x:name)\"}"));
+        return upToken;
+    }
+
+    public static String upTokenWithPfops(Auth auth, String bucket, String scopeFileKey, long expires, String pfops, String pipeline) {
+        String upToken = auth.uploadToken(bucket, scopeFileKey, expires, new StringMap()
+                .putNotEmpty("persistentOps", pfops)
+                .putNotEmpty("persistentPipeline", pipeline), true);
         return upToken;
     }
 

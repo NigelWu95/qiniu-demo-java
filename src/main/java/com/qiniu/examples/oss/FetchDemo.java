@@ -20,19 +20,19 @@ public class FetchDemo {
         Zone z = Zone.zone0();
         Configuration c = new Configuration(z);
         BucketManager bucketManager = new BucketManager(auth, c);
-        String bucket = "temp";
-        String key = "96c49f8cb6b7d6cecf15364533520b8e69bed960.png";
+        String bucket = "qiniu-suits-test";
+        String key = "";
         // 要fetch的url
-        String url = "http://xxx.com/test.png";
+        String url = "http://pe61gh7q7.bkt.clouddn.com/03-%E7%BE%A4%E4%B9%A6%E6%B2%BB%E8%A6%81-20180425.mp4";
         FetchRet fetchRet = null;
 
         try {
             //调用fetch方法抓取文件
             fetchRet = bucketManager.fetch(url, bucket, key);
-            System.out.printf(fetchRet.hash);
-            System.out.printf(fetchRet.key);
-            System.out.printf(fetchRet.mimeType);
-            System.out.printf(String.valueOf(fetchRet.fsize));
+            System.out.println(fetchRet.hash);
+            System.out.println(fetchRet.key);
+            System.out.println(fetchRet.mimeType);
+            System.out.println(String.valueOf(fetchRet.fsize));
         } catch (QiniuException e) {
             //捕获异常信息
             Response r = e.response;

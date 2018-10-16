@@ -34,7 +34,7 @@ public class SavePlayback {
         System.out.println(Json.encode(stringMap));
 
         String qiniuToken = "Qiniu " + auth.signRequestV2(url, "POST", StringUtils.utf8Bytes(Json.encode(stringMap)), contentType);
-        StringMap headers = new StringMap().put("Authorization", qiniuToken);
+        StringMap headers = new StringMap().put("AuthorizationUtil", qiniuToken);
         headers.put("Content-Type", contentType);
 
         Client client = new Client();

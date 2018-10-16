@@ -37,16 +37,16 @@ public class ListBucketFIle {
         Zone z = Zone.autoZone();
         Configuration c = new Configuration(z);
         BucketManager bucketManager = new BucketManager(auth, c);
-        String bucket = "temp";
+        String bucket = "qiniu-suits-test";
 
 //        Response response = list(auth, "ydb-video", "c2V6aWduOjIwMTblubTlgLzlvpfmjqjojZDnmoQyMOasvkFuZHJvaWQgQXBwLm1wNA==_q00040001_0000", "", 1000, "");
 //        String resultBody = response.bodyString();
 //        System.out.println(resultBody);
 
 //        fileList(bucket, "", "", 100, bucketManager);
-        fileList("video360", "|", "", 1000, bucketManager);
+//        fileList(bucket, "", "eyJjIjowLCJrIjoibWVpcGlhbi8wODE0L3VzZXJzLzMyNTgwMzkyL2NiNTdlZGRlMGZmZDRlZTZiNTFjOWQ1Y2E2NGNlNWQ5LmpwZyJ9", 1000, bucketManager);
 //        fileIteratorList(bucket, "", 100, bucketManager);
-//        listWrite(auth, bucket, resultPath);
+        listWrite(auth, bucket, resultPath);
 
     }
 
@@ -57,13 +57,14 @@ public class ListBucketFIle {
         JsonObject jsonObject = new Gson().fromJson(resultBody, JsonObject.class);
         JsonArray jsonArray = jsonObject.getAsJsonArray("items");
         String result = jsonArray.toString().replaceAll("[\\[\\]]", "").replaceAll("\\},\\{", "\\}\n\\{");
-        FileWriter fileWriter = new FileWriter(resultPath + "result.txt");
-        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+        System.out.println(result);
+//        FileWriter fileWriter = new FileWriter(resultPath + "result.txt");
+//        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 //        fileWriter.write(result);
-        bufferedWriter.write(result);
-        bufferedWriter.newLine();
-        bufferedWriter.close();
-        fileWriter.close();
+//        bufferedWriter.write(result);
+//        bufferedWriter.newLine();
+//        bufferedWriter.close();
+//        fileWriter.close();
         response.close();
     }
 
@@ -78,8 +79,9 @@ public class ListBucketFIle {
             FileListing fileListing = bucketManager.listFiles(bucket, prefix, marker, limit, null);
             FileInfo[] items = fileListing.items;
 
+            System.out.println(items.length);
             for (FileInfo fileInfo : items) {
-                System.out.println(fileInfo.toString());
+                System.out.println(fileInfo.key);
             }
         } catch (QiniuException e) {
             e.printStackTrace();

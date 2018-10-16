@@ -23,7 +23,7 @@ public class BucketFileCount {
         String url = "http://api.qiniu.com/v6/bucket_net_stat?begin=" + beginTime + "&end="
                 + endTime + "&bucket=" + bucket + "&region=" + region;
         String authorization = "QBox " + auth.signRequest(url, null, null);
-        StringMap headers = new StringMap().put("Authorization", authorization);
+        StringMap headers = new StringMap().put("AuthorizationUtil", authorization);
 
         Client client = new Client();
         Response response = null;

@@ -29,12 +29,12 @@ public class ListBucketV2 {
         String accesskey = config.getAccesskey();
         String secretKey = config.getSecretKey();
         Auth auth = Auth.create(accesskey, secretKey);
-        String bucket = "temp";
+        String bucket = "qiniu-suits-test";
 
 //        fileList(auth, bucket, "", "", "", 1000);
 //        fileList(auth, bucket, "在", "", "", 1000);
 //        fileList(auth, bucket, "|", "", "", 1000);
-        fileList(auth, bucket, "1", "", "",300000);
+        fileList(auth, bucket, "", "", "",1);
     }
 
     /*
@@ -47,7 +47,7 @@ public class ListBucketV2 {
         String url = String.format("http://rsf.qbox.me/v2/list?%s", map.formString());
         System.out.println(url);
         String authorization = "QBox " + auth.signRequest(url, null, null);
-        StringMap headers = new StringMap().put("Authorization", authorization);
+        StringMap headers = new StringMap().put("AuthorizationUtil", authorization);
         Client client = new Client();
         Response response = null;
 
@@ -55,10 +55,11 @@ public class ListBucketV2 {
             response = client.post(url, null, headers, null);
             System.out.println(response.statusCode);
             System.out.println(response.contentType());
-            InputStream inputStream = response.bodyStream();
-            Reader reader = new InputStreamReader(inputStream);
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("result.txt"));
-            BufferedReader bufferedReader = new BufferedReader(reader);
+            System.out.println(response.bodyString());
+//            InputStream inputStream = response.bodyStream();
+//            Reader reader = new InputStreamReader(inputStream);
+//            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("result.txt"));
+//            BufferedReader bufferedReader = new BufferedReader(reader);
 //            bufferedReader.lines().forEach( p -> {
 //                try {
 //                    bufferedWriter.write(p);
@@ -69,11 +70,11 @@ public class ListBucketV2 {
 //                }
 //            });
 
-            bufferedReader.lines().forEach(System.out::println);
-            bufferedReader.close();
-            inputStream.close();
-            reader.close();
-            bufferedWriter.close();
+//            bufferedReader.lines().forEach(System.out::println);
+//            bufferedReader.close();
+//            inputStream.close();
+//            reader.close();
+//            bufferedWriter.close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

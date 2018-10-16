@@ -36,7 +36,7 @@ public class AtlabSensor {
         String qiniuToken = "Qiniu " + auth.signRequestV2(url, "POST", bodyBytes, "application/json");
         Client client = new Client();
         StringMap headers = new StringMap();
-        headers.put("Authorization", qiniuToken);
+        headers.put("AuthorizationUtil", qiniuToken);
         Response resp = null;
 
         try {

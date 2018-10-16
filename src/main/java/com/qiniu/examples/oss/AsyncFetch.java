@@ -48,7 +48,7 @@ public class AsyncFetch {
         byte[] bodyBytes = jsonBody.getBytes();
         String accessToken = "Qiniu " + auth.signRequestV2(apiUrl, "POST", bodyBytes, "application/json");
         StringMap headers = new StringMap();
-        headers.put("Authorization", accessToken);
+        headers.put("AuthorizationUtil", accessToken);
         Client client = new Client();
         Response resp = null;
 

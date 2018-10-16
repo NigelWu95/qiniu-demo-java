@@ -24,8 +24,8 @@ public class LiveHubs {
         String hubName = "hub";
         String url = "http://pili.qiniuapi.com/v1/hubs";
         String token = "Qiniu " + auth.signRequestV2(url, "GET", null, null);
-        StringMap headers = new StringMap().put("Authorization", token);
-        System.out.println(headers.get("Authorization"));
+        StringMap headers = new StringMap().put("AuthorizationUtil", token);
+        System.out.println(headers.get("AuthorizationUtil"));
         Client client = new Client();
         Response response = null;
 

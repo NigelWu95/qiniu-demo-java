@@ -26,7 +26,7 @@ public class QiniuCdn {
         String url = "http://api.qiniu.com/domain?marker=" + marker + "&limit=" + limit;
         String authorization = "QBox " + auth.signRequestV2(url, null, null, null);
         System.out.println(authorization);
-        StringMap headers = new StringMap().put("Authorization", authorization);
+        StringMap headers = new StringMap().put("AuthorizationUtil", authorization);
 
         Client client = new Client();
         Response response = null;
@@ -54,7 +54,7 @@ public class QiniuCdn {
         object.addProperty("Domains", domains);
         System.out.println( object.toString());
         StringMap headers = auth.authorization(url, object.toString().getBytes(), Client.JsonMime);
-        System.out.println(headers.get("Authorization"));
+        System.out.println(headers.get("AuthorizationUtil"));
         Client client = new Client();
         Response response = null;
 

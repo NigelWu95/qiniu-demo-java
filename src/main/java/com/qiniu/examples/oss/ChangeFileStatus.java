@@ -23,7 +23,7 @@ public class ChangeFileStatus {
         String url = "http://rs.qiniu.com/chstatus/" + UrlSafeBase64.encodeToString(bucket + ":" + key) + "/status/" + status;
         String accessToken = "QBox " + auth.signRequest(url, null, Client.FormMime);
         StringMap headers = new StringMap();
-        headers.put("Authorization", accessToken);
+        headers.put("AuthorizationUtil", accessToken);
         Client client = new Client();
         Response resp = null;
 
