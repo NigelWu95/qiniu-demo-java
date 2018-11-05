@@ -38,15 +38,16 @@ public class ListBucketV2 {
         String accesskey = config.getAccesskey();
         String secretKey = config.getSecretKey();
         Auth auth = Auth.create(accesskey, secretKey);
-        String bucket = "kodo-z0-req-up";
+        String bucket = "fusionlog";
 
 //        fileList(auth, bucket, "", "", "", 1000);
 //        fileList(auth, bucket, "在", "", "", 1000);
 //        fileList(auth, bucket, "|", "", "", 1000);
-        String marker = fileList(auth, bucket, "", "", "",10000);
-        while (!StringUtils.isNullOrEmpty(marker)) {
-            marker = fileList(auth, bucket, "", "", marker,10000);
-        }
+        String marker = fileList(auth, bucket, "", "", "eyJjIjowLCJrIjoidjIvN3hvZzN0LmNvbTIuejAuZ2xiLnFpbml1Y2RuLmNvbV8yMDE4LTA1LTA0LTE4X3BhcnQtMDAwMDAuZ3oifQ==",50000);
+        System.out.println(marker);
+//        while (!StringUtils.isNullOrEmpty(marker)) {
+//            marker = fileList(auth, bucket, "v2/", "", marker,10000);
+//        }
     }
 
     /*
@@ -71,7 +72,7 @@ public class ListBucketV2 {
             List<String> lines = Arrays.asList(response.bodyString().split("\n"));
 //            InputStream inputStream = response.bodyStream();
 //            Reader reader = new InputStreamReader(inputStream);
-            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("result.txt", true));
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter("result-news.txt", true));
 //            BufferedReader bufferedReader = new BufferedReader(reader);
 //            lines.forEach( p -> {
 //                try {
