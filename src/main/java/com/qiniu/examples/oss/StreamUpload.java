@@ -32,10 +32,10 @@ public class StreamUpload {
 
     Config config = Config.getInstance();
     //设置好账号的ACCESS_KEY和SECRET_KEY
-    String ACCESS_KEY = config.getAccesskey();
-    String SECRET_KEY = config.getSecretKey();
+    String accessKey = config.getAccesskey();
+    String secretKey = config.getSecretKey();
     //要上传的空间
-    String bucketname = config.getFirstBucketName();
+    String bucket = config.getFirstBucketName();
     //上传到七牛后保存的文件名
     String key = "yuanhai.jpg";
     //上传文件的路径
@@ -43,7 +43,7 @@ public class StreamUpload {
     File file = new File(filePath);
 
     //密钥配置
-    Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
+    Auth auth = Auth.create(accessKey, secretKey);
     Zone z = Zone.autoZone();
     Configuration c = new Configuration(z);
 
@@ -53,12 +53,12 @@ public class StreamUpload {
     //创建上传对象
     UploadManager uploadManager = new UploadManager(c);
 
-    String FOPS="imageView2/0/q/75|watermark/2/text/5Lit5aSn57q657uH5Z-O/" +
+    String fops = "imageView2/0/q/75|watermark/2/text/5Lit5aSn57q657uH5Z-O/" +
             "font/5a6L5L2T/fontsize/1360/fill/I0ZGRkZGRg==/dissolve/41/" +
             "gravity/Center/dx/10/dy/10|imageslim|saveas/Zmlyc3Q6MTB3YXRlcm1hcmsuanBn";
 
     StringMap putPolicy = new StringMap()
-            .putNotEmpty("persistentOps", FOPS)
+            .putNotEmpty("persistentOps", fops)
             .putNotEmpty("persistentPipeline", pipeline);
 
 
@@ -70,7 +70,7 @@ public class StreamUpload {
 //        byte[] uploadBytes = "hello qiniu cloud".getBytes("utf-8");
 //        ByteArrayInputStream byteInputStream = new ByteArrayInputStream(uploadBytes);
 
-        String upToken = auth.uploadToken(bucketname, key, 3600, null);
+        String upToken = auth.uploadToken(bucket, key, 3600, null);
 
         try {
             FileInputStream fileInputStream = new FileInputStream(file);

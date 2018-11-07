@@ -30,10 +30,10 @@ public class ListBucketFIle {
     public static void main(String args[]) throws IOException {
 
         Config config = Config.getInstance();
-        String accesskey = config.getAccesskey();
+        String accessKey = config.getAccesskey();
         String secretKey = config.getSecretKey();
         String resultPath = config.getFilepath();
-        Auth auth = Auth.create(accesskey, secretKey);
+        Auth auth = Auth.create(accessKey, secretKey);
         Zone z = Zone.autoZone();
         Configuration c = new Configuration(z);
         BucketManager bucketManager = new BucketManager(auth, c);

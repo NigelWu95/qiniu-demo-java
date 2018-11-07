@@ -15,7 +15,7 @@ public class KodoDomainPublish {
 
         Auth auth = Auth.create(accessKey, secretKey);
         String tbl = "";
-        String url = "http://api.qiniu.com//publish/" + UrlSafeBase64.encodeToString("image.diyidan.net")
+        String url = "http://api.qiniu.com/publish/" + UrlSafeBase64.encodeToString("image.diyidan.net")
                 + "/from/" + tbl + "/domaintype/1";
         StringMap headers = auth.authorization(url, null, "application/json");
 

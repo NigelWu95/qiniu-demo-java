@@ -16,23 +16,23 @@ public class UploadCallback {
 
     Config config = Config.getInstance();
     //设置好账号的ACCESS_KEY和SECRET_KEY
-    String ACCESS_KEY = config.getAccesskey();
-    String SECRET_KEY = config.getSecretKey();
+    String accessKey = config.getAccesskey();
+    String secretKey = config.getSecretKey();
     //要上传的空间
-    String bucketname = "temp";
+    String bucket = "temp";
     //上传到七牛后保存的文件名
     String key = "react.txt";
     //上传文件的路径
     String filePath = config.getFilepath() + key;
 
-    Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
+    Auth auth = Auth.create(accessKey, secretKey);
     Zone z = Zone.autoZone();
     Configuration c = new Configuration(z);
     UploadManager uploadManager = new UploadManager(c);
 
     //设置callbackUrl以及callbackBody,七牛将文件名和文件大小回调给业务服务器
     public String getUpToken() {
-        return auth.uploadToken(bucketname, key, 3600,
+        return auth.uploadToken(bucket, key, 3600,
                 new StringMap()
                 .put("callbackUrl", "http://bf091726.ngrok.io/QiniuDemo/callback")
 //                .put("callbackBody", "filename=$(fname)&filesize=$(fsize)")

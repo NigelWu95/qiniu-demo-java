@@ -13,9 +13,9 @@ public class CopyFileDemo {
     public static void main(String args[]) {
 
         Config config = Config.getInstance();
-        String ACCESS_KEY = config.getAccesskey();
-        String SECRET_KEY = config.getSecretKey();
-        Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
+        String accessKey = config.getAccesskey();
+        String secretKey = config.getSecretKey();
+        Auth auth = Auth.create(accessKey, secretKey);
         Zone z = Zone.autoZone();
         Configuration c = new Configuration(z);
 

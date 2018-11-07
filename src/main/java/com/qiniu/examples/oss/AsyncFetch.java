@@ -19,9 +19,9 @@ public class AsyncFetch {
         //参考api文档 https://developer.qiniu.com/kodo/api/4097/asynch-fetch
         //设置好账号的ACCESS_KEY和SECRET_KEY
         Config config = Config.getInstance();
-        String accesskey = config.getAccesskey();
+        String accessKey = config.getAccesskey();
         String secretKey = config.getSecretKey();
-        Auth auth = Auth.create(accesskey, secretKey);
+        Auth auth = Auth.create(accessKey, secretKey);
 
         String url = "http://xxx.com/test1.jpg";
         String host = ""; // 回源访问时需要的 host

@@ -18,8 +18,8 @@ public class UploadBreakpoint {
 
         Config config = Config.getInstance();
         //设置好账号的ACCESS_KEY和SECRET_KEY
-        String ACCESS_KEY = config.getAccesskey();
-        String SECRET_KEY = config.getSecretKey();
+        String accessKey = config.getAccesskey();
+        String secretKey = config.getSecretKey();
         //要上传的空间
         String bucketname = "temp";
         //上传到七牛后保存的文件名
@@ -27,7 +27,7 @@ public class UploadBreakpoint {
         //上传文件的路径
         String filePath = config.getFilepath() + key;
 
-        Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
+        Auth auth = Auth.create(accessKey, secretKey);
         Zone z = Zone.autoZone();
         Configuration c = new Configuration(z);
         //设置断点记录文件保存在指定文件夹或的File对象

@@ -64,9 +64,9 @@ public class FileRecoderUpload {
         //构造一个带指定Zone对象的配置类
         Configuration cfg = new Configuration(zone);
         Config config = Config.getInstance();
-        String accesskey = config.getAccesskey();
+        String accessKey = config.getAccesskey();
         String secretKey = config.getSecretKey();
-        Auth auth = Auth.create(accesskey, secretKey);
+        Auth auth = Auth.create(accessKey, secretKey);
         String upToken = auth.uploadToken(bucket);
         String localFilePath = config.getFilepath() + "test.mp4";
         String localTempDir = "./temp";

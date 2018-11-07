@@ -44,17 +44,17 @@ public class ScopeUpload extends Basic {
 
     Config config = Config.getInstance();
     //设置好账号的ACCESS_KEY和SECRET_KEY
-    String ACCESS_KEY = config.getAccesskey();
-    String SECRET_KEY = config.getSecretKey();
+    String accessKey = config.getAccesskey();
+    String secretKey = config.getSecretKey();
     //要上传的空间
-    String bucketname = config.getFirstBucketName();
+    String bucket = config.getFirstBucketName();
     //上传到七牛后保存的文件名
     String key = "12345.mp4";
     //上传文件的路径
     String filePath = "/Users/wubingheng/Downloads/1234.mp4";
 
     //密钥配置
-    Auth auth = Auth.create(ACCESS_KEY, SECRET_KEY);
+    Auth auth = Auth.create(accessKey, secretKey);
     Zone z = Zone.autoZone();
     Configuration c = new Configuration(z);
 
@@ -67,7 +67,7 @@ public class ScopeUpload extends Basic {
 //        byte[] uploadBytes = "hello qiniu cloud".getBytes("utf-8");
 //        ByteArrayInputStream byteInputStream = new ByteArrayInputStream(uploadBytes);
 
-        String upToken = auth.uploadToken(bucketname, key, 3600, putPolicy);
+        String upToken = auth.uploadToken(bucket, key, 3600, putPolicy);
 
         try {
             Response response = uploadManager.put(filePath, key, upToken);

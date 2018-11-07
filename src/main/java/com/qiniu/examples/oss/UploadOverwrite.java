@@ -16,9 +16,9 @@ public class UploadOverwrite {
     public static void main(String args[]) {
 
         Config config = Config.getInstance();
-        String accesskey = config.getAccesskey();
+        String accessKey = config.getAccesskey();
         String secretKey = config.getSecretKey();
-        Auth auth = Auth.create(accesskey, secretKey);
+        Auth auth = Auth.create(accessKey, secretKey);
         Zone z = Zone.autoZone();
         Configuration c = new Configuration(z);
         UploadManager uploadManager = new UploadManager(c);

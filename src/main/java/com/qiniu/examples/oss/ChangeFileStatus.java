@@ -13,9 +13,9 @@ public class ChangeFileStatus {
     public static void main(String[] args) {
 
         Config config = Config.getInstance();
-        String accesskey = config.getAccesskey();
+        String accessKey = config.getAccesskey();
         String secretKey = config.getSecretKey();
-        Auth auth = Auth.create(accesskey, secretKey);
+        Auth auth = Auth.create(accessKey, secretKey);
 
         String bucket = "temp";
         String key = "test1.jpg";
