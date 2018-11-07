@@ -35,9 +35,9 @@ public class ListBucketV2 {
     public static void main(String args[]) throws UnsupportedEncodingException {
 
         Config config = Config.getInstance();
-        String accesskey = config.getAccesskey();
+        String accessKey = config.getAccesskey();
         String secretKey = config.getSecretKey();
-        Auth auth = Auth.create(accesskey, secretKey);
+        Auth auth = Auth.create(accessKey, secretKey);
         String bucket = "fusionlog";
 
 //        fileList(auth, bucket, "", "", "", 1000);
