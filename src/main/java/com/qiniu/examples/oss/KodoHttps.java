@@ -3,6 +3,7 @@ package com.qiniu.examples.oss;
 import com.qiniu.common.Config;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Client;
+import com.qiniu.http.Response;
 import com.qiniu.util.Auth;
 import com.qiniu.util.Json;
 import com.qiniu.util.StringMap;
@@ -22,17 +23,17 @@ public class KodoHttps {
 //        stringMap.put("certid", "5b88b3da340597388f00195d");
 
         JSONObject jsonData = new JSONObject();
-        jsonData.put("domain", "image.diyidan.net");
-        jsonData.put("certid", "5b88b3da340597388f00195d");
+//        jsonData.put("domain", "image.diyidan.net");
+//        jsonData.put("certid", "5b88b3da340597388f00195d");
+        jsonData.put("domain", "first.nigel.qiniuts.com");
+        jsonData.put("certid", "5a1698d1cf2f675aae000395");
         String data = Json.encode(jsonData);
         System.out.println(data);
         byte[] body = StringUtils.utf8Bytes(data);
         String url = "http://api.qiniu.com/cert/bind";
         StringMap headers = auth.authorization(url, body, "application/json");
-
-
         Client client = new Client();
-        com.qiniu.http.Response response = null;
+        Response response = null;
         try {
             response = client.post(url, body, headers);
             System.out.println(response.bodyString());
