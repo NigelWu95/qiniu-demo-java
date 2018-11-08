@@ -141,7 +141,7 @@ public class PersistenceFop {
 //                "avthumb/mp4/s/960x540/autoscale/1/wmImage/aHR0cHM6Ly9xbi5rYWloZWlrZWppLmNvbS8lRTclOUYlQTIlRTklODclOEYlRTYlOTklQkElRTglODMlQkQlRTUlQUYlQjklRTglQjElQTFAMngucG5n/wmGravity/NorthWest/vmOffsetX/60/vmOffsetY/25|avthumb/mp4/s/1000x1000/autoscale/1/wmText/SUQ6MTIzNDU2Nzg=/wmFontSize/36/wmFontColor/I0ZGRkZGRg==/wmGravityText/NorthWest/wmOffsetY/125" +
 //                "|saveas/" + UrlSafeBase64.encodeToString( "temp:" + "2593faaf76e2650352dfab75356e908b-7.mp4");
 
-//                "avconcat/2/format/mp4/" + UrlSafeBase64.encodeToString("http://temp.nigel.qiniuts.com/douguo-live15270448612503c1384s1898.mp4");
+//                "avconcat/2/format/mp4/" + UrlSafeBase64.encodeToString("http://temp.nigel.qiniuts.com/douguo-live15270448612503c1384s1898.mp4") +
 //                "avthumb/mp4/wmImage/aHR0cDovL3BjNXIyYjN6by5ia3QuY2xvdWRkbi5jb20vd2F0ZXIucG5nP2ltYWdlVmlldzIvMC93LzU0/wmOffsetX/-50/wmOffsetY/125" +
 //                "avthumb/mp4/wmImage/aHR0cDovL3BjNXIyYjN6by5ia3QuY2xvdWRkbi5jb20vd2F0ZXIucG5nP2ltYWdlVmlldzIvMC93LzU0" +
 //                "avthumb/mp3/ab/96k/ar/44100/acodec/libmp3lame" +
