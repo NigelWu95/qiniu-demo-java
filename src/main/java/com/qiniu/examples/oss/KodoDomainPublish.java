@@ -12,14 +12,11 @@ public class KodoDomainPublish {
         Config config = Config.getInstance();
         String accessKey = config.getAccesskey();
         String secretKey = config.getSecretKey();
-
         Auth auth = Auth.create(accessKey, secretKey);
-        String tbl = "";
-        String url = "http://api.qiniu.com/publish/" + UrlSafeBase64.encodeToString("image.diyidan.net")
+        String tbl = "7zmz4b";
+        String url = "http://api.qiniu.com/publish/" + UrlSafeBase64.encodeToString("first.nigel.qiniuts.com")
                 + "/from/" + tbl + "/domaintype/1";
         StringMap headers = auth.authorization(url, null, "application/json");
-
-
         Client client = new Client();
         com.qiniu.http.Response response = null;
         try {
@@ -27,8 +24,8 @@ public class KodoDomainPublish {
             System.out.println(response.bodyString());
         } catch (QiniuException e) {
             e.printStackTrace();
+        } finally {
+            if (response != null) response.close();
         }
-
-        response.close();
     }
 }
