@@ -18,15 +18,9 @@ public class KodoHttps {
         String accessKey = config.getAccesskey();
         String secretKey = config.getSecretKey();
         Auth auth = Auth.create(accessKey, secretKey);
-//        StringMap stringMap = new StringMap();
-//        stringMap.put("domain", "image.diyidan.net");
-//        stringMap.put("certid", "5b88b3da340597388f00195d");
-
         JSONObject jsonData = new JSONObject();
-//        jsonData.put("domain", "image.diyidan.net");
-//        jsonData.put("certid", "5b88b3da340597388f00195d");
-        jsonData.put("domain", "first.nigel.qiniuts.com");
-        jsonData.put("certid", "5a1698d1cf2f675aae000395");
+        jsonData.put("domain", "xxx.xxx.com");
+        jsonData.put("certid", "certification id of domain on qiniu");
         String data = Json.encode(jsonData);
         System.out.println(data);
         byte[] body = StringUtils.utf8Bytes(data);

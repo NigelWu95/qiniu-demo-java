@@ -13,15 +13,16 @@ public class KodoDomainPublish {
         String accessKey = config.getAccesskey();
         String secretKey = config.getSecretKey();
         Auth auth = Auth.create(accessKey, secretKey);
-        String bucket = "temp";
-        String url = "http://rs.qbox.me/publish/" + UrlSafeBase64.encodeToString("first.nigel.qiniuts.com")
+        String bucket = "bucket name";
+        String domain = "bucket domain";
+        String url = "http://rs.qbox.me/publish/" + UrlSafeBase64.encodeToString(domain)
                 + "/from/" + bucket + "/domaintype/1";
         System.out.println(url);
         StringMap headers = auth.authorization(url, null, "application/json");
         Client client = new Client();
         com.qiniu.http.Response response = null;
         try {
-            response = client.post(url, null, headers, "bodyString.getBytes()");
+            response = client.post(url, null, headers, "application/json");
             System.out.println(response.statusCode);
             System.out.println(response.bodyString());
         } catch (QiniuException e) {
