@@ -43,11 +43,13 @@ public class ListBucketV2 {
 //        fileList(auth, bucket, "", "", "", 1000);
 //        fileList(auth, bucket, "在", "", "", 1000);
 //        fileList(auth, bucket, "|", "", "", 1000);
-        String marker = fileList(auth, bucket, "", "", "eyJjIjowLCJrIjoidjIvN3hvZzN0LmNvbTIuejAuZ2xiLnFpbml1Y2RuLmNvbV8yMDE4LTA1LTA0LTE4X3BhcnQtMDAwMDAuZ3oifQ==",50000);
-        System.out.println(marker);
+//        String marker = fileList(auth, bucket, "", "", "eyJjIjowLCJrIjoidjIvN3hvZzN0LmNvbTIuejAuZ2xiLnFpbml1Y2RuLmNvbV8yMDE4LTA1LTA0LTE4X3BhcnQtMDAwMDAuZ3oifQ==",50000);
+//        System.out.println(marker);
 //        while (!StringUtils.isNullOrEmpty(marker)) {
 //            marker = fileList(auth, bucket, "v2/", "", marker,10000);
 //        }
+
+        System.out.println(calculateMarker(0, "v2/.6zer.com_2018-11-12-06_part-00000.gz"));
     }
 
     /*
@@ -113,7 +115,7 @@ public class ListBucketV2 {
         return jsonObject.get("marker").getAsString();
     }
 
-    public String calculateMarker(int type, String key) {
+    public static String calculateMarker(int type, String key) {
         return UrlSafeBase64.encodeToString("{\"c\":" + type + ",\"k\":\"" + key + "\"}");
     }
 }
