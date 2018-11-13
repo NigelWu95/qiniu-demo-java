@@ -14,7 +14,7 @@ public class CharactersUtil {
 
     public static String[] parseBytesToHexArray(byte[] byteArray) {
 
-        String hex = "";
+        String hex;
         StringBuilder hexString = new StringBuilder();
 
         for (int i = 0; i < byteArray.length; i++) {
