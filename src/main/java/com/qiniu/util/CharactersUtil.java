@@ -6,6 +6,16 @@ import java.nio.charset.Charset;
 
 public class CharactersUtil {
 
+    public static void main(String[] args) {
+
+        System.out.println(QiniuEtagUtil.urlSafeBase64Decode("Fto5o-5ea0sNMlW_75VgGJCv2AcJ"));
+        System.out.println(new String(UrlSafeBase64.decode("Fto5o-5ea0sNMlW_75VgGJCv2AcJ")));
+        System.out.println(QiniuEtagUtil.urlSafeBase64Encode("test:test.jpg"));
+        System.out.println(QiniuEtagUtil.urlSafeBase64Decode("dGVzdDp0ZXN0LmpwZw=="));
+        System.out.println(UrlSafeBase64.encodeToString("test:test.jpg"));
+        System.out.println(new String(UrlSafeBase64.decode("dGVzdDp0ZXN0LmpwZw==")));
+    }
+
     public static String[] parseStringToHexArray(String originString) {
 
         byte[] byteArray = originString.getBytes();
@@ -23,9 +33,9 @@ public class CharactersUtil {
 
             hex = Integer.toHexString(0xFF & byteArray[i]);
             if ((byteArray[i] & 0xFF) < 0x10) // 0~F前面加上零
-                hexString.append("0x0" + hex);
+                hexString.append("0x0").append(hex);
             else
-                hexString.append("0x" + hex);
+                hexString.append("0x").append(hex);
         }
 
         return hexString.toString().split(",");

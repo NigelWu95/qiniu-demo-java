@@ -3,6 +3,7 @@ package com.qiniu.util;
 import java.io.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.Base64;
 import javax.xml.bind.DatatypeConverter;
 
@@ -45,13 +46,22 @@ public class QiniuEtagUtil {
         return encodedString;
     }
 
+    public static String urlSafeBase64Encode(String data) {
+        return urlSafeBase64Encode(data.getBytes());
+    }
+
+    public static String urlSafeBase64Decode(String encodedString) {
+        byte[] bytes = DatatypeConverter.parseBase64Binary(encodedString
+                .replace('-', '+').replace('_', '/'));
+        return new String(bytes);
+    }
+
     public static byte[] lessThan4mHash(FileInputStream inputStream) throws IOException, NoSuchAlgorithmException {
         byte[] bytesData = new byte[CHUNK_SIZE];
         int bytesReadLen = inputStream.read(bytesData, 0, CHUNK_SIZE);
         byte[] bytesRead = new byte[bytesReadLen];
         System.arraycopy(bytesData, 0, bytesRead, 0, bytesReadLen);
-        byte[] hashData = sha1(bytesRead);
-        return hashData;
+        return sha1(bytesRead);
     }
 
     public static byte[] greaterThan4mHash(FileInputStream inputStream, long fileLength) throws IOException,

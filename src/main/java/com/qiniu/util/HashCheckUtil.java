@@ -9,6 +9,7 @@ public class HashCheckUtil {
 
     public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
 
+        System.out.println(Etag.file("/Users/wubingheng/Downloads/parsed-3.jpg"));
         System.out.println(isEqualWithHash("/Users/wubingheng/Downloads/paper-hor-1.jpg",
                 "01105c5436820997b0588ef323c83ca326d79805"));
         System.out.println(isEqualWithHash("/Users/wubingheng/Downloads/parsed-3.jpg",
