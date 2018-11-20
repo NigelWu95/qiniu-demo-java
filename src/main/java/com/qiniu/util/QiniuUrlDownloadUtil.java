@@ -105,7 +105,7 @@ public class QiniuUrlDownloadUtil {
                 response.close();
         }
 
-        boolean fileRight = ioLength == fileSize && HashCheckUtil.isEquealWithHash(file, responseHash);
+        boolean fileRight = ioLength == fileSize && HashCheckUtil.isEqualWithHash(file, responseHash);
         if (deleteIfFalse && !fileRight)
             file.delete();
 
