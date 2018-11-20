@@ -110,7 +110,7 @@ public class QiniuUrlDownloadUtil {
         File file = new File(downloadPath, fileKey);
         FileOutputStream fileOutputStream = new FileOutputStream(file);
         Response response = null;
-        long ioLength = 0;
+        long ioLength;
 
         try {
             response = client.get(url);
@@ -123,7 +123,7 @@ public class QiniuUrlDownloadUtil {
                 response.close();
         }
 
-        boolean fileRight = ioLength == fileSize && HashCheckUtil.isEqualWithHash(file, responseHash);
+        boolean fileRight = ioLength == fileSize && HashCheckUtil.getFileHash(file, "sha1").equals(responseHash);
         if (deleteIfFalse && !fileRight)
             file.delete();
 

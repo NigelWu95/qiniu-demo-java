@@ -2,47 +2,44 @@ package com.qiniu.util;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class HashCheckUtil {
 
-    public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
+    public static void main(String[] args) throws Exception {
 
-        System.out.println(Etag.file("/Users/wubingheng/Downloads/parsed-3.jpg"));
-        System.out.println(isEqualWithHash("/Users/wubingheng/Downloads/paper-hor-1.jpg",
-                "01105c5436820997b0588ef323c83ca326d79805"));
-        System.out.println(isEqualWithHash("/Users/wubingheng/Downloads/parsed-3.jpg",
-                "3edc2d8fd7d1c88e109c6fe64fb70a72ea1ab80c"));
-        try {
-            System.out.println(isEqualWithHash(new File("/Users/wubingheng/Downloads/result1.jpg"),
-                    "71fe3926b6c47a2c96e8130da96783a25cc570d6"));
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
+        System.out.println(getFileHash("/Users/wubingheng/Downloads/parsed-3.jpg", "sha1"));
+        System.out.println(getFileHash("/Users/wubingheng/Downloads/paper-hor-1.jpg", "sha1")
+                .equals("01105c5436820997b0588ef323c83ca326d79805"));
+        System.out.println(getFileHash("/Users/wubingheng/Downloads/parsed-3.jpg", "sha1")
+                .equals("3edc2d8fd7d1c88e109c6fe64fb70a72ea1ab80c"));
     }
 
-    public static boolean isEqualWithHash(String filePath, String fileSha1sum) throws IOException, NoSuchAlgorithmException {
+    public static String getFileHash(String filePath, String algorithm) throws NoSuchAlgorithmException, IOException {
         File file = new File(filePath);
-        return isEqualWithHash(file, fileSha1sum);
+        return getFileHash(file, algorithm);
     }
 
-    public static boolean isEqualWithHash(File file, String fileSha1sum) throws IOException, NoSuchAlgorithmException {
-
-        if (!(file.exists() && file.isFile() && file.canRead())) {
-            throw new IOException("Error: no such file");
+    public static String getFileHash(File file, String algorithm) throws NoSuchAlgorithmException, IOException {
+        try (FileInputStream in = new FileInputStream(file)) {
+            MessageDigest digest = MessageDigest.getInstance(algorithm);
+            byte[] buffer = new byte[1024 * 1024 * 10];
+            int len;
+            while ((len = in.read(buffer)) > 0) {
+                digest.update(buffer, 0, len);
+            }
+            String sha1 = new BigInteger(1, digest.digest()).toString(16);
+            int length = 40 - sha1.length();
+            if (length > 0) {
+                for (int i = 0; i < length; i++) {
+                    sha1 = "0" + sha1;
+                }
+            }
+            return sha1;
         }
-        long fileLength = file.length();
-        FileInputStream inputStream = new FileInputStream(file);
-        byte[] hashDataSha1;
-        if (fileLength <= QiniuEtagUtil.CHUNK_SIZE) {
-            hashDataSha1 = QiniuEtagUtil.lessThan4mHash(inputStream);
-        } else {
-            hashDataSha1 = QiniuEtagUtil.greaterThan4mHash(inputStream, fileLength);
-        }
-
-        inputStream.close();
-        String calculatedSha1 = CharactersUtil.bytesToHexString(hashDataSha1);
-        return fileSha1sum.equals(calculatedSha1);
     }
 }
