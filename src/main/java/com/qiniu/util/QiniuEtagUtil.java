@@ -70,7 +70,7 @@ public class QiniuEtagUtil {
     }
 
     public static String calcETag(String fileName) throws IOException, NoSuchAlgorithmException {
-        String etag = "";
+        String etag;
         File file = new File(fileName);
         if (!(file.exists() && file.isFile() && file.canRead())) {
             throw new IOException("Error: File not found or not readable");
