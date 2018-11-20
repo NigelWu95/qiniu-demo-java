@@ -1,6 +1,5 @@
 package com.qiniu.util;
 
-import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Client;
@@ -13,9 +12,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class QiniuUrlDownloadUtil {
+
+    private static String algorithm = "sha1";
 
     public static void main(String[] args) {
         test3();
@@ -101,7 +101,7 @@ public class QiniuUrlDownloadUtil {
     public static boolean checkDownload(String url, String downloadPath, boolean deleteIfFalse) throws IOException,
             NoSuchAlgorithmException {
 
-        JsonObject respJson = getQHash(url);
+        JsonObject respJson = Json.decode(getQHash(url, algorithm), JsonObject.class);
         String responseHash = respJson.get("hash").getAsString();
         long fileSize = respJson.get("fsize").getAsLong();
         SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd-HH-mm-ss-SSS");
@@ -126,35 +126,35 @@ public class QiniuUrlDownloadUtil {
         return fileRight;
     }
 
-    public static JsonObject getQHash(String url) throws QiniuException {
+    /**
+     *
+     * @param url
+     * @param algorithm md5/sha1
+     * @return 请求 qhash 接口得到的 json body
+     * @throws QiniuException
+     */
+    public static String getQHash(String url, String algorithm) throws QiniuException {
 
         String host = url.replaceAll("(https?://)|(/[^\\\\?]*)|(\\?.*)", "");
         String srcIOUrl = url.replaceAll("https?://[^\\s/]+\\.[^\\s/\\\\.]{1,3}/", "https://iovip.qbox.me/");
 
         if (srcIOUrl.matches("https://iovip.qbox.me/[^\\\\?]*\\?.*"))
-            srcIOUrl += "|qhash/sha1";
+            srcIOUrl += "|qhash/" + algorithm;
         else
-            srcIOUrl += "?qhash/sha1";
+            srcIOUrl += "?qhash/";
 
         Map<String, Object> map = new HashMap<>();
         map.put("Host", host);
         StringMap stringMap = new StringMap(map);
-        Response response = null;
-        Gson gson = new Gson();
-        JsonObject jsonObject;
+        String responseBody;
+        Response response = client.get(srcIOUrl, stringMap);
+        responseBody = response.bodyString();
+        response.close();
 
-        try {
-            response = client.get(srcIOUrl, stringMap);
-            jsonObject = gson.fromJson(response.bodyString(), JsonObject.class);
-        } finally {
-            if (response != null)
-                response.close();
+        if (!responseBody.matches("\\{\"hash\":\".{40}\",\"fsize\":\\d+}")) {
+            throw new QiniuException(null, "not qhash response");
         }
 
-        Set<String> keySet = jsonObject.keySet();
-        if (!keySet.contains("hash") || !keySet.contains("fsize"))
-            throw new QiniuException(null, "not qhash response");
-
-        return jsonObject;
+        return responseBody;
     }
 }
