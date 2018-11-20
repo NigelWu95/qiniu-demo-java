@@ -21,7 +21,8 @@ public class QiniuEtagUtil {
             System.out.println("src etag hex string is: " + CharactersUtil.bytesToHexString(checkHashFromEtag(srcEtag)));
             System.out.println("move preamble from src etag: " + CharactersUtil.bytesToHexString(movePreambleFromEtag(srcEtag)));
             System.out.println("target etag: " + tarEtag);
-            System.out.println("fop etag is " + fopEtag + ", and it is " + (tarEtag.equals(fopEtag) ? "" : "not ") + "equal with tarEtag");
+            System.out.println("fop etag is " + fopEtag + ", and it is " + (tarEtag.equals(fopEtag) ? "" : "not ") +
+                    "equal with tarEtag");
             System.out.println("fop etag hex string is: " + CharactersUtil.bytesToHexString(checkHashFromEtag(fopEtag)));
             System.out.println("add preamble to origin hash: " + CharactersUtil.bytesToHexString(addPreambleToHash(
                     CharactersUtil.decode("def9d60bc1206a3ac77ec4243719f1d5512dbffb".toCharArray()), (byte)0x16)));
@@ -53,7 +54,8 @@ public class QiniuEtagUtil {
         return hashData;
     }
 
-    public static byte[] greaterThan4mHash(FileInputStream inputStream, long fileLength) throws IOException, NoSuchAlgorithmException {
+    public static byte[] greaterThan4mHash(FileInputStream inputStream, long fileLength) throws IOException,
+            NoSuchAlgorithmException {
         int chunkCount = (int) (fileLength / CHUNK_SIZE);
         if (fileLength % CHUNK_SIZE != 0) {
             chunkCount += 1;
@@ -127,7 +129,8 @@ public class QiniuEtagUtil {
         byte[] hashData = new byte[srcEtagHashBytes.length + fopBytes.length + fopParamsBytes.length];
         System.arraycopy(srcEtagHashBytes, 0, hashData, 0, srcEtagHashBytes.length);
         System.arraycopy(fopBytes, 0, hashData, srcEtagHashBytes.length, fopBytes.length);
-        System.arraycopy(fopParamsBytes, 0, hashData, srcEtagHashBytes.length + fopBytes.length, fopParamsBytes.length);
+        System.arraycopy(fopParamsBytes, 0, hashData, srcEtagHashBytes.length + fopBytes.length,
+                fopParamsBytes.length);
         byte[] allSha1DataSha1 = sha1(hashData);
         byte[] finalHashData = new byte[allSha1DataSha1.length + 1];
         System.arraycopy(allSha1DataSha1, 0, finalHashData, 1, allSha1DataSha1.length);

@@ -24,7 +24,8 @@ public class QiniuUrlDownloadUtil {
     public static void test2() {
 
         try {
-            urlListDownload("/Users/wubingheng/Downloads/image-url2.txt", "/Users/wubingheng/Downloads/images", true, true);
+            urlListDownload("/Users/wubingheng/Downloads/image-url2.txt",
+                    "/Users/wubingheng/Downloads/images", true, true);
         } catch (Exception exception) {
             exception.printStackTrace();
         }
@@ -34,7 +35,8 @@ public class QiniuUrlDownloadUtil {
 
         try {
             getQhash("http://temp.nigel.qiniuts.com/test-  2.jpg");
-            boolean result = checkDownload("http://temp.nigel.qiniuts.com/test-  2.jpg", "/Users/wubingheng/Downloads", false);
+            boolean result = checkDownload("http://temp.nigel.qiniuts.com/test-  2.jpg",
+                    "/Users/wubingheng/Downloads", false);
             System.out.println(result);
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -43,7 +45,8 @@ public class QiniuUrlDownloadUtil {
 
     public static final Client client = new Client();
 
-    public static void urlListDownload(String urlListFile, String downloadPath, boolean deleteIfFalse, boolean tryStripMeta) throws IOException {
+    public static void urlListDownload(String urlListFile, String downloadPath, boolean deleteIfFalse,
+                                       boolean tryStripMeta) throws IOException {
 
         File file = new File(urlListFile);
         if (!(file.exists() && file.isFile() && file.canRead())) {
@@ -82,13 +85,15 @@ public class QiniuUrlDownloadUtil {
         bufferedReader.readLine();
     }
 
-    public static boolean checkDownload(String url, String downloadPath, boolean deleteIfFalse) throws IOException, NoSuchAlgorithmException {
+    public static boolean checkDownload(String url, String downloadPath, boolean deleteIfFalse) throws IOException,
+            NoSuchAlgorithmException {
 
         JsonObject respJson = getQhash(url);
         String responseHash = respJson.get("hash").getAsString();
         long fileSize = respJson.get("fsize").getAsLong();
         SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd-HH-mm-ss-SSS");
-        String fileKey = ft.format(new Date()) + url.replaceAll("(https?://[^\\s/]+\\.[^\\s/\\\\.]{1,3}/)|(\\?.*)", "").replace("/", "-");
+        String fileKey = ft.format(new Date()) + url.replaceAll("(https?://[^\\s/]+\\.[^\\s/\\\\.]{1,3}/)|(\\?.*)",
+                "").replace("/", "-");
         File file = new File(downloadPath, fileKey);
         FileOutputStream fileOutputStream = new FileOutputStream(file);
         Response response = null;

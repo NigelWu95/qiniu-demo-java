@@ -10,7 +10,8 @@ public class HashCheckUtil {
     public static void main(String[] args) {
 
         try {
-            System.out.println(isEqualWithHash(new File("/Users/wubingheng/Downloads/result1.jpg"), "71fe3926b6c47a2c96e8130da96783a25cc570d6"));
+            System.out.println(isEqualWithHash(new File("/Users/wubingheng/Downloads/result1.jpg"),
+                    "71fe3926b6c47a2c96e8130da96783a25cc570d6"));
         } catch (Exception exception) {
             exception.printStackTrace();
         }
