@@ -7,8 +7,12 @@ import java.security.NoSuchAlgorithmException;
 
 public class HashCheckUtil {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, NoSuchAlgorithmException {
 
+        System.out.println(isEqualWithHash("/Users/wubingheng/Downloads/paper-hor-1.jpg",
+                "01105c5436820997b0588ef323c83ca326d79805"));
+        System.out.println(isEqualWithHash("/Users/wubingheng/Downloads/parsed-3.jpg",
+                "3edc2d8fd7d1c88e109c6fe64fb70a72ea1ab80c"));
         try {
             System.out.println(isEqualWithHash(new File("/Users/wubingheng/Downloads/result1.jpg"),
                     "71fe3926b6c47a2c96e8130da96783a25cc570d6"));
@@ -35,6 +39,7 @@ public class HashCheckUtil {
         } else {
             hashDataSha1 = QiniuEtagUtil.greaterThan4mHash(inputStream, fileLength);
         }
+
         inputStream.close();
         String calculatedSha1 = CharactersUtil.bytesToHexString(hashDataSha1);
         return fileSha1sum.equals(calculatedSha1);

@@ -65,8 +65,7 @@ public class QiniuEtagUtil {
             byte[] chunkDataSha1 = lessThan4mHash(inputStream);
             allSha1Data = addBytesToHashArray(allSha1Data, chunkDataSha1);
         }
-        byte[] allSha1DataSha1 = sha1(allSha1Data);
-        return allSha1DataSha1;
+        return sha1(allSha1Data);
     }
 
     public static String calcETag(String fileName) throws IOException, NoSuchAlgorithmException {

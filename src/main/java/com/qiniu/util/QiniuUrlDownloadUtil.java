@@ -27,7 +27,7 @@ public class QiniuUrlDownloadUtil {
             String url = "https://ss2.meipian.me/book/img/sku/calendar/paper-hor-1.jpg";
             String fop = "watermark/1/image/aHR0cDovL3N0YXRpYzIuaXZ3ZW4uY29tL3VzZXJzLzE2NTc0MDc0LzYyOGU2MTU4ZDNmMTQyYTM" +
                     "5ODVmMjE2NTNkNDlmMjA3LmpwZz9pbWFnZU1vZ3IyL2RlbnNpdHkvNDUwL3JvdGF0ZS8wL2Nyb3AvITE0NDB4NzkwYTBhMTMxL3" +
-                    "RodW1ibmFpbC8zOTY0eDIxNzU=/gravity/North/dx/0/dy/278%7CimageMogr2/density/450/quality/99/strip";
+                    "RodW1ibmFpbC8zOTY0eDIxNzU=/gravity/North/dx/0/dy/278|imageMogr2/density/450/quality/99/strip";
             boolean result = checkDownload(url + "?" + fop, "/Users/wubingheng/Downloads", false);
             System.out.println(result);
         } catch (Exception exception) {
