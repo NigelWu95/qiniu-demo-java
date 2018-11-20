@@ -58,6 +58,7 @@ public class QiniuUrlDownloadUtil {
 
     public static final Client client = new Client();
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public static void urlListDownload(String urlListFile, String downloadPath, boolean deleteIfFalse,
                                        boolean tryStripMeta) throws IOException {
 
@@ -67,9 +68,7 @@ public class QiniuUrlDownloadUtil {
         }
 
         File dir = new File(downloadPath);
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
+        if (!dir.exists()) dir.mkdirs();
 
         FileReader fileReader = new FileReader(urlListFile);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
@@ -98,6 +97,7 @@ public class QiniuUrlDownloadUtil {
         bufferedReader.readLine();
     }
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public static boolean checkDownload(String url, String downloadPath, boolean deleteIfFalse) throws IOException,
             NoSuchAlgorithmException {
 
@@ -116,16 +116,12 @@ public class QiniuUrlDownloadUtil {
             response = client.get(url);
             InputStream inputStream = response.bodyStream();
             ioLength = IOUtils.copyLarge(inputStream, fileOutputStream);
-        } catch (QiniuException e) {
-            throw e;
         } finally {
-            if (response != null)
-                response.close();
+            if (response != null) response.close();
         }
 
         boolean fileRight = ioLength == fileSize && HashCheckUtil.getFileHash(file, "sha1").equals(responseHash);
-        if (deleteIfFalse && !fileRight)
-            file.delete();
+        if (deleteIfFalse && !fileRight) file.delete();
 
         return fileRight;
     }
@@ -150,8 +146,6 @@ public class QiniuUrlDownloadUtil {
         try {
             response = client.get(srcIOUrl, stringMap);
             jsonObject = gson.fromJson(response.bodyString(), JsonObject.class);
-        } catch (QiniuException e) {
-            throw e;
         } finally {
             if (response != null)
                 response.close();

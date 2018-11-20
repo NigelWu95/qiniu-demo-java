@@ -143,8 +143,6 @@ public class QiniuEtagUtil {
         byte[] finalHashData = new byte[allSha1DataSha1.length + 1];
         System.arraycopy(allSha1DataSha1, 0, finalHashData, 1, allSha1DataSha1.length);
         finalHashData[0] = (byte) 0x00;
-        String etag = urlSafeBase64Encode(finalHashData);
-
-        return etag;
+        return urlSafeBase64Encode(finalHashData);
     }
 }
