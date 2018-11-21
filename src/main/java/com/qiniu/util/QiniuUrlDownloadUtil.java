@@ -18,7 +18,7 @@ public class QiniuUrlDownloadUtil {
     private static String algorithm = "sha1";
 
     public static void main(String[] args) {
-        test3();
+        test1();
     }
 
     public static void test3() {
@@ -27,7 +27,7 @@ public class QiniuUrlDownloadUtil {
             String url = "https://ss2.meipian.me/book/img/sku/calendar/paper-hor-1.jpg";
             String fop = "watermark/1/image/aHR0cDovL3N0YXRpYzIuaXZ3ZW4uY29tL3VzZXJzLzE2NTc0MDc0LzYyOGU2MTU4ZDNmMTQyYTM" +
                     "5ODVmMjE2NTNkNDlmMjA3LmpwZz9pbWFnZU1vZ3IyL2RlbnNpdHkvNDUwL3JvdGF0ZS8wL2Nyb3AvITE0NDB4NzkwYTBhMTMxL3" +
-                    "RodW1ibmFpbC8zOTY0eDIxNzU=/gravity/North/dx/0/dy/278|imageMogr2/density/450/quality/99/strip";
+                    "RodW1ibmFpbC8zOTY0eDIxNzU=/gravity/North/dx/0/dy/278|imageMogr2/density/450/quality/99";
             boolean result = checkDownload(url + "?" + fop, "/Users/wubingheng/Downloads", false);
             System.out.println(result);
         } catch (Exception exception) {
@@ -48,7 +48,8 @@ public class QiniuUrlDownloadUtil {
     public static void test1() {
 
         try {
-            boolean result = checkDownload("http://temp.nigel.qiniuts.com/test-  2.jpg",
+            boolean result = checkDownload("http://temp.nigel.qiniuts.com/1400x2000.png?" +
+                            "watermark/2/text/d2F0ZXJtYXJrLXRlc3Q=/fill/IzAwMDAwMA==/fontsize/500",
                     "/Users/wubingheng/Downloads", false);
             System.out.println(result);
         } catch (Exception exception) {
@@ -82,7 +83,7 @@ public class QiniuUrlDownloadUtil {
 
                         if (!result && line.matches(".*\\?.*$"))
                             line += "|imageMogr2/strip";
-                            result = checkDownload(line, downloadPath, deleteIfFalse);
+                        result = checkDownload(line, downloadPath, deleteIfFalse);
 
                         System.out.println(line + " : " + result);
                     } else {
