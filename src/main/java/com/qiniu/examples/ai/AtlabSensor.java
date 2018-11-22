@@ -5,7 +5,11 @@ import com.qiniu.common.Config;
 import com.qiniu.http.Client;
 import com.qiniu.http.Response;
 import com.qiniu.util.Auth;
+import com.qiniu.util.Json;
 import com.qiniu.util.StringMap;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class AtlabSensor {
 
@@ -16,27 +20,44 @@ public class AtlabSensor {
         String secretKey = config.getSecretKey();
         Auth auth = Auth.create(accesskey, secretKey);
 
-        JsonObject dataValueJson = new JsonObject();
-        JsonObject paramsValueJson = new JsonObject();
-        JsonObject opValue = new JsonObject();
-        JsonArray opsValueJsonArray = new JsonArray();
-        dataValueJson.addProperty("uri", "http://xxx.com/test.mp4");
-//        paramsValueJson.addProperty("", "");
-        opValue.addProperty("op", "pulp");
-        opsValueJsonArray.add(opValue);
         JsonObject bodyJson = new JsonObject();
+
+        JsonObject dataValueJson = new JsonObject();
+        dataValueJson.addProperty("uri", "http://zb.xksquare.com/20180929204815_1_5baf748f1e18a.mp4");
         bodyJson.add("data", dataValueJson);
-        bodyJson.add("params", paramsValueJson);
+
+        JsonArray opsValueJsonArray = new JsonArray();
+        JsonObject opValue = new JsonObject();
+        opValue.addProperty("op", "pulp");
+        JsonArray jsonArray = new JsonArray();
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("label", "1");
+        jsonObject.addProperty("select", 2);
+        jsonObject.addProperty("score", 0);
+        jsonArray.add(jsonObject);
+        JsonObject jsonObject1 = new JsonObject();
+        jsonObject1.add("labels", jsonArray);
+        opValue.add("params", jsonObject1);
+        opsValueJsonArray.add(opValue);
         bodyJson.add("ops", opsValueJsonArray);
+
+        JsonObject paramsValueJson = new JsonObject();
+        paramsValueJson.addProperty("async", false);
+        JsonObject jsonObject2 = new JsonObject();
+        jsonObject2.addProperty("mode", 1);
+        jsonObject2.addProperty("interval", 5);
+        paramsValueJson.add("vframe", jsonObject1);
+        bodyJson.add("params", paramsValueJson);
+
         System.out.println(bodyJson.toString());
         byte[] bodyBytes = bodyJson.toString().getBytes();
 
         // 获取签名
-        String url = "http://argus.atlab.ai/v1/video/" + "testvid";
+        String url = "http://argus.atlab.ai/v1/video/" + "12345678";
         String qiniuToken = "Qiniu " + auth.signRequestV2(url, "POST", bodyBytes, "application/json");
         Client client = new Client();
         StringMap headers = new StringMap();
-        headers.put("AuthorizationUtil", qiniuToken);
+        headers.put("Authorization", qiniuToken);
         Response resp = null;
 
         try {

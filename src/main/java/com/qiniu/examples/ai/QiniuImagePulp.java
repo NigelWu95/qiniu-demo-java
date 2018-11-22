@@ -60,7 +60,6 @@ public class QiniuImagePulp {
             }
         }
 
-
         // get 请求方式
         String url2 = String.format("http://7xlv47.com1.z0.glb.clouddn.com/pulpsexy.jpg?qpulp");
         Response response2 = null;
