@@ -41,4 +41,30 @@
         </dependency>
     </dependencies>
 
+    <build>
+        <finalName>qiniu-demo</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.jsonschema2pojo</groupId>
+                <artifactId>jsonschema2pojo-maven-plugin</artifactId>
+                <version>0.4.34</version>
+                <configuration>
+                    <sourceDirectory>${basedir}/src/main/jsons</sourceDirectory>
+                    <targetPackage>com.qiniu.model</targetPackage>
+                    <outputDirectory>${basedir}/src/main/java</outputDirectory>
+                    <addCompileSourceRoot>false</addCompileSourceRoot>
+                    <sourceType>json</sourceType>
+                    <annotationStyle>none</annotationStyle>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
