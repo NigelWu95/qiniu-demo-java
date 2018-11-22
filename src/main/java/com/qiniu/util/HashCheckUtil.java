@@ -24,7 +24,9 @@ public class HashCheckUtil {
     }
 
     public static String getFileHash(File file, String algorithm) throws NoSuchAlgorithmException, IOException {
-        try (FileInputStream in = new FileInputStream(file)) {
+        FileInputStream in = null;
+        try {
+            in = new FileInputStream(file);
             MessageDigest digest = MessageDigest.getInstance(algorithm);
             byte[] buffer = new byte[1024 * 1024 * 10];
             int len;
@@ -39,6 +41,8 @@ public class HashCheckUtil {
                 }
             }
             return sha1;
+        } finally {
+            if (in != null) in.close();
         }
     }
 }

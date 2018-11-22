@@ -71,7 +71,7 @@ public class QiniuImagePulp {
             StringMap resultJson = Json.decode(response2.bodyString());
             System.out.println(resultJson.get("result"));
             resultJson.put("url", url2);
-            System.out.println(Json.encode(resultJson).toString());
+            System.out.println(Json.encode(resultJson));
         } catch (QiniuException e) {
             e.printStackTrace();
         }
