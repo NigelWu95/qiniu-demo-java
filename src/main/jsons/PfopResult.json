@@ -1,0 +1,19 @@
+{
+  "code": 0,
+  "desc": "The fop was completed successfully",
+  "id": "z1.5bf824b4c0ebc160e4a3e93c",
+  "inputBucket": "fantasy-tv",
+  "inputKey": "video/1916272/1918151/1538725715351_new.mp4",
+  "items": [
+    {
+      "cmd": "avthumb/mp4/s/640x480/autoscale/1|saveas/ZmFudGFzeS10djp2aWRlby8xOTE2MjcyLzE5MTgxNTEvMTUzODcyNTcxNTM1MV9uZXdGNDgwLm1wNA==",
+      "code": 0,
+      "desc": "The fop was completed successfully",
+      "hash": "ltuUHhGQulleNFfDjAaywCJnfHoS",
+      "key": "video/1916272/1918151/1538725715351_newF480.mp4",
+      "returnOld": 0
+    }
+  ],
+  "pipeline": "1381308487.avthumb-pipline",
+  "reqid": "iC0AAAwdIIxNzGkV"
+}
