@@ -23,7 +23,7 @@ public class AtlabSensor {
         JsonObject bodyJson = new JsonObject();
 
         JsonObject dataValueJson = new JsonObject();
-        dataValueJson.addProperty("uri", "http://zb.xksquare.com/20180929204815_1_5baf748f1e18a.mp4");
+        dataValueJson.addProperty("uri", "http://video.diaodiaosocial.com/2f28e1685d255dac692d8c4f0d3c25d4.mp4");
         bodyJson.add("data", dataValueJson);
 
         JsonArray opsValueJsonArray = new JsonArray();

@@ -19,7 +19,7 @@ public class BucketMain {
         Configuration c = new Configuration(z);
         BucketManager bucketManager = new BucketManager(auth, c);
         try {
-            bucketManager.deleteBucket("");
+            bucketManager.deleteBucket("ji");
         } catch (QiniuException e) {
             e.printStackTrace();
             System.out.println(e.code());

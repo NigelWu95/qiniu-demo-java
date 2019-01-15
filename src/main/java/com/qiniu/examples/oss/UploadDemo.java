@@ -7,6 +7,7 @@ import com.qiniu.storage.UploadManager;
 import com.qiniu.common.Zone;
 import com.qiniu.storage.Configuration;
 import com.qiniu.util.Auth;
+import com.qiniu.util.StringMap;
 
 import java.io.IOException;
 
@@ -50,7 +51,7 @@ public class UploadDemo {
 
         try {
             //调用put方法上传
-            Response res = uploadManager.put(filePath, key, auth.uploadToken(bucket));
+            Response res = uploadManager.put(filePath, key, auth.uploadToken(bucket, "", 3600, new StringMap().put("insertOnly", 1)));
             //打印返回的信息
             System.out.println(res.bodyString());
         } catch (QiniuException e) {

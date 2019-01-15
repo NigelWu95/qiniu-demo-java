@@ -19,7 +19,7 @@ public class FileStatDemo {
         Zone z = Zone.autoZone();
         Configuration configuration = new Configuration(z);
         BucketManager bucketManager = new BucketManager(auth, configuration);
-        String bucket = "bucket";
+        String bucket = "temp";
         String key = "key";
 
         try {
