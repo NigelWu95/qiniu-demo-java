@@ -9,8 +9,6 @@ import com.qiniu.storage.Configuration;
 import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
 
-import java.io.IOException;
-
 public class UploadDemo {
 
     public static void main(String args[]) {

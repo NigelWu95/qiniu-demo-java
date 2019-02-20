@@ -44,21 +44,27 @@ public class KeepWatermarkSizeDemo {
                                     String sourceVideoKey, String targetFileName, String wmText, String wmImageUrl) {
 
         double[] wxh = getWidthAndHeight(domainOfBucket, sourceVideoKey);
-        double width = wxh[0];
-        double height = wxh[1];
-        Configuration cfg = new Configuration(Zone.autoZone());
-        //新建一个OperationManager对象
-        OperationManager operationManager = new OperationManager(auth, cfg);
+        // 原视频的宽高
+        double srcVideo_width = wxh[0];
+        double srcVideo_height = wxh[1];
+        // 目标水印的宽高
+        double wm_width = 360.000000;
+//        double wm_height = 300.000000;
+        // 视频水印自适应类型，根据宽高比选择短边自适应还是长边自适应
+        int wmScaleType = (int) (srcVideo_height/srcVideo_width);
+        double wmScale = srcVideo_width >= srcVideo_height ? (wm_width/srcVideo_width) : (wm_width/srcVideo_height);
 
-        // 控制图片大小的参数是 wmScale，这个使得图片跟随视频大小缩放，根据 360.000000/width 来设置这个参数就是表示，自适应的一边保持长度 360，然后除以原视频 width 得到这个比例。
+        // 控制图片大小的参数是 wmScale，这个使得图片跟随视频大小缩放，自适应的一边保持长度360，然后除以原视频的短边或者长边得到这个比例。
         String pfops = "avthumb/mp4/wmImage/" + UrlSafeBase64.encodeToString(wmImageUrl) +
-                "/wmGravity/NorthWest/vmOffsetX/-30/vmOffsetY/-30/wmConstant/1/wmScale/" + 360.000000/width + "/wmScaleType/0" +
-                "|saveas/" + UrlSafeBase64.encodeToString(bucket + ":" + targetFileName);
+                "/wmGravity/NorthWest/vmOffsetX/-30/vmOffsetY/-30/wmConstant/1/wmScale/" + wmScale + "/wmScaleType/" +
+                wmScaleType + "|saveas/" + UrlSafeBase64.encodeToString(bucket + ":" + targetFileName);
 
         StringMap params = new StringMap().putWhen("force", 1, true).putNotEmpty("pipeline", pipeline);
         String persistId = "";
 
         try {
+            Configuration cfg = new Configuration(Zone.autoZone());
+            OperationManager operationManager = new OperationManager(auth, cfg);
             persistId = operationManager.pfop(bucket, sourceVideoKey, pfops, params);
         } catch (QiniuException e) {
             //捕获异常信息
@@ -68,9 +74,8 @@ public class KeepWatermarkSizeDemo {
             try {
                 // 响应的文本信息
                 System.out.println(r.bodyString());
-            } catch (QiniuException e1) {
-                //ignore
-            }
+            } catch (QiniuException ignored) {}
+            r.close();
         }
 
         return persistId;
