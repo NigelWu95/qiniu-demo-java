@@ -25,30 +25,34 @@ public class KeepWatermarkSizeDemo {
         Auth auth = Auth.create(accesskey, secretKey);
 
         //设置转码的队列名称
-        String pipeline = "xxx";
+        String pipeline = "audio-video";
         //设置要转码的空间和 key，并且这个 key 在你空间中存在
         String bucket = "temp";
-        String domainOfBucket = "http://xxx.com/";
-        String sourceVideoKey = "test1.mp4";
-        String targetFileName = "test2.mp4";
+        String domainOfBucket = "http://temp.xxx.com/";
+        String sourceVideoKey = "1080x1920.mp4";
+        String targetFileName = "1080x1920-vm1.mp4";
         String wmText = "ID:12345678";
-        String wmImageUrl = "https://xxx.com/watermark.png";
-
-        String persistId = new KeepWatermarkSizeDemo().keepSizeWaterMark(auth, bucket, domainOfBucket, pipeline,
-                sourceVideoKey, targetFileName, wmText, wmImageUrl);
-
-        System.out.println("http://api.qiniu.com/status/get/prefop?id=" + persistId);
+        String wmImageUrl = "https://xxx/test/watermarks/logo/logo-white-1.png";
+        String persistId;
+        try {
+            persistId = new KeepWatermarkSizeDemo().keepSizeWaterMark(auth, bucket, domainOfBucket, pipeline,
+                    sourceVideoKey, targetFileName, wmText, wmImageUrl);
+            System.out.println("http://api.qiniu.com/status/get/prefop?id=" + persistId);
+        } catch (QiniuException e) {
+            e.printStackTrace();
+        }
     }
 
     public String keepSizeWaterMark(Auth auth, String bucket, String domainOfBucket, String pipeline,
-                                    String sourceVideoKey, String targetFileName, String wmText, String wmImageUrl) {
+                                    String sourceVideoKey, String targetFileName, String wmText, String wmImageUrl)
+            throws QiniuException {
 
         double[] wxh = getWidthAndHeight(domainOfBucket, sourceVideoKey);
         // 原视频的宽高
         double srcVideo_width = wxh[0];
         double srcVideo_height = wxh[1];
         // 目标水印的宽高
-        double wm_width = 360.000000;
+        double wm_width = 108.000000;
 //        double wm_height = 300.000000;
         // 视频水印自适应类型，根据宽高比选择短边自适应还是长边自适应
         int wmScaleType = (int) (srcVideo_height/srcVideo_width);
@@ -82,17 +86,10 @@ public class KeepWatermarkSizeDemo {
     }
 
 
-    public double[] getWidthAndHeight(String domain, String sourceVideoKey) {
+    public double[] getWidthAndHeight(String domain, String sourceVideoKey) throws QiniuException {
         // 先获取视频元信息
         Client client = new Client();
-        String responseJson = null;
-
-        try {
-            responseJson = client.get(domain + sourceVideoKey + "?avinfo").bodyString();
-        } catch (QiniuException e) {
-            e.printStackTrace();
-        }
-
+        String responseJson = client.get(domain + sourceVideoKey + "?avinfo").bodyString();
         JsonArray jsonArray = new JsonArray();
         JsonParser jsonParser = new JsonParser();
         JsonElement element = jsonParser.parse(responseJson);
