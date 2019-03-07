@@ -5,6 +5,9 @@ import com.qiniu.common.QiniuException;
 import com.qiniu.http.Client;
 import com.qiniu.util.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class KodoDomainPublish {
 
     public static void main(String[] args) {
@@ -13,8 +16,8 @@ public class KodoDomainPublish {
         String accessKey = config.getAccesskey();
         String secretKey = config.getSecretKey();
         Auth auth = Auth.create(accessKey, secretKey);
-        String bucket = "hey-video";
-        String domain = "hey-video.xiaohongshu.com";
+        String bucket = "xxx";
+        String domain = "xxx.com";
         String url = "http://rs.qbox.me/publish/" + UrlSafeBase64.encodeToString(domain)
                 + "/from/" + bucket + "/domaintype/1";
         System.out.println(url);
