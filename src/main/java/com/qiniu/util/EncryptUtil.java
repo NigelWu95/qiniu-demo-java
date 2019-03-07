@@ -12,7 +12,7 @@ public class EncryptUtil {
         }};
 //        String domain = "xxx.xxx.com";
         for (String domain : domains) {
-            System.out.println(domain + "\tcname:" + DigestUtils.shaHex(domain) + ".xiangha.com");
+            System.out.println(domain + "\tcname:" + DigestUtils.shaHex(domain) + ".");
         }
     }
 }
