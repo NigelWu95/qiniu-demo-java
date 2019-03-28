@@ -51,6 +51,31 @@
         <finalName>qiniu-demo</finalName>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.5.5</version>
+                <configuration>
+                    <!--<descriptor>resources/assembly.xml</descriptor>-->
+                    <archive>
+                        <manifest>
+                            <mainClass>com.qiniu.examples.QSuitsDemo</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>make-assembly</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.jsonschema2pojo</groupId>
                 <artifactId>jsonschema2pojo-maven-plugin</artifactId>
                 <version>0.4.34</version>
