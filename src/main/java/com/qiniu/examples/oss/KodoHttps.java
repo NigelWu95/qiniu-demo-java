@@ -63,7 +63,6 @@ public class KodoHttps {
         } catch (QiniuException e) {
             e.printStackTrace();
         }
-//
         response.close();
     }
 }

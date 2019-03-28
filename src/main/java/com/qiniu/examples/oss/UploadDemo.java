@@ -2,6 +2,7 @@ package com.qiniu.examples.oss;
 
 import com.qiniu.common.Config;
 import com.qiniu.common.QiniuException;
+import com.qiniu.http.ProxyConfiguration;
 import com.qiniu.http.Response;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.common.Zone;
@@ -9,7 +10,12 @@ import com.qiniu.storage.Configuration;
 import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
 
+import java.net.Proxy;
+
 public class UploadDemo {
+
+    static private String proxyUser = "wubingheng";
+    static private String proxyPass = "7354892wbhajw128";
 
     public static void main(String args[]) {
 
@@ -19,8 +25,8 @@ public class UploadDemo {
         Auth auth = Auth.create(accessKey, secretKey);
 
         String bucket = "temp";
-        String key = "";
-        String filePath = "xxx";
+        String key = "AXMLPrinter2.jar";
+        String filePath = "/Users/wubingheng/Downloads/AXMLPrinter2.jar";
 
         ///////////////////////指定上传的Zone的信息//////////////////
         //第一种方式: 指定具体的要上传的zone
@@ -42,14 +48,16 @@ public class UploadDemo {
                 .rsfHttp("http://rsf.qiniu.com").rsfHttps("https://rsf.qbox.me")
                 .apiHttp("http://api.qiniu.com").apiHttps("https://api.qiniu.com").build();
 
-        Configuration c = new Configuration(z);
+        Configuration cfg = new Configuration(z);
+        cfg.proxy = new ProxyConfiguration("vpn.qiniu.io", 443, proxyUser, proxyPass, Proxy.Type.HTTP);
 
         //创建上传对象
-        UploadManager uploadManager = new UploadManager(c);
+        UploadManager uploadManager = new UploadManager(cfg);
 
         try {
             //调用put方法上传
-            Response res = uploadManager.put(filePath, key, auth.uploadToken(bucket, "", 3600, new StringMap().put("insertOnly", 1)));
+            Response res = uploadManager.put(filePath, key, auth.uploadToken(bucket, key, 3600,
+                    new StringMap().put("insertOnly", 1)));
             //打印返回的信息
             System.out.println(res.bodyString());
         } catch (QiniuException e) {
