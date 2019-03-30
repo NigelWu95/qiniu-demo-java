@@ -34,10 +34,15 @@ public class KodoCorsRules {
         JsonArray allowedOrigin = new JsonArray();
         allowedOrigin.add("*");
         jsonData.add("allowed_origin", allowedOrigin);
+        JsonArray allowedHeader = new JsonArray();
+        allowedHeader.add("*");
+        jsonData.add("allowed_header", allowedHeader);
         JsonArray allowedMethod = new JsonArray();
         allowedMethod.add("GET");
         allowedMethod.add("HEAD");
+        allowedMethod.add("OPTIONS");
         jsonData.add("allowed_method", allowedMethod);
+        jsonData.addProperty("max_age", 2592000);
         JsonArray jsonArray = new JsonArray();
         jsonArray.add(jsonData);
         System.out.println(jsonArray);
