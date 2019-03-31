@@ -20,7 +20,7 @@ public class KodoCorsRules {
         //密钥配置
         Auth auth = Auth.create(accessKey, secretKey);
 
-        String bucket = "vcam";
+        String bucket = "veer-slice";
         String contentType = "application/json";
 
         JsonObject jsonData = new JsonObject();
