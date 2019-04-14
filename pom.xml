@@ -18,7 +18,7 @@
         <dependency>
             <groupId>com.qiniu</groupId>
             <artifactId>qsuits</artifactId>
-            <version>4.50</version>
+            <version>4.60</version>
         </dependency>
 
         <dependency>

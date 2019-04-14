@@ -14,11 +14,12 @@ public class AuthorizationUtil {
         String secretKey = config.getSecretKey();
         Auth auth = Auth.create(accessKey, secretKey);
         Configuration configuration = new Configuration(Zone.autoZone());
-        upToken(auth, "bucket", null, 2000000000, 7);
-        dropBucketAuthorization(auth, "bucket");
-        fetchAuthorization(auth, "", "bucket", "");
-        domainsOfBucketAuthorization(auth, "", "bucket");
-        pfopAuthorization(auth, configuration, "", "bucket", "", "avthumb/mp4...");
+        String token = upToken(auth, "temp", null, 2000000000, 7);
+        System.out.println(token);
+//        dropBucketAuthorization(auth, "bucket");
+//        fetchAuthorization(auth, "", "bucket", "");
+//        domainsOfBucketAuthorization(auth, "", "bucket");
+//        pfopAuthorization(auth, configuration, "", "bucket", "", "avthumb/mp4...");
     }
 
     public static String upToken(Auth auth, String bucket, String scopeFileKey, long expires, int deleteAfterDays) {
