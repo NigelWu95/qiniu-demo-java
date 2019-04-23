@@ -23,7 +23,7 @@ public class AsyncFetch {
         String secretKey = config.getSecretKey();
         Auth auth = Auth.create(accessKey, secretKey);
 
-        String url = "http://xxx.com/test1.jpg";
+        String url = "http://videoqiniu.laosiji.com/lqa384zbul8Fy9GVIB-Jt4mHMrwF";
         String host = ""; // 回源访问时需要的 host
         String bucket = "";
         String key = url.replaceAll("(https?://[^\\s/]+\\.[^\\s/\\\\.]{1,3}/)|(\\?.*)", "");

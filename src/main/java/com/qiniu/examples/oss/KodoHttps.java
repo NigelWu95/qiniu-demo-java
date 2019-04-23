@@ -24,12 +24,13 @@ public class KodoHttps {
         Auth auth = Auth.create(accessKey, secretKey);
 
         List<String> domains = new ArrayList<String>(){{
+            add("xxx.com");
         }};
 
         for (String domain : domains) {
             JSONObject jsonData = new JSONObject();
             jsonData.put("domain", domain);
-            jsonData.put("certid", "5c2c628d34059729a3000583");
+            jsonData.put("certid", "5c750350c7d76277fd00013b");
             String data = Json.encode(jsonData);
 //            System.out.println(data);
             byte[] body = StringUtils.utf8Bytes(data);
@@ -47,22 +48,22 @@ public class KodoHttps {
 
             response.close();
         }
-        JSONObject jsonData = new JSONObject();
-        jsonData.put("domain", "xxx.xxx.com");
-        jsonData.put("certid", "certification id of domain on qiniu");
-        String data = Json.encode(jsonData);
-        System.out.println(data);
-        byte[] body = StringUtils.utf8Bytes(data);
-        String url = "http://api.qiniu.com/cert/bind";
-        StringMap headers = auth.authorization(url, body, "application/json");
-        Client client = new Client();
-        Response response = null;
-        try {
-            response = client.post(url, body, headers);
-            System.out.println(response.bodyString());
-        } catch (QiniuException e) {
-            e.printStackTrace();
-        }
-        response.close();
+//        JSONObject jsonData = new JSONObject();
+//        jsonData.put("domain", "xxx.xxx.com");
+//        jsonData.put("certid", "certification id of domain on qiniu");
+//        String data = Json.encode(jsonData);
+//        System.out.println(data);
+//        byte[] body = StringUtils.utf8Bytes(data);
+//        String url = "http://api.qiniu.com/cert/bind";
+//        StringMap headers = auth.authorization(url, body, "application/json");
+//        Client client = new Client();
+//        Response response = null;
+//        try {
+//            response = client.post(url, body, headers);
+//            System.out.println(response.bodyString());
+//        } catch (QiniuException e) {
+//            e.printStackTrace();
+//        }
+//        response.close();
     }
 }

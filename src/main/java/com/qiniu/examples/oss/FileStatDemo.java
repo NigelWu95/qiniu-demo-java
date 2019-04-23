@@ -20,7 +20,7 @@ public class FileStatDemo {
         Configuration configuration = new Configuration(z);
         BucketManager bucketManager = new BucketManager(auth, configuration);
         String bucket = "temp";
-        String key = "key";
+        String key = "key/adjlsha";
 
         try {
             // 调用 stat() 方法获取文件的信息

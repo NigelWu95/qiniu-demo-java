@@ -16,7 +16,7 @@ public class KodoDomainPublish {
         String accessKey = config.getAccesskey();
         String secretKey = config.getSecretKey();
         Auth auth = Auth.create(accessKey, secretKey);
-        String bucket = "xxx";
+        String bucket = "kbms";
         String domain = "xxx.com";
         String url = "http://rs.qbox.me/publish/" + UrlSafeBase64.encodeToString(domain)
                 + "/from/" + bucket + "/domaintype/1";
