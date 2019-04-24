@@ -1,8 +1,8 @@
 package com.qiniu.examples;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DiffFiles {
 
@@ -11,10 +11,12 @@ public class DiffFiles {
         String path2 = args[1];
         FileReader fileReader1 = new FileReader(new File(path1));
         BufferedReader bufferedReader1 = new BufferedReader(fileReader1);
-        Map<String, Integer> lineMap = new HashMap<>();
+        List<String> lines = new ArrayList<>();
         String line1;
         while ((line1 = bufferedReader1.readLine()) != null) {
-            lineMap.put(line1.split("\t")[0], 1);
+            if (line1.startsWith("\"\\\"/")) line1 = line1.substring(4).split("\\?")[0];
+            else line1 = line1.split("\\?")[0];
+            lines.add(line1);
         }
         bufferedReader1.close();
         fileReader1.close();
@@ -25,7 +27,7 @@ public class DiffFiles {
         BufferedReader bufferedReader2 = new BufferedReader(fileReader2);
         String line2;
         while ((line2 = bufferedReader2.readLine()) != null) {
-            if (!lineMap.containsKey(line2.split("\t")[0])) {
+            if (!lines.contains(line2.split("\t")[0])) {
                 bufferedWriter.write(line2);
                 bufferedWriter.newLine();
             }
