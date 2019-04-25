@@ -24,7 +24,7 @@ public class KodoHttps {
         Auth auth = Auth.create(accessKey, secretKey);
 
         List<String> domains = new ArrayList<String>(){{
-            add("xxx.com");
+            add("bricoletest.xiaohongshu.com");
         }};
 
         for (String domain : domains) {

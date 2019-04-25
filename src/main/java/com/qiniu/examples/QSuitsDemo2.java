@@ -41,7 +41,7 @@ public class QSuitsDemo2 {
                 processor.updateSavePath(savePath + "/" + bucket);
             }
             if (dataSource != null) {
-                dataSource.setSaveOptions(saveTotal, saveFormat, saveSeparator, rmFields);
+                dataSource.setSaveOptions(savePath, saveTotal, saveFormat, saveSeparator, rmFields);
                 dataSource.updateSettings(commonParams);
                 dataSource.setProcessor(processor);
                 dataSource.export();
