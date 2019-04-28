@@ -25,7 +25,6 @@ public class CustomProcess2 extends Base {
         mediaManager = new MediaManager(configuration.clone(), "http");
     }
 
-
     public CustomProcess2(Configuration configuration, String savePath)
             throws IOException {
         this(configuration, savePath, 0);
