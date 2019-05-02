@@ -10,16 +10,16 @@ import java.util.List;
 public class HttpDemo {
 
     public static void main(String[] args) throws Exception {
-        // query();
-        //transferZone();
-        addRR();
+         query();
+//        transferZone();
+//        addRR();
     }
 
     // 查询
     static void query() throws IOException {
-        Resolver resolver = new SimpleResolver("192.168.36.54");
+        Resolver resolver = new SimpleResolver("8.8.8.8");
         resolver.setPort(53);
-        Lookup lookup = new Lookup("www.test.com", Type.A);
+        Lookup lookup = new Lookup("www.baidu.com", Type.A);
         lookup.setResolver(resolver);
         lookup.run();
         if (lookup.getResult() == Lookup.SUCCESSFUL) {
@@ -42,12 +42,12 @@ public class HttpDemo {
     }
 
     static void addRR() throws Exception {
-        Name zone = Name.fromString("test.com.");
+        Name zone = Name.fromString("baidu.com.");
         Name host = Name.fromString("host", zone);
         Update update = new Update(zone, DClass.IN);
         Record record = new ARecord(host, DClass.IN, 3600, InetAddress.getByName("192.0.0.2"));
         update.add(record);
-        Resolver resolver = new SimpleResolver("192.168.36.54");
+        Resolver resolver = new SimpleResolver("8.8.8.8");
         resolver.setPort(53);
         TSIG tsig = new TSIG("test_key", "epYaIl5VMJGRSG4WMeFW5g==");
         resolver.setTSIGKey(tsig);

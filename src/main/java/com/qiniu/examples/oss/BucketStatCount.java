@@ -7,7 +7,7 @@ import com.qiniu.http.Response;
 import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
 
-public class BucketFileCount {
+public class BucketStatCount {
 
     public static void main(String[] args) {
 
@@ -16,10 +16,12 @@ public class BucketFileCount {
         String secretKey = config.getSecretKey();
         Auth auth = Auth.create(accessKey, secretKey);
 
-        String bucket = "tslog";
-        String beginTime = "20190429000000";
-        String endTime = "20190430235959";
-        String url = "http://api.qiniu.com/v6/count?begin=" + beginTime + "&end=" + endTime + "&bucket=" + bucket + "&g=day";
+        String bucket = "temp";
+        String beginTime = "20180820000000";
+        String endTime = "20180825235959";
+        String region = "z0";
+        String url = "http://api.qiniu.com/v6/bucket_net_stat?begin=" + beginTime + "&end="
+                + endTime + "&bucket=" + bucket + "&region=" + region;
         String authorization = "QBox " + auth.signRequest(url, null, null);
         StringMap headers = new StringMap().put("Authorization", authorization);
 
