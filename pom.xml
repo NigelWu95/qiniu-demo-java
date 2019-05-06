@@ -64,7 +64,7 @@
                     <!--<descriptor>resources/assembly.xml</descriptor>-->
                     <archive>
                         <manifest>
-                            <mainClass>com.qiniu.examples.QSuitsDemo3</mainClass>
+                            <mainClass>com.qiniu.examples.DiffFiles2</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

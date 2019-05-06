@@ -2,6 +2,7 @@ package com.qiniu.examples;
 
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Client;
+import com.qiniu.http.Response;
 import com.qiniu.process.Base;
 import com.qiniu.storage.Configuration;
 
@@ -10,7 +11,7 @@ import java.util.Map;
 
 public class ExecDownProcess extends Base {
 
-//    private Client client;
+    private Client client;
     private String urlIndex;
     private String[] cmd = { "/bin/bash", "-c", "" };
     private Runtime runtime = Runtime.getRuntime();
@@ -23,7 +24,7 @@ public class ExecDownProcess extends Base {
 
     public ExecDownProcess(Configuration configuration, String urlIndex, String savePath)
             throws IOException {
-        this(configuration, savePath, urlIndex, 0);
+        this(configuration, urlIndex, savePath, 0);
     }
 
     public ExecDownProcess clone() throws CloneNotSupportedException {
@@ -34,7 +35,7 @@ public class ExecDownProcess extends Base {
 
     @Override
     protected String singleResult(Map<String, String> line) throws QiniuException {
-        cmd[2] = "curl -o /dev/null " + line.get("key");
+        cmd[2] = "curl -o /dev/null " + line.get("key") + " -x chapter2.zhuishushenqi.com.qiniudns.com:80";
         Process process = null;
         int exitVal;
         try {
@@ -50,5 +51,12 @@ public class ExecDownProcess extends Base {
         } else {
             return "0";
         }
+//        Response response = null;
+//        try {
+//            response = client.get(line.get("key"));
+//        } finally {
+//            if (response != null) response.close();
+//        }
+//        return String.valueOf(response.statusCode);
     }
 }

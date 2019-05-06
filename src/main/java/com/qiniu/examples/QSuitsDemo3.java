@@ -14,7 +14,7 @@ import java.util.Map;
 public class QSuitsDemo3 {
 
     public static void main(String[] args) throws Exception {
-//        args = new String[]{"-config=src/main/resources/.qinu.properties"};
+        args = new String[]{"-config=src/main/resources/.qinu.properties"};
         QSuitsEntry qSuitsEntry = new QSuitsEntry(args);
         Configuration configuration = new Configuration(Zone.autoZone());
         configuration.connectTimeout = 60;
@@ -35,7 +35,7 @@ public class QSuitsDemo3 {
 //                fopsIndex, "url", jsonPath, jsonPath2, savePath);
 
 //        CustomProcess2 customProcess = new CustomProcess2(configuration, savePath);
-        ExecDownProcess customProcess = new ExecDownProcess(null, "url", savePath);
+        ExecDownProcess customProcess = new ExecDownProcess(configuration, "url", savePath);
 
         boolean saveTotal = commonParams.getSaveTotal();
         String saveFormat = commonParams.getSaveFormat();

@@ -4,13 +4,17 @@ import org.xbill.DNS.*;
 
 import java.io.IOException;
 import java.net.InetAddress;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class HttpDemo {
 
     public static void main(String[] args) throws Exception {
-         query();
+        Map<String, String> map = new HashMap<>();
+        System.out.println(map.get(null));
+//         query();
 //        transferZone();
 //        addRR();
     }
