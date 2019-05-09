@@ -10,19 +10,22 @@ import java.util.Map;
 public class ExecDownProcess extends Base {
 
     private String domain;
+    private String query;
     private String[] cmd = { "/bin/bash", "-c", "" };
     private String curlOther;
     private Runtime runtime = Runtime.getRuntime();
 
-    public ExecDownProcess(Configuration configuration, String domain, String curlOther, String savePath, int saveIndex) throws IOException {
+    public ExecDownProcess(Configuration configuration, String domain, String query, String curlOther, String savePath,
+                           int saveIndex) throws IOException {
         super("execdown", "", "", configuration, "", savePath, saveIndex);
         this.domain = domain;
         this.curlOther = curlOther;
+        this.query = query;
     }
 
-    public ExecDownProcess(Configuration configuration, String domain, String curlOther, String savePath)
+    public ExecDownProcess(Configuration configuration, String domain, String query, String curlOther, String savePath)
             throws IOException {
-        this(configuration, domain, curlOther, savePath, 0);
+        this(configuration, domain, query, curlOther, savePath, 0);
     }
 
     public ExecDownProcess clone() throws CloneNotSupportedException {
@@ -31,7 +34,7 @@ public class ExecDownProcess extends Base {
 
     @Override
     protected String singleResult(Map<String, String> line) throws QiniuException {
-        cmd[2] = "curl http://" + domain + line.get("key") + " " + curlOther;
+        cmd[2] = "curl http://" + domain + line.get("key") + query + " " + curlOther;
         Process process = null;
         int exitVal;
         try {
