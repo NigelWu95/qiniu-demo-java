@@ -92,7 +92,7 @@ public class QiniuLister {
         InputStream inputStream = new BufferedInputStream(response.bodyStream());
         Reader reader = new InputStreamReader(inputStream);
         BufferedReader bufferedReader = new BufferedReader(reader);
-        BufferedWriter writer = null;
+        BufferedWriter writer;
         try {
             writer = new BufferedWriter(new FileWriter("../" + prefix + "-result.txt", true));
         } catch (IOException e) {
