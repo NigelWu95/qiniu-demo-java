@@ -2,6 +2,7 @@ package com.qiniu.examples;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Test {
 
@@ -13,5 +14,11 @@ public class Test {
 
         String testKey = "123456";
         System.out.println(testKey.substring(3,testKey.length()));
+
+        Scanner scanner = new Scanner(System.in);
+        String line = scanner.nextLine();
+        System.out.println(line == null);
+        System.out.println("".equals(line));
+        System.out.println(line);
     }
 }
