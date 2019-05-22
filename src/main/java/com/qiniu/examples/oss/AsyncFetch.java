@@ -35,7 +35,7 @@ public class AsyncFetch {
         String fileType = "";
         Gson gson = new Gson();
         String apiUrl = ("z0".equals(bucketZone) ? "http://api.qiniu.com" : "http://api-" + bucketZone + ".qiniu.com") + "/sisyphus/fetch";
-        Map<String, String> bodyMap = new HashMap();
+        Map<String, String> bodyMap = new HashMap<>();
         bodyMap.put("url", url);
         bodyMap.put("bucket", bucket);
 //        bodyMap.put("md5", md5);

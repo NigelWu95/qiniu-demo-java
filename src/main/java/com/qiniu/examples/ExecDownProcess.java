@@ -34,7 +34,7 @@ public class ExecDownProcess extends Base {
 
     @Override
     protected String singleResult(Map<String, String> line) throws QiniuException {
-        cmd[2] = "curl http://" + domain + line.get("key") + query + " " + curlOther;
+        cmd[2] = "curl http://" + domain + "/" + line.get("key") + query + " " + curlOther;
         Process process = null;
         int exitVal;
         try {

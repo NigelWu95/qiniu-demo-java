@@ -36,7 +36,7 @@ public class QSuitsDemo3 {
 
 //        CustomProcess2 customProcess = new CustomProcess2(configuration, savePath);
         String domain = entryParam.getValue("domain");
-        String query = entryParam.getValue("query");
+        String query = entryParam.getValue("query", "");
         String curlOther = entryParam.getValue("curl");
         ExecDownProcess customProcess = new ExecDownProcess(configuration, domain, query, curlOther, savePath);
 
