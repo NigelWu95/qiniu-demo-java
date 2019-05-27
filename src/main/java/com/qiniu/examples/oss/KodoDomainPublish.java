@@ -16,8 +16,8 @@ public class KodoDomainPublish {
         String accessKey = config.getAccesskey();
         String secretKey = config.getSecretKey();
         Auth auth = Auth.create(accessKey, secretKey);
-        String bucket = "server-apk";
-        String domain = "qnsrc-apk.eebbk.net";
+        String bucket = "";
+        String domain = "";
         String url = "http://uc.qbox.me/publish?domain=" + domain
 //        UrlSafeBase64.encodeToString(domain)
                 + "&tbl=" + bucket + "&domaintype=1" + "&skipownership=true";
@@ -27,6 +27,7 @@ public class KodoDomainPublish {
         com.qiniu.http.Response response = null;
         try {
             response = client.post(url, null, headers, "application/json");
+            System.out.println(response);
             System.out.println(response.statusCode);
             System.out.println(response.bodyString());
         } catch (QiniuException e) {
