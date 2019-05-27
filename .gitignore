@@ -13,9 +13,8 @@ buildNumber.properties
 
 ### idea
 .idea/
-/src/main/resources/.config.properties
 
 ### macOS template
 # General
 .DS_Store
-/src/main/resources/.qinu.properties
+src/main/resources/.*
