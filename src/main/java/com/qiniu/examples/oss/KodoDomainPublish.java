@@ -16,10 +16,11 @@ public class KodoDomainPublish {
         String accessKey = config.getAccesskey();
         String secretKey = config.getSecretKey();
         Auth auth = Auth.create(accessKey, secretKey);
-        String bucket = "kbms";
-        String domain = "xxx.com";
-        String url = "http://rs.qbox.me/publish/" + UrlSafeBase64.encodeToString(domain)
-                + "/from/" + bucket + "/domaintype/1";
+        String bucket = "server-apk";
+        String domain = "qnsrc-apk.eebbk.net";
+        String url = "http://uc.qbox.me/publish?domain=" + domain
+//        UrlSafeBase64.encodeToString(domain)
+                + "&tbl=" + bucket + "&domaintype=1" + "&skipownership=true";
         System.out.println(url);
         StringMap headers = auth.authorization(url, null, "application/json");
         Client client = new Client();
