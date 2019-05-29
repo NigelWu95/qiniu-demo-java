@@ -1,4 +1,4 @@
-package com.qiniu.examples.cdn;
+package com.qiniu.examples.oss;
 
 import com.qiniu.common.Config;
 import com.qiniu.common.QiniuException;
@@ -28,9 +28,10 @@ public class DomainListDemo {
                 System.out.print(domain);
             }
         } catch (QiniuException e) {
-            System.out.printf(e.response.reqId);
-            System.out.printf(String.valueOf(e.response.statusCode));
-            System.out.printf(e.response.error);
+            System.out.println(e.response);
+            System.out.println(e.response.reqId);
+            System.out.println(String.valueOf(e.response.statusCode));
+            System.out.println(e.response.error);
         }
     }
 }

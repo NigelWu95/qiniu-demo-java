@@ -18,13 +18,13 @@ public class QiniuCdn {
         Auth auth = Auth.create(accessKey, secretKey);
         QiniuCdn qiniuCdn = new QiniuCdn();
         qiniuCdn.listDomains(auth, null, 10);
-        qiniuCdn.queryCdnFlux(auth, "2018-08-27", "2018-08-31", "day", "xxx.com");
+        qiniuCdn.queryCdnFlux(auth, "2019-05-01", "2019-05-28", "day", "");
     }
 
     public void listDomains(Auth auth, String marker, int limit) {
 
         String url = "http://api.qiniu.com/domain?marker=" + marker + "&limit=" + limit;
-        String authorization = "QBox " + auth.signRequestV2(url, null, null, null);
+        String authorization = "QBox " + auth.signRequest(url, null, null);
         System.out.println(authorization);
         StringMap headers = new StringMap().put("Authorization", authorization);
 
