@@ -1,6 +1,7 @@
 package com.qiniu.examples.cdn;
 
 import com.google.gson.JsonObject;
+import com.qiniu.cdn.CdnManager;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Client;
 import com.qiniu.http.Response;
@@ -17,8 +18,16 @@ public class QiniuCdn {
         String secretKey = config.getSecretKey();
         Auth auth = Auth.create(accessKey, secretKey);
         QiniuCdn qiniuCdn = new QiniuCdn();
-        qiniuCdn.listDomains(auth, null, 10);
-        qiniuCdn.queryCdnFlux(auth, "2019-05-01", "2019-05-28", "day", "");
+//        qiniuCdn.listDomains(auth, null, 10);
+//        qiniuCdn.queryCdnFlux(auth, "2019-05-01", "2019-05-28", "day", "");
+        CdnManager manager = new CdnManager(auth);
+        String[] domains = new String[]{""};
+        try {
+            manager.getCdnLogList(domains, "2019-05-29");
+        } catch (QiniuException e) {
+            e.printStackTrace();
+            System.out.println(e.response);
+        }
     }
 
     public void listDomains(Auth auth, String marker, int limit) {

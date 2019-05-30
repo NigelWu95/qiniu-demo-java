@@ -16,18 +16,13 @@ import java.util.HashMap;
 public class CdnLogAnalyze {
 
     public static void main(String[] args) throws Exception {
-        String[] domains = new String[]{"www.zhicdn.com"};
-        String startDate = "2019-05-15";
-        String endDate = "2019-05-15";
+        String domain = "";
+        String startDate = "2019-05-28";
+        String endDate = "2019-05-28";
         String freq = "5min";
-        HashMap<String, String> req = new HashMap<>();
-        req.put("domains", StringUtils.join(domains, ","));
-        req.put("startDate", startDate);
-        req.put("endDate", endDate);
-        req.put("freq", freq);
 
         JsonArray jsonArray = new JsonArray();
-        jsonArray.add("www.zhicdn.com");
+        jsonArray.add(domain);
         JsonObject jsonObject = new JsonObject();
         jsonObject.add("domains", jsonArray);
         jsonObject.addProperty("freq", freq);
