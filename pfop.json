@@ -1,6 +1,8 @@
 {
-  "censor":{
-    "cmd":"image-censor/v3/pulp/terror/politician",
-    "saveas":"image-censor:$(key).json"
-  }
+  "pfop":[
+    {
+      "cmd":"image-censor/v3/pulp/terror/politician",
+      "saveas":"image-censor:$(key).json"
+    }
+  ]
 }

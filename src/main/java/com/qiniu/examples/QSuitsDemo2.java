@@ -8,8 +8,8 @@ import com.qiniu.process.qoss.CopyFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class QSuitsDemo2 {
 
@@ -24,7 +24,7 @@ public class QSuitsDemo2 {
         boolean saveTotal = commonParams.getSaveTotal();
         String saveFormat = commonParams.getSaveFormat();
         String saveSeparator = commonParams.getSaveSeparator();
-        List<String> rmFields = commonParams.getRmFields();
+        Set<String> rmFields = commonParams.getRmFields();
         String path = commonParams.getPath();
 
         File file = new File(path);

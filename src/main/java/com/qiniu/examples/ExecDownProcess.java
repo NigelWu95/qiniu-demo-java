@@ -7,7 +7,7 @@ import com.qiniu.storage.Configuration;
 import java.io.IOException;
 import java.util.Map;
 
-public class ExecDownProcess extends Base {
+public class ExecDownProcess extends Base<Map<String, String>> {
 
     private String domain;
     private String query;
@@ -33,7 +33,17 @@ public class ExecDownProcess extends Base {
     }
 
     @Override
-    protected String singleResult(Map<String, String> line) throws QiniuException {
+    public String resultInfo(Map<String, String> line) {
+        return line.get("key");
+    }
+
+    @Override
+    public boolean validCheck(Map<String, String> line) {
+        return true;
+    }
+
+    @Override
+    public String singleResult(Map<String, String> line) throws QiniuException {
         cmd[2] = "curl http://" + domain + "/" + line.get("key") + query + " " + curlOther;
         Process process = null;
         int exitVal;

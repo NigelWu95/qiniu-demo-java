@@ -16,7 +16,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class CustomProcess extends Base {
+public class CustomProcess extends Base<Map<String, String>> {
 
     private StringMap pfopParams;
     private String fopsIndex;
@@ -68,7 +68,7 @@ public class CustomProcess extends Base {
     }
 
     @Override
-    protected String resultInfo(Map<String, String> line) {
+    public String resultInfo(Map<String, String> line) {
         StringBuilder stringBuilder = new StringBuilder();
         for (String key : line.keySet()) {
             stringBuilder.append(line.get(key)).append("\t");
@@ -77,11 +77,16 @@ public class CustomProcess extends Base {
     }
 
     @Override
-    protected void parseSingleResult(Map<String, String> line, String result) throws IOException {
+    public boolean validCheck(Map<String, String> line) {
+        return false;
     }
 
     @Override
-    protected String singleResult(Map<String, String> line) throws IOException {
+    public void parseSingleResult(Map<String, String> line, String result) throws IOException {
+    }
+
+    @Override
+    public String singleResult(Map<String, String> line) throws IOException {
 //        String key = parseReplacedKey(line.get(urlIndex));
         String key = new URL(line.get(urlIndex)).getPath().substring(1);
         if (pfopConfigs != null) {

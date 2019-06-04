@@ -104,9 +104,9 @@ public class QiniuLister {
             JsonObject jsonObject = null;
             JsonObject item;
             while ((line = bufferedReader.readLine()) != null) {
-                jsonObject = JsonConvertUtils.toJsonObject(line);
+                jsonObject = JsonUtils.toJsonObject(line);
                 if (jsonObject.get("item") != null && !(jsonObject.get("item") instanceof JsonNull)) {
-                    fileInfoList.add(JsonConvertUtils.fromJson(jsonObject.get("item"), FileInfo.class));
+                    fileInfoList.add(JsonUtils.fromJson(jsonObject.get("item"), FileInfo.class));
                     item = jsonObject.get("item").getAsJsonObject();
                     writer.write(item.get("key").getAsString() + "\t" + (item.has("x-qn-meta") ?
                             item.get("x-qn-meta").getAsJsonObject().get("!X-CDO-Content-MD5").getAsString() : "no md5."));
@@ -205,7 +205,7 @@ public class QiniuLister {
         if (object != null) {
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("k", object.key);
-            marker = Base64.encodeToString(JsonConvertUtils.toJson(jsonObject).getBytes(Constants.UTF_8),
+            marker = Base64.encodeToString(JsonUtils.toJson(jsonObject).getBytes(Constants.UTF_8),
                     Base64.URL_SAFE | Base64.NO_WRAP);
         } else {
             marker = null;

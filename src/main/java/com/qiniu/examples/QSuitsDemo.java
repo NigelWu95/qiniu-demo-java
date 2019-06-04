@@ -9,6 +9,7 @@ import com.qiniu.process.qoss.CopyFile;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class QSuitsDemo {
 
@@ -631,7 +632,7 @@ public class QSuitsDemo {
         boolean saveTotal = commonParams.getSaveTotal();
         String saveFormat = commonParams.getSaveFormat();
         String saveSeparator = commonParams.getSaveSeparator();
-        List<String> rmFields = commonParams.getRmFields();
+        Set<String> rmFields = commonParams.getRmFields();
 
         // 不断去更改 bucket 做执行
         for (String bucket : buckets) {

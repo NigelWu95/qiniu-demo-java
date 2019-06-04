@@ -1,7 +1,7 @@
 package com.qiniu.examples;
 
 import com.qiniu.common.Zone;
-import com.qiniu.datasource.FileInput;
+import com.qiniu.datasource.LocalFileContainer;
 import com.qiniu.entry.CommonParams;
 import com.qiniu.entry.QSuitsEntry;
 import com.qiniu.examples.media.CustomProcess2;
@@ -10,6 +10,7 @@ import com.qiniu.storage.Configuration;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class QSuitsDemo3 {
 
@@ -43,15 +44,16 @@ public class QSuitsDemo3 {
         boolean saveTotal = commonParams.getSaveTotal();
         String saveFormat = commonParams.getSaveFormat();
         String saveSeparator = commonParams.getSaveSeparator();
-        List<String> rmFields = commonParams.getRmFields();
+        Set<String> rmFields = commonParams.getRmFields();
         String filePath = commonParams.getPath();
         String parseType = commonParams.getParse();
         String separator = commonParams.getSeparator();
         String rmKeyPrefix = commonParams.getRmKeyPrefix();
+        String addKeyPrefix = commonParams.getAddKeyPrefix();
         Map<String, String> indexMap = commonParams.getIndexMap();
 //        indexMap.put("0", "0");
-        FileInput fileInput = new FileInput(filePath, parseType, separator, rmKeyPrefix, indexMap,
-                commonParams.getUnitLen(), commonParams.getThreads());
+        LocalFileContainer fileInput = new LocalFileContainer(filePath, parseType, separator, addKeyPrefix, rmKeyPrefix,
+                indexMap, commonParams.getUnitLen(), commonParams.getThreads());
         fileInput.setSaveOptions(savePath, saveTotal, saveFormat, saveSeparator, rmFields);
         fileInput.setRetryTimes(commonParams.getRetryTimes());
         fileInput.setSaveOptions(savePath, saveTotal, saveFormat, saveSeparator, rmFields);

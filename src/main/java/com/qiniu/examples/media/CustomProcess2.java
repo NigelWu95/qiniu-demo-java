@@ -9,12 +9,12 @@ import com.qiniu.model.qdora.PfopResult;
 import com.qiniu.process.Base;
 import com.qiniu.process.qdora.MediaManager;
 import com.qiniu.storage.Configuration;
-import com.qiniu.util.JsonConvertUtils;
+import com.qiniu.util.JsonUtils;
 
 import java.io.IOException;
 import java.util.Map;
 
-public class CustomProcess2 extends Base {
+public class CustomProcess2 extends Base<Map<String, String>> {
 
     private Client client;
     private MediaManager mediaManager;
@@ -38,7 +38,7 @@ public class CustomProcess2 extends Base {
     }
 
     @Override
-    protected String resultInfo(Map<String, String> line) {
+    public String resultInfo(Map<String, String> line) {
         StringBuilder stringBuilder = new StringBuilder();
         for (String key : line.keySet()) {
             if (!key.equals("mimeType")) stringBuilder.append(line.get(key)).append("\t");
@@ -48,15 +48,20 @@ public class CustomProcess2 extends Base {
     }
 
     @Override
-    protected void parseSingleResult(Map<String, String> line, String result) throws IOException {}
+    public boolean validCheck(Map<String, String> line) {
+        return true;
+    }
 
     @Override
-    protected String singleResult(Map<String, String> line) throws IOException {
+    public void parseSingleResult(Map<String, String> line, String result) throws IOException {}
+
+    @Override
+    public String singleResult(Map<String, String> line) throws IOException {
         String result = mediaManager.getPfopResultBodyById(line.get("mimeType"));
         if (result != null && !"".equals(result)) {
             PfopResult pfopResult;
             try {
-                pfopResult = JsonConvertUtils.fromJson(result, PfopResult.class);
+                pfopResult = JsonUtils.fromJson(result, PfopResult.class);
             } catch (JsonParseException e) {
                 throw new QiniuException(e, e.getMessage());
             }
@@ -71,10 +76,10 @@ public class CustomProcess2 extends Base {
                     fileSaveMapper.writeError(resultInfo(line) + "\t" + item.error, false);
                 else if (item.code == 4)
                     fileSaveMapper.writeKeyFile("waiting", resultInfo(line) + "\t" +
-                            JsonConvertUtils.toJsonWithoutUrlEscape(item), false);
+                            JsonUtils.toJsonWithoutUrlEscape(item), false);
                 else
                     fileSaveMapper.writeKeyFile("notify_failed", resultInfo(line) + "\t" +
-                            JsonConvertUtils.toJsonWithoutUrlEscape(item), false);
+                            JsonUtils.toJsonWithoutUrlEscape(item), false);
             }
             return null;
         } else {
