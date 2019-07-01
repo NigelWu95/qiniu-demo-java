@@ -14,8 +14,8 @@ import java.net.Proxy;
 
 public class UploadDemo {
 
-    static private String proxyUser = "wubingheng";
-    static private String proxyPass = "7354892wbhajw128";
+    static private String proxyUser = "";
+    static private String proxyPass = "";
 
     public static void main(String args[]) {
 
@@ -25,8 +25,8 @@ public class UploadDemo {
         Auth auth = Auth.create(accessKey, secretKey);
 
         String bucket = "temp";
-        String key = "AXMLPrinter2.jar";
-        String filePath = "/Users/wubingheng/Downloads/AXMLPrinter2.jar";
+        String key = "215663f615e94c828f93501ec46a4815-1.zip";
+        String filePath = "/Users/wubingheng/Downloads/215663f615e94c828f93501ec46a4815.zip";
 
         ///////////////////////指定上传的Zone的信息//////////////////
         //第一种方式: 指定具体的要上传的zone
@@ -49,7 +49,7 @@ public class UploadDemo {
                 .apiHttp("http://api.qiniu.com").apiHttps("https://api.qiniu.com").build();
 
         Configuration cfg = new Configuration(z);
-        cfg.proxy = new ProxyConfiguration("vpn.qiniu.io", 443, proxyUser, proxyPass, Proxy.Type.HTTP);
+//        cfg.proxy = new ProxyConfiguration("", 443, proxyUser, proxyPass, Proxy.Type.HTTP);
 
         //创建上传对象
         UploadManager uploadManager = new UploadManager(cfg);
@@ -57,7 +57,9 @@ public class UploadDemo {
         try {
             //调用put方法上传
             Response res = uploadManager.put(filePath, key, auth.uploadToken(bucket, key, 3600,
-                    new StringMap().put("insertOnly", 1)));
+                    new StringMap().put("insertOnly", 1)
+//                            .put("detectMime", 1)
+                            .put("mimeLimit", "image/png;image/jpeg;text/plain;application/zip;application/octet-stream")));
             //打印返回的信息
             System.out.println(res.bodyString());
         } catch (QiniuException e) {

@@ -19,7 +19,7 @@ public class QiniuCdn {
         Auth auth = Auth.create(accessKey, secretKey);
         QiniuCdn qiniuCdn = new QiniuCdn();
 //        qiniuCdn.listDomains(auth, null, 10);
-//        qiniuCdn.queryCdnFlux(auth, "2019-05-01", "2019-05-28", "day", "");
+        qiniuCdn.queryCdnFlux(auth, "2019-05-01", "2019-05-28", "day", "");
         CdnManager manager = new CdnManager(auth);
         String[] domains = new String[]{""};
         try {
@@ -54,7 +54,7 @@ public class QiniuCdn {
 
     public void queryCdnFlux(Auth auth, String startDate, String endDate, String granularity, String domains) {
 
-        String url = "http://fusion.qiniuapi.com/v2/tune/flux";
+        String url = "https://fusion.qiniuapi.com/v2/tune/flux";
         //String url = "http://fusion.qiniuapi.com/v2/tune/bandwidth";
         JsonObject object = new JsonObject();
         object.addProperty("StartDate", startDate);

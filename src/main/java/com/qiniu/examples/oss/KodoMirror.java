@@ -61,7 +61,7 @@ public class KodoMirror {
     }
 
     public Map<String, Object> mirrorQueryConfig(Auth auth, int flag) {
-        String bucket = "mingdiao-new";
+        String bucket = "vb-wting";
         String host = "uc.qbox.me";
         // 设置允许带参数回源，flag 为 1 表示允许，0 为不允许
         String url = "http://" + host + "/mirrorRawQuerySupport?bucket=" + bucket + "&opt=" + flag;

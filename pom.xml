@@ -18,7 +18,7 @@
         <dependency>
             <groupId>com.qiniu</groupId>
             <artifactId>qsuits</artifactId>
-            <version>[6.20, 6.99]</version>
+            <version>6.20</version>
         </dependency>
 
         <dependency>
@@ -70,7 +70,7 @@
                     <!--<descriptor>resources/assembly.xml</descriptor>-->
                     <archive>
                         <manifest>
-                            <mainClass>com.qiniu.examples.QSuitsDemo3</mainClass>
+                            <mainClass>com.qiniu.examples.DiffFiles2</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

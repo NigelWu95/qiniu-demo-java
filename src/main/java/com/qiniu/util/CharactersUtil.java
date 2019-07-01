@@ -3,6 +3,7 @@ package com.qiniu.util;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
+import java.util.Arrays;
 
 public class CharactersUtil {
 
@@ -14,6 +15,9 @@ public class CharactersUtil {
         System.out.println(QiniuEtagUtil.urlSafeBase64Decode("dGVzdDp0ZXN0LmpwZw=="));
         System.out.println(UrlSafeBase64.encodeToString("test:test.jpg"));
         System.out.println(new String(UrlSafeBase64.decode("dGVzdDp0ZXN0LmpwZw==")));
+        System.out.println(CharactersUtil.bytesToHexString("lln5g3WQCBqSp3WazTf0shKDyRAP".getBytes()));
+        System.out.println(Arrays.toString(CharactersUtil.parseStringToHexArray("lln5g3WQCBqSp3WazTf0shKDyRAP")));
+
     }
 
     public static String[] parseStringToHexArray(String originString) {

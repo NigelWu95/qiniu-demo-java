@@ -33,7 +33,7 @@ public class CdnLogAnalyze {
         System.out.println(Json.encode(jsonObject));
 
         byte[] body = Json.encode(jsonObject).getBytes(Constants.UTF_8);
-        String url = "http://fusion.qiniuapi.com/v2/tune/loganalyze/reqcount";
+        String url = "https://fusion.qiniuapi.com/v2/tune/loganalyze/reqcount";
 
         Config config = Config.getInstance();
         String accesskey = config.getAccesskey();
