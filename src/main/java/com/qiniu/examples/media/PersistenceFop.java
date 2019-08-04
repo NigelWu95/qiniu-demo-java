@@ -36,18 +36,18 @@ public class PersistenceFop {
 //                + "/url/" + UrlSafeBase64.encodeToString(auth.privateDownloadUrl(domain + "/test.mp4"))
 //                + "/alias/" + UrlSafeBase64.encodeToString("b.mp4");
         //设置转码操作参数
-        String fops = "mkzip/4/";
+//        String fops = "mkzip/4/";
 
         //设置转码的队列
         String pipeline = "pipeline";
 
         //可以对转码后的文件进行使用saveas参数自定义命名，当然也可以不指定文件会默认命名并保存在当前空间。
         String urlbase64 = UrlSafeBase64.encodeToString(bucket + ":mkzip4-test.zip");
-        String pfops = fops + "|saveas/" + urlbase64;
+//        String pfops = fops + "|saveas/" + urlbase64;
 
         String encodedImageURL = UrlSafeBase64.encodeToString("http://nigel.qiniuts.com/so-w.jpg");
 
-        pfops =
+        String pfops =
 //              "avthumb/mp4/ab/160k/ar/44100/acodec/libfaac/r/30/vb/2200k/vcodec/libx264/s/1280x720/autoscale/1/stripmeta/0" +
 //            "avthumb/mp4/ab/160k/ar/44100/acodec/libfaac/r/30/vb/5400k/vcodec/libx264/s/1920x1080/autoscale/1/strpmeta/0" +
 //            "avthumb/mp4/ss/0/t/357" +
@@ -150,8 +150,9 @@ public class PersistenceFop {
 //                "avthumb/mp4/vcodec/libx264/s/847x480/ar/22050/r/30/vb/1.25m" +
 //                "avthumb/m3u8/ab/64k/ar/22050/vn/1" +
 //                "avthumb/mp4/vn/1" +
-                "avwatermarks/mp4/wmImage/" + UrlSafeBase64.encodeToString("https://ss2.meipian.me/video/water/video_logo.gif") + "/wmOffsetX/-20/wmOffsetY/20/wmPos/0/wmDuration/$(gte)" +
-                "|saveas/" + UrlSafeBase64.encodeToString( "temp:" + "1536112882703587-1.mp4");
+//                "avwatermarks/mp4/wmImage/" + UrlSafeBase64.encodeToString("https://ss2.meipian.me/video/water/video_logo.gif") + "/wmOffsetX/-20/wmOffsetY/20/wmPos/0/wmDuration/$(gte)" +
+                "video-censor/v3/pulp/bucket/temp" +
+                "|saveas/" + UrlSafeBase64.encodeToString( "temp:" + "ltSP7XPbPGviBNjXiZEHX7mpdm6o.json");
 //                "avthumb/mp4/s/320x240/vb/200k|saveas/" + UrlSafeBase64.encodeToString( "temp:" + "1111111222211-240p.mp4") + ";" +
 //                "avthumb/mp4/s/640x480/vb/800k|saveas/" + UrlSafeBase64.encodeToString( "temp:" + "1111111222211-480p.mp4") + ";" +
 //                "avthumb/mp4/s/1280x720/vb/1700k|saveas/" + UrlSafeBase64.encodeToString( "temp:" + "1111111222211-720p.mp4");
@@ -159,15 +160,15 @@ public class PersistenceFop {
         StringMap params = new StringMap()
 //                .putNotEmpty("notifyURL", "http://753637b3.ngrok.io/QiniuDemo/callback") // 设置回调参数
                 .putWhen("force", 1, true) // 设置覆盖源文件参数
-                .putNotEmpty("pipeline", pipeline); // 设置 pipeline 参数
+                .putNotEmpty("pipeline", "audio-video"); // 设置 pipeline 参数
 
         try {
-            String persistId = operationManager.pfop("temp", "1536112882703587.mp4", pfops, params);
+            String persistId = operationManager.pfop("temp", "-YVzTgC_I8zlDYIm8eCcPnA76pU=/ltSP7XPbPGviBNjXiZEHX7mpdm6o", pfops, params);
             System.out.println("http://api.qiniu.com/status/get/prefop?id=" + persistId);
 
             StringMap params2 = new StringMap().put("id", persistId);
             byte[] data = StringUtils.utf8Bytes(params2.formString());
-            String url = String.format("http://api.qiniu.com/status/get/prefop");
+            String url = "http://api.qiniu.com/status/get/prefop";
             Response response = new Client().post(url, data, null, Client.FormMime);
             System.out.println(response.jsonToObject(OperationStatus.class).code);
         } catch (QiniuException e) {

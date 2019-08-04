@@ -4,6 +4,7 @@ import com.google.gson.*;
 import com.qiniu.common.Config;
 import com.qiniu.http.Client;
 import com.qiniu.http.Response;
+import com.qiniu.storage.Configuration;
 import com.qiniu.util.Auth;
 import com.qiniu.util.Json;
 import com.qiniu.util.StringMap;
@@ -23,7 +24,7 @@ public class AtlabSensor {
         JsonObject bodyJson = new JsonObject();
 
         JsonObject dataValueJson = new JsonObject();
-        dataValueJson.addProperty("uri", "http://video.diaodiaosocial.com/2f28e1685d255dac692d8c4f0d3c25d4.mp4");
+        dataValueJson.addProperty("uri", "http://p3l1d5mx4.bkt.clouddn.com/-YVzTgC_I8zlDYIm8eCcPnA76pU=/ltSP7XPbPGviBNjXiZEHX7mpdm6o");
         bodyJson.add("data", dataValueJson);
 
         JsonArray opsValueJsonArray = new JsonArray();
@@ -49,13 +50,16 @@ public class AtlabSensor {
         paramsValueJson.add("vframe", jsonObject1);
         bodyJson.add("params", paramsValueJson);
 
-        System.out.println(bodyJson.toString());
+//        System.out.println(bodyJson.toString());
         byte[] bodyBytes = bodyJson.toString().getBytes();
 
         // 获取签名
         String url = "http://argus.atlab.ai/v1/video/" + "12345678";
         String qiniuToken = "Qiniu " + auth.signRequestV2(url, "POST", bodyBytes, "application/json");
-        Client client = new Client();
+        Configuration configuration = new Configuration();
+        configuration.connectTimeout = 60;
+        configuration.readTimeout = 60;
+        Client client = new Client(configuration);
         StringMap headers = new StringMap();
         headers.put("Authorization", qiniuToken);
         Response resp = null;

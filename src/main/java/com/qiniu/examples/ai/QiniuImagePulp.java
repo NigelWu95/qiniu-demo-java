@@ -43,8 +43,7 @@ public class QiniuImagePulp {
         byte[] data = StringUtils.utf8Bytes(s);
         String contentType = "application/json";
         String authorization = "Qiniu " + auth.signRequestV2(url, "POST", data, contentType);
-        StringMap headers = new StringMap().put("AuthorizationUtil", authorization);
-        System.out.println(headers.map());
+        StringMap headers = new StringMap().put("Authorization", authorization);
 
         Client client = new Client();
         Response response = null;
