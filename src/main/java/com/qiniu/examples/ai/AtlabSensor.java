@@ -6,11 +6,7 @@ import com.qiniu.http.Client;
 import com.qiniu.http.Response;
 import com.qiniu.storage.Configuration;
 import com.qiniu.util.Auth;
-import com.qiniu.util.Json;
 import com.qiniu.util.StringMap;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class AtlabSensor {
 
@@ -24,7 +20,7 @@ public class AtlabSensor {
         JsonObject bodyJson = new JsonObject();
 
         JsonObject dataValueJson = new JsonObject();
-        dataValueJson.addProperty("uri", "http://p3l1d5mx4.bkt.clouddn.com/-YVzTgC_I8zlDYIm8eCcPnA76pU=/ltSP7XPbPGviBNjXiZEHX7mpdm6o");
+        dataValueJson.addProperty("uri", "http://xxx.com/-YVzTgC_I8zlDYIm8eCcPnA76pU=/ltSP7XPbPGviBNjXiZEHX7mpdm6o");
         bodyJson.add("data", dataValueJson);
 
         JsonArray opsValueJsonArray = new JsonArray();

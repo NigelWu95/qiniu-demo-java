@@ -9,14 +9,18 @@ public class CharactersUtil {
 
     public static void main(String[] args) {
 
-        System.out.println(QiniuEtagUtil.urlSafeBase64Decode("Fto5o-5ea0sNMlW_75VgGJCv2AcJ"));
-        System.out.println(new String(UrlSafeBase64.decode("Fto5o-5ea0sNMlW_75VgGJCv2AcJ")));
-        System.out.println(QiniuEtagUtil.urlSafeBase64Encode("test:test.jpg"));
-        System.out.println(QiniuEtagUtil.urlSafeBase64Decode("dGVzdDp0ZXN0LmpwZw=="));
-        System.out.println(UrlSafeBase64.encodeToString("test:test.jpg"));
-        System.out.println(new String(UrlSafeBase64.decode("dGVzdDp0ZXN0LmpwZw==")));
-        System.out.println(CharactersUtil.bytesToHexString("lln5g3WQCBqSp3WazTf0shKDyRAP".getBytes()));
-        System.out.println(Arrays.toString(CharactersUtil.parseStringToHexArray("lln5g3WQCBqSp3WazTf0shKDyRAP")));
+//        System.out.println(QiniuEtagUtil.urlSafeBase64Decode("Fto5o-5ea0sNMlW_75VgGJCv2AcJ"));
+//        System.out.println(new String(UrlSafeBase64.decode("Fto5o-5ea0sNMlW_75VgGJCv2AcJ")));
+//        System.out.println(QiniuEtagUtil.urlSafeBase64Encode("test:test.jpg"));
+//        System.out.println(QiniuEtagUtil.urlSafeBase64Decode("dGVzdDp0ZXN0LmpwZw=="));
+//        System.out.println(UrlSafeBase64.encodeToString("test:test.jpg"));
+//        System.out.println(new String(UrlSafeBase64.decode("dGVzdDp0ZXN0LmpwZw==")));
+//        System.out.println(CharactersUtil.bytesToHexString("lv2X7xpx2YERBScZ7i1RJ42gDha6".getBytes()));
+//        System.out.println(Arrays.toString(CharactersUtil.parseStringToHexArray("lln5g3WQCBqSp3WazTf0shKDyRAP")));
+        char[] chars = new char[28];
+        "lv2X7xpx2YERBScZ7i1RJ42gDha6".getChars(0, 28, chars, 0);
+//        System.out.println(new String(CharactersUtil.decode(chars)));
+//        System.out.println(new String(CharactersUtil.getBytes(chars)));
 
     }
 

@@ -36,7 +36,7 @@ public class QiniuImagePulp {
 
         JSONObject jsonData = new JSONObject();
         Map imageAddress = new HashMap();
-        imageAddress.put("uri", "http://7xlv47.com1.z0.glb.clouddn.com/pulpsexy.jpg");
+        imageAddress.put("uri", "http://xxx.cn/upload/24790f63-0936-44c4-8695-a6d6b1dd8d91.jpg?imageView2/0/w/4999/h/4999");
         jsonData.put("data", JSONObject.fromObject(imageAddress));
         String s = Json.encode(jsonData);
         String url = "http://argus.atlab.ai/v1/pulp";
