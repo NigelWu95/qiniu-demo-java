@@ -33,16 +33,15 @@ public class KodoMirror {
         configMap = kodoMirrorProcessor.mirrorQueryConfig(auth, 1);
         String url = (String) configMap.get("url");
         StringMap headers = (StringMap) configMap.get("headers");
-
         Client client = new Client();
-        Response response = null;
         try {
-            response = client.post(url, null, headers, null);
+            Response response = client.post(url, null, headers, null);
             System.out.println(response.bodyString());
+            response.close();
         } catch (QiniuException e) {
             e.printStackTrace();
+            if (e.response != null) e.response.close();
         }
-        response.close();
     }
 
     public Map<String, Object> mirrorCodeConfig(Auth auth, String statusCode) {

@@ -1,5 +1,9 @@
 package com.qiniu.examples;
 
+import com.qiniu.common.QiniuException;
+import com.qiniu.storage.BucketManager;
+import com.qiniu.storage.Configuration;
+import com.qiniu.util.Auth;
 import sun.misc.SignalHandler;
 
 import java.util.*;
@@ -66,5 +70,14 @@ public class Test {
 //        System.out.println(stringBuilder.deleteCharAt(2).toString());
 //
 //        System.out.println(("a" == null ? "\t" : "a" + "\t") + "abc");
+
+        BucketManager bucketManager = new BucketManager(
+                Auth.create("TzrY5-kegJHsTnX1APnL3pSiBWwy-HJSrBMkG09Z", "2ARzxJ7EbYKKeCn3R2_lOfEe2xaa6mUwUdFOraCU"),
+                new Configuration());
+        try {
+            bucketManager.buckets();
+        } catch (QiniuException e) {
+            e.printStackTrace();
+        }
     }
 }
