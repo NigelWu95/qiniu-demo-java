@@ -22,8 +22,8 @@ public class UploadDemo {
         Auth auth = Auth.create(accessKey, secretKey);
 
         String bucket = "temp";
-        String key = "215663f615e94c828f93501ec46a4815-3";
-        String filePath = "/Users/wubingheng/Downloads/215663f615e94c828f93501ec46a4815.zip";
+        String key = "react.txt";
+        String filePath = "/Users/wubingheng/Downloads/react.txt";
 
         ///////////////////////指定上传的Zone的信息//////////////////
         //第一种方式: 指定具体的要上传的zone
@@ -53,8 +53,9 @@ public class UploadDemo {
 
         try {
             //调用put方法上传
-            Response res = uploadManager.put(filePath, key, auth.uploadToken(bucket, key, 3600,
-                    new StringMap().put("insertOnly", 1)
+            Response res = uploadManager.put(filePath, key, auth.uploadToken(bucket, key, 3600
+                    , new StringMap()
+//                            .put("insertOnly", 1)
 //                            .put("detectMime", 1)
 //                            .put("mimeLimit", "image/png;image/jpeg;text/plain;application/zip;application/octet-stream")
             ));

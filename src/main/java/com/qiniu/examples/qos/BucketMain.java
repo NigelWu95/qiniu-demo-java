@@ -17,9 +17,12 @@ public class BucketMain {
         Auth auth = Auth.create(accessKey, secretKey);
         Zone z = Zone.autoZone();
         Configuration c = new Configuration(z);
+        c.connectTimeout = 360;
+        c.readTimeout = 360;
+        c.writeTimeout = 360;
         BucketManager bucketManager = new BucketManager(auth, c);
         try {
-            bucketManager.deleteBucket("ji");
+            bucketManager.deleteBucket("new-pic-b");
         } catch (QiniuException e) {
             e.printStackTrace();
             System.out.println(e.code());
