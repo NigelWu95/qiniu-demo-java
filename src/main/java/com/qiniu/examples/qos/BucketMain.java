@@ -22,7 +22,7 @@ public class BucketMain {
         c.writeTimeout = 360;
         BucketManager bucketManager = new BucketManager(auth, c);
         try {
-            bucketManager.deleteBucket("new-pic-b");
+            bucketManager.deleteBucket("pic-app-b");
         } catch (QiniuException e) {
             e.printStackTrace();
             System.out.println(e.code());
