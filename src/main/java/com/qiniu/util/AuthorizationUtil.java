@@ -14,7 +14,7 @@ public class AuthorizationUtil {
         String secretKey = config.getSecretKey();
         Auth auth = Auth.create(accessKey, secretKey);
         Configuration configuration = new Configuration(Zone.autoZone());
-        String token = upToken(auth, "temp", null, 2000000000, 7);
+        String token = upToken(auth, "nigel", null, 2000000000, 7);
         System.out.println(token);
 //        dropBucketAuthorization(auth, "bucket");
 //        fetchAuthorization(auth, "", "bucket", "");

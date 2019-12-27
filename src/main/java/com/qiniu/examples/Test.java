@@ -6,6 +6,7 @@ import com.qiniu.storage.Configuration;
 import com.qiniu.util.Auth;
 import sun.misc.SignalHandler;
 
+import java.io.File;
 import java.util.*;
 
 public class Test {
@@ -71,13 +72,25 @@ public class Test {
 //
 //        System.out.println(("a" == null ? "\t" : "a" + "\t") + "abc");
 
-        BucketManager bucketManager = new BucketManager(
-                Auth.create("TzrY5-kegJHsTnX1APnL3pSiBWwy-HJSrBMkG09Z", "2ARzxJ7EbYKKeCn3R2_lOfEe2xaa6mUwUdFOraCU"),
-                new Configuration());
-        try {
-            bucketManager.buckets();
-        } catch (QiniuException e) {
-            e.printStackTrace();
+//        BucketManager bucketManager = new BucketManager(
+//                Auth.create("TzrY5--HJSrBMkG09Z", ""),
+//                new Configuration());
+//        try {
+//            bucketManager.buckets();
+//        } catch (QiniuException e) {
+//            e.printStackTrace();
+//        }
+//        File file = new File("..", "");
+//        System.out.println(file.exists());
+//        File[] files = file.listFiles();
+//        for (File file1 : files) {
+//            System.out.println(file1.getName() + "---" + file1.getPath());
+//        }
+
+        int a = 100;
+        while (a < 1000) {
+            a += a >> 1;
+            System.out.println(a);
         }
     }
 }

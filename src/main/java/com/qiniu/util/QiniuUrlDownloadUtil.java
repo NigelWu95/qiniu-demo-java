@@ -15,7 +15,8 @@ import java.util.Map;
 
 public class QiniuUrlDownloadUtil {
 
-    private static String algorithm = "sha1";
+//    private static String algorithm = "sha1";
+    private static String algorithm = "md5";
 
     public static void main(String[] args) {
         test1();
@@ -24,7 +25,7 @@ public class QiniuUrlDownloadUtil {
     public static void test3() {
 
         try {
-            String url = "https://ss2.meipian.me/book/img/sku/calendar/paper-hor-1.jpg";
+            String url = "https://xxx.me/book/img/sku/calendar/paper-hor-1.jpg";
             String fop = "watermark/1/image/aHR0cDovL3N0YXRpYzIuaXZ3ZW4uY29tL3VzZXJzLzE2NTc0MDc0LzYyOGU2MTU4ZDNmMTQyYTM" +
                     "5ODVmMjE2NTNkNDlmMjA3LmpwZz9pbWFnZU1vZ3IyL2RlbnNpdHkvNDUwL3JvdGF0ZS8wL2Nyb3AvITE0NDB4NzkwYTBhMTMxL3" +
                     "RodW1ibmFpbC8zOTY0eDIxNzU=/gravity/North/dx/0/dy/278|imageMogr2/density/450/quality/99";
@@ -48,8 +49,8 @@ public class QiniuUrlDownloadUtil {
     public static void test1() {
 
         try {
-            boolean result = checkDownload("http://temp.nigel.qiniuts.com/1400x2000.png?" +
-                            "watermark/2/text/d2F0ZXJtYXJrLXRlc3Q=/fill/IzAwMDAwMA==/fontsize/500",
+            boolean result = checkDownload("http://xxx/pic_26990114_075529fa668f83fd41aa3abc128c08f8.jpg?" +
+                            "imageView2/2/format/webp/ignore-error/1",
                     "/Users/wubingheng/Downloads", false);
             System.out.println(result);
         } catch (Exception exception) {
@@ -121,7 +122,7 @@ public class QiniuUrlDownloadUtil {
             if (response != null) response.close();
         }
 
-        boolean fileRight = ioLength == fileSize && HashCheckUtil.getFileHash(file, "sha1").equals(responseHash);
+        boolean fileRight = ioLength == fileSize && HashCheckUtil.getFileHash(file, algorithm).equals(responseHash);
         if (deleteIfFalse && !fileRight) file.delete();
 
         return fileRight;
@@ -152,9 +153,9 @@ public class QiniuUrlDownloadUtil {
         responseBody = response.bodyString();
         response.close();
 
-        if (!responseBody.matches("\\{\"hash\":\".{40}\",\"fsize\":\\d+}")) {
-            throw new QiniuException(null, "not qhash response");
-        }
+//        if (!responseBody.matches("\\{\"hash\":\".{40}\",\"fsize\":\\d+}")) {
+//            throw new QiniuException(null, "not qhash response");
+//        }
 
         return responseBody;
     }
